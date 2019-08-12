@@ -1,0 +1,7 @@
+Debug/
+.vs/
+x64/
+x86/
+.log
+node_modules/
+!lib/**
