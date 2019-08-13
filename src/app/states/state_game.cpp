@@ -16,10 +16,6 @@
 #include "../game/components/com_animation.h"
 
 
-
-#include "../game/player_controller.h"
-
-
 namespace app {
 
 	using namespace game;
@@ -90,7 +86,7 @@ namespace app {
 
 	void StateGame::onHandleEvent(SDL_Event& e) noexcept
 	{
-		//playerController->handleInput(e);
+		sysInput.handleEvent(ecs, e);
 	}
 
 	void StateGame::onClean() noexcept

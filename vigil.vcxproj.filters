@@ -57,9 +57,6 @@
     <ClCompile Include="src\cmn\yuu\core.cpp">
       <Filter>src\cmn\yuu</Filter>
     </ClCompile>
-    <ClCompile Include="src\app\game\player_controller.cpp">
-      <Filter>src\app\game</Filter>
-    </ClCompile>
     <ClCompile Include="src\cmn\entt.h">
       <Filter>src\cmn</Filter>
     </ClCompile>
@@ -67,6 +64,9 @@
       <Filter>src\app\game\systems</Filter>
     </ClCompile>
     <ClCompile Include="src\app\game\systems\sys_animator.cpp">
+      <Filter>src\app\game\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\app\game\systems\sys_input.cpp">
       <Filter>src\app\game\systems</Filter>
     </ClCompile>
   </ItemGroup>
@@ -104,12 +104,6 @@
     <ClInclude Include="src\cmn\ryoji\rect.h">
       <Filter>src\cmn\ryoji</Filter>
     </ClInclude>
-    <ClInclude Include="src\app\game\i_player_controllable.h">
-      <Filter>src\app\game</Filter>
-    </ClInclude>
-    <ClInclude Include="src\app\game\player_controller.h">
-      <Filter>src\app\game</Filter>
-    </ClInclude>
     <ClInclude Include="src\app\game\components\com_animation.h">
       <Filter>src\app\game\components</Filter>
     </ClInclude>
@@ -126,6 +120,9 @@
       <Filter>src\cmn\ryoji</Filter>
     </ClInclude>
     <ClInclude Include="src\app\game\systems\sys_animator.h">
+      <Filter>src\app\game\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\systems\sys_input.h">
       <Filter>src\app\game\systems</Filter>
     </ClInclude>
   </ItemGroup>

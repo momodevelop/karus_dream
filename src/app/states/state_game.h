@@ -9,6 +9,7 @@
 #include "../../image/texture_shelf.h"
 #include "../game/systems/sys_renderer.h"
 #include "../game/systems/sys_animator.h"
+#include "../game/systems/sys_input.h"
 
 
 namespace app {
@@ -39,6 +40,7 @@ namespace app {
 		entt::registry ecs;
 		game::systems::SysRenderer sysRenderer;
 		game::systems::SysAnimator sysAnimator;
+		game::systems::SysInput sysInput;
 
 
 		texture_shelf_t textureShelf;

@@ -34,10 +34,6 @@
 #endif
 
 using namespace app;
-using namespace yuu;
-
-// Total memory for our application
-#define TOTAL_MEMORY (1 << 11)
 
 #include <iostream>
 int main(int argc, char* argv[]) {
