@@ -7,10 +7,6 @@
 
 #include "state_game.h"
 
-
-#include "../game/systems/sys_renderer.h"
-#include "../game/systems/sys_animator.h"
-
 #include "../game/components/com_renderable.h"
 #include "../game/components/com_transform.h"
 #include "../game/components/com_animation.h"

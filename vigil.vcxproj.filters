@@ -66,7 +66,7 @@
     <ClCompile Include="src\app\game\systems\sys_animator.cpp">
       <Filter>src\app\game\systems</Filter>
     </ClCompile>
-    <ClCompile Include="src\app\game\systems\sys_input.cpp">
+    <ClCompile Include="src\app\game\systems\sys_player_input.cpp">
       <Filter>src\app\game\systems</Filter>
     </ClCompile>
   </ItemGroup>
@@ -122,7 +122,7 @@
     <ClInclude Include="src\app\game\systems\sys_animator.h">
       <Filter>src\app\game\systems</Filter>
     </ClInclude>
-    <ClInclude Include="src\app\game\systems\sys_input.h">
+    <ClInclude Include="src\app\game\systems\sys_player_input.h">
       <Filter>src\app\game\systems</Filter>
     </ClInclude>
   </ItemGroup>

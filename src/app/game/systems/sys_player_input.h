@@ -5,7 +5,7 @@
 #include <SDL.h>
 
 namespace app::game::systems {
-	class SysInput {
+	class SysPlayerInput {
 	public:
 		void handleEvent(entt::registry& registry, SDL_Event& e);
 	};
