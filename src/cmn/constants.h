@@ -1,13 +1,15 @@
-#ifndef __APP_CONSTANTS_H__
-#define __APP_CONSTANTS_H__
+#ifndef __CONSTANTS_H__
+#define __CONSTANTS_H__
 
 #include "SDL.h"
 
+constexpr static int gDisplayWidth = 800;
+constexpr static int gDisplayHeight = 600;
+constexpr static int gDisplayHalfWidth = gDisplayWidth / 2;
+constexpr static int gDisplayHalfHeight = gDisplayHeight / 2;
+
 namespace app {
-	constexpr static int kDisplayWidth = 800;
-	constexpr static int kDisplayHeight = 600;
-	constexpr static int kDisplayHalfWidth = kDisplayWidth / 2;
-	constexpr static int kDisplayHalfHeight = kDisplayHeight / 2;
+
 	constexpr static int kTileSize = 96;
 
 	namespace character {

@@ -4,9 +4,9 @@
 #include <SDL.h>
 #include <constants.h>
 #include <entt.h>
+#include <yuu/texture_shelf.h>
 
 #include "state_base.h"
-#include "../../image/texture_shelf.h"
 #include "../game/systems/sys_renderer.h"
 #include "../game/systems/sys_animator.h"
 #include "../game/systems/sys_player_input.h"
@@ -34,7 +34,7 @@ namespace app {
 		constexpr static int kMaxEntities = 10;
 		
 	private: // typedefs
-		using texture_shelf_t = image::TextureShelf<TEXTURE_MAX>;
+		using texture_shelf_t = yuu::TextureShelf<TEXTURE_MAX>;
 		using tile_list_t = std::vector<Tile>;
 	private:
 		entt::registry ecs;

@@ -11,6 +11,7 @@ namespace yuu {
 		RYOJI_MAKE_CONSTEXPR_FP(1000, 0)
 	}
 
+	// Responsibility: Ticks time.
 	class Time
 	{
 	public:

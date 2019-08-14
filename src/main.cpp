@@ -1,6 +1,8 @@
 #define SDL_MAIN_HANDLED
 
+#include <SDL.h>
 #include <yuu/time.h>
+#include <yuu/core.h>
 #include <constants.h>
 
 #include "app/root.h"
@@ -33,14 +35,55 @@
 #pragma comment(lib, "lib/sdl2_image/lib/x86/SDL2_image.lib")
 #endif
 
-using namespace app;
-
+#include <assert.h>
 #include <iostream>
-int main(int argc, char* argv[]) {
+#include <optional>
+#include <constants.h>
 
+using namespace app;
+using namespace yuu;
+
+
+std::unique_ptr<SDL_Window> initSDL() {
+
+	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+		SDL_Log(SDL_GetError());
+		return nullptr;
+	}
+
+	auto window = SDL_CreateWindow(
+		"vigil",
+		SDL_WINDOWPOS_CENTERED,
+		SDL_WINDOWPOS_CENTERED,
+		gDisplayWidth,
+		gDisplayHeight,
+		SDL_WINDOW_SHOWN);
+
+	if (!window) {
+		SDL_Log(SDL_GetError());
+		return nullptr;
+	}
+
+	auto renderer = SDL_CreateRenderer(window, -1, 0);
+	if (renderer == nullptr) {
+		SDL_Log(SDL_GetError());
+		return nullptr;
+	}
+
+	return std::make_unique<SDL_Window>(window);
+}
+
+int main(int argc, char* argv[]) {
+	auto ret = initSDL();
+	if (!ret)
+		return 1;
+
+	Time time;
+
+	
 	// Create the app
-	Root app;
-	app.run();
+	Root root(std::move(ret), time);
+	root.run();
 	
 	
 	return 0;

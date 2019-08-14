@@ -8,8 +8,8 @@ namespace app {
 	
 	using namespace yuu;
 
-	Root::Root() :
-		core("Sandbox", kDisplayWidth, kDisplayHeight),
+	Root::Root(std::unique_ptr<SDL_Window> window, yuu::Time& time) :
+		window(std::move(window)), time(time),
 		currentState(STATE_NONE), nextState(STATE_NONE)
 	{
 	}
@@ -40,18 +40,13 @@ namespace app {
 		}
 	}
 
-	void Root::setNextState(StateEnum state)
-	{
-		nextState = state;
-	}
 
 
 	void Root::render() {
-		SDL_RenderClear(&core.getRenderer());
-		
-		state->onRender(core.getRenderer());
-
-		SDL_RenderPresent(&core.getRenderer());
+		auto& renderer = (*SDL_GetRenderer(window.get()));
+		SDL_RenderClear(&renderer);
+		state->onRender(renderer);
+		SDL_RenderPresent(&renderer);
 	}
 
 	void Root::handleEvents() {
@@ -74,9 +69,9 @@ namespace app {
 		if (currentState != nextState) {
 			if (state) {
 				state->onExit();
-				delete state;
 			}
 		
+			state.reset();
 			state = createState(nextState);
 
 			if (state)
@@ -93,24 +88,25 @@ namespace app {
 	}
 
 
-	StateBase * Root::createState(StateEnum e)
+	std::unique_ptr<StateBase> Root::createState(StateEnum e)
 	{
 		StateBase * ret = nullptr;
+		auto& renderer = *SDL_GetRenderer(window.get());
 		switch (e)
 		{
 		case STATE_SPLASH:
-			ret = new StateSplash(core.getRenderer(), [=](){
-				setNextState(Root::STATE_GAME);
+			return std::make_unique<StateSplash>(renderer, [=](){
+				nextState = Root::STATE_GAME;
 			});
 			break;
 		case STATE_GAME:
-			ret = new StateGame(core.getRenderer());
+			return std::make_unique<StateGame>(renderer);
 			break;
 		default:
 			break;
 		}
 		
-		return ret;
+		return nullptr;
 	}
 
 }

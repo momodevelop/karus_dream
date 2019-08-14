@@ -125,5 +125,11 @@
     <ClInclude Include="src\app\game\systems\sys_player_input.h">
       <Filter>src\app\game\systems</Filter>
     </ClInclude>
+    <ClInclude Include="src\cmn\yuu\surface_shelf.h">
+      <Filter>src\cmn\yuu</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cmn\yuu\texture_shelf.h">
+      <Filter>src\cmn\yuu</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

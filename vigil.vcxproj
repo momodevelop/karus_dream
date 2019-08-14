@@ -158,6 +158,8 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
     <ClInclude Include="src\cmn\ryoji\rect.h" />
     <ClInclude Include="src\cmn\ryoji\vector.h" />
     <ClInclude Include="src\cmn\yuu\core.h" />
+    <ClInclude Include="src\cmn\yuu\surface_shelf.h" />
+    <ClInclude Include="src\cmn\yuu\texture_shelf.h" />
     <ClInclude Include="src\cmn\yuu\time.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

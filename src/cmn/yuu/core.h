@@ -4,7 +4,8 @@
 #include "SDL.h"
 
 namespace yuu {
-	// All SDL related cores are here.
+
+	// Responsibility: This function sets up an application, holding the window and renderer pointer.
 	class Core {
 		SDL_Window * window;
 		SDL_Renderer * renderer;

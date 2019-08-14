@@ -5,7 +5,7 @@
 #include "SDL.h"
 #include "state_base.h"
 
-#include "../../image/texture_shelf.h"
+#include <yuu/texture_shelf.h>
 
 
 namespace app::splash {
@@ -30,7 +30,7 @@ namespace app {
 		float timer;
 		Uint8 alpha;
 
-		image::TextureShelf<TEXTURE_MAX> textureShelf;		
+		yuu::TextureShelf<TEXTURE_MAX> textureShelf;
 		std::function<void()> completedCallback;
 
 		void (StateSplash::*stateUpdate)(float dt);

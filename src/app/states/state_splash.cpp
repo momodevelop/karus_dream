@@ -18,13 +18,13 @@ namespace app {
 	static constexpr float kRectSize = 240.f;
 
 	static const Vec2f kSplashImageOrigin[] = {
-		{-kRectSize, kDisplayHeight / 2 - kRectSize / 2},		//left
-		{(float)kDisplayWidth, (float)kDisplayHeight / 2 - kRectSize / 2},	//right
+		{-kRectSize, gDisplayHeight / 2 - kRectSize / 2},		//left
+		{(float)gDisplayWidth, (float)gDisplayHeight / 2 - kRectSize / 2},	//right
 	};
 
 	static const Vec2f kSplashImageDest[] = {
-		{(float)kDisplayWidth / 2 - kRectSize, kDisplayHeight / 2 - kRectSize / 2 }, //left
-		{(float)kDisplayWidth / 2, (float)kDisplayHeight / 2 - kRectSize / 2 },	//right
+		{(float)gDisplayWidth / 2 - kRectSize, gDisplayHeight / 2 - kRectSize / 2 }, //left
+		{(float)gDisplayWidth / 2, (float)gDisplayHeight / 2 - kRectSize / 2 },	//right
 	};
 
 	StateSplash::StateSplash(

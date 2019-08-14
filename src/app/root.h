@@ -1,6 +1,7 @@
 #ifndef __APP_ROOT_H__
 #define __APP_ROOT_H__
 
+#include <SDL.h>
 #include <yuu/time.h>
 #include <yuu/core.h>
 
@@ -10,9 +11,8 @@
 
 
 namespace app {
-
-
-	class Root { 
+	// Responsibility: Manages the different states
+	class Root {
 	public:
 		enum StateEnum : uint8_t {
 			STATE_NONE,
@@ -22,24 +22,20 @@ namespace app {
 		};
 
 	private:
-		// important stuff
-		yuu::Core core;
-		yuu::Time time;
+		std::unique_ptr<SDL_Window> window;
+		yuu::Time& time;
 		
 		//State
-		StateBase* state;
+		std::unique_ptr<StateBase> state;
 		StateEnum currentState;
 		StateEnum nextState;
-		StateBase* createState(StateEnum e);
+		std::unique_ptr<StateBase> createState(StateEnum e);
 
 	public:
-		Root();
+		Root(std::unique_ptr<SDL_Window> window, yuu::Time& time);
 		~Root() noexcept;
 
 		void run();
-		
-		// For states
-		void setNextState(StateEnum state);
 
 	private:
 		void update();

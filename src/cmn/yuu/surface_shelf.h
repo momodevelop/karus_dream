@@ -4,7 +4,7 @@
 #include <cassert>
 #include "SDL_image.h"
 
-namespace image {
+namespace yuu {
 
 	// Simple class that wraps an array of SDL_Surfaces
 	// 

@@ -21,8 +21,6 @@ namespace app {
 
 	StateGame::StateGame(SDL_Renderer& renderer)
 	{
-
-
 		textureShelf.loadFromPath(&renderer, TEXTURE_KARU_SPRITESHEET, "img/spritesheet_karu.png");
 		textureShelf.loadFromPath(&renderer, TEXTURE_GRID_SPRITESHEET, "img/tiles.jpg");
 
