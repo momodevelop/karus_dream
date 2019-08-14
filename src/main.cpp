@@ -44,7 +44,7 @@ using namespace app;
 using namespace yuu;
 
 
-std::unique_ptr<SDL_Window> initSDL() {
+std::unique_ptr<SDL_Window, SDLWindowDestroyer> initSDL() {
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
 		SDL_Log(SDL_GetError());

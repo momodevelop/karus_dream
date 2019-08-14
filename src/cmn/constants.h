@@ -8,6 +8,14 @@ constexpr static int gDisplayHeight = 600;
 constexpr static int gDisplayHalfWidth = gDisplayWidth / 2;
 constexpr static int gDisplayHalfHeight = gDisplayHeight / 2;
 
+struct SDLWindowDestroyer
+{
+	void operator()(SDL_Window* w) const
+	{
+		SDL_DestroyWindow(w);
+	}
+};
+
 namespace app {
 
 	constexpr static int kTileSize = 96;
