@@ -5,26 +5,26 @@
 
 #include "../root.h"
 
-#include "state_game.h"
+#include "state.h"
 
-#include "../game/components/com_renderable.h"
-#include "../game/components/com_transform.h"
-#include "../game/components/com_animation.h"
+#include "components/com_renderable.h"
+#include "components/com_transform.h"
+#include "components/com_animation.h"
 
 
-namespace app {
+namespace app::game {
 
-	using namespace game;
 	using namespace ryoji;
 	using namespace math;
 	using namespace components;
+	using namespace yuu;
 
-	StateGame::StateGame(SDL_Renderer& renderer)
+	State::State(SDL_Renderer& renderer) :
+		textures {
+			SDL_TextureUniquePtr(yuu::SDL_CreateTextureFromPathX(&renderer, "img/karu.png")),
+			SDL_TextureUniquePtr(yuu::SDL_CreateTextureFromPathX(&renderer, "img/sui.png")),
+		}
 	{
-		textureShelf.loadFromPath(&renderer, TEXTURE_KARU_SPRITESHEET, "img/spritesheet_karu.png");
-		textureShelf.loadFromPath(&renderer, TEXTURE_GRID_SPRITESHEET, "img/tiles.jpg");
-
-
 		// initialize entities
 		for (int i = 0; i < kMaxEntities; ++i) {
 			using namespace character;
@@ -36,7 +36,7 @@ namespace app {
 			ecs.assign<ComTransform>(entity, position, scale);
 			
 			auto& renderable = ecs.assign<ComRenderable>(entity);
-			renderable.texture = textureShelf[TEXTURE_KARU_SPRITESHEET];
+			//renderable.texture = TEXTURE_KARU_SPRITESHEET;
 
 			auto& animation = ecs.assign<ComAnimation>(entity);
 			animation.indices.reserve(kAnimeMaxFrames);
@@ -46,37 +46,37 @@ namespace app {
 		
 	}
 
-	StateGame::~StateGame()
+	State::~State()
 	{
 	}
 
-	void StateGame::onEnter() noexcept
+	void State::onEnter() noexcept
 	{
-		SDL_Log("game::StateGame::onEnter()");
+		SDL_Log("game::State::onEnter()");
 
 	}
 
-	void StateGame::onUpdate(float dt) noexcept
+	void State::onUpdate(float dt) noexcept
 	{
 		sysAnimator.update(ecs, dt);
 	}
 
-	void StateGame::onExit() noexcept
+	void State::onExit() noexcept
 	{
-		SDL_Log("game::StateGame::onExit()");
+		SDL_Log("game::State::onExit()");
 	}
 
-	void StateGame::onRender(SDL_Renderer& renderer) noexcept
+	void State::onRender(SDL_Renderer& renderer) noexcept
 	{
 		sysRenderer.render(ecs, renderer);
 	}
 
-	void StateGame::onHandleEvent(SDL_Event& e) noexcept
+	void State::onHandleEvent(SDL_Event& e) noexcept
 	{
 		sysInput.handleEvent(ecs, e);
 	}
 
-	void StateGame::onClean() noexcept
+	void State::onClean() noexcept
 	{
 	}
 

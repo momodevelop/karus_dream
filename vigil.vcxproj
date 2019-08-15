@@ -76,6 +76,8 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -86,6 +88,8 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>lib/sdl2/include;src/cmn/;lib/sdl2_image/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
     </ClCompile>
     <PostBuildEvent>
       <Command>xcopy /y /d img\* $(OutDir)\img\
@@ -101,6 +105,8 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -117,6 +123,8 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>lib/sdl2/include;src/cmn/;lib/sdl2_image/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -129,12 +137,12 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\app\game\state.cpp" />
     <ClCompile Include="src\app\game\systems\sys_player_input.cpp" />
     <ClCompile Include="src\app\game\systems\sys_renderer.cpp" />
     <ClCompile Include="src\app\game\systems\sys_animator.cpp" />
     <ClCompile Include="src\app\root.cpp" />
-    <ClCompile Include="src\app\states\state_game.cpp" />
-    <ClCompile Include="src\app\states\state_splash.cpp" />
+    <ClCompile Include="src\app\splash\state.cpp" />
     <ClCompile Include="src\cmn\entt.h" />
     <ClCompile Include="src\cmn\yuu\time.cpp" />
     <ClCompile Include="src\cmn\yuu\utils.cpp" />
@@ -144,13 +152,17 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
     <ClInclude Include="src\app\game\components\com_animation.h" />
     <ClInclude Include="src\app\game\components\com_renderable.h" />
     <ClInclude Include="src\app\game\components\com_transform.h" />
+    <ClInclude Include="src\app\game\state.h" />
     <ClInclude Include="src\app\game\systems\sys_player_input.h" />
     <ClInclude Include="src\app\game\systems\sys_renderer.h" />
     <ClInclude Include="src\app\game\systems\sys_animator.h" />
+    <ClInclude Include="src\app\game\types.h" />
     <ClInclude Include="src\app\root.h" />
-    <ClInclude Include="src\app\states\state_base.h" />
-    <ClInclude Include="src\app\states\state_game.h" />
-    <ClInclude Include="src\app\states\state_splash.h" />
+    <ClInclude Include="src\app\splash\rect_data.h" />
+    <ClInclude Include="src\app\splash\state.h" />
+    <ClInclude Include="src\app\splash\types.h" />
+    <ClInclude Include="src\app\state_base.h" />
+    <ClInclude Include="src\app\types.h" />
     <ClInclude Include="src\cmn\constants.h" />
     <ClInclude Include="src\cmn\ryoji\common.h" />
     <ClInclude Include="src\cmn\ryoji\fixed_floats.h" />

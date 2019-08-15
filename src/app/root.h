@@ -1,25 +1,13 @@
 #ifndef __APP_ROOT_H__
 #define __APP_ROOT_H__
 
-
+#include <functional>
 #include <yuu/time.h>
-#include "states/state_base.h"
-#include "states/state_splash.h"
-#include "states/state_game.h"
-
+#include "types.h"
+#include "state_base.h"
 
 namespace app {
-	// Responsibility: Manages the different states
 	class Root {
-	public:
-		enum StateEnum : uint8_t {
-			STATE_NONE,
-			STATE_SPLASH,
-			STATE_GAME,
-			STATE_EXIT,
-		};
-
-	private:
 		SDL_Window& window;
 		yuu::Time& time;
 		

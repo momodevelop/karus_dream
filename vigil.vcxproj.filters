@@ -19,9 +19,6 @@
     <Filter Include="src\app\game">
       <UniqueIdentifier>{d23d275a-634e-4b3f-adf0-3d74189ed56a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\app\states">
-      <UniqueIdentifier>{861236f9-ae8e-47e7-9bb8-828622853b23}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\cmn">
       <UniqueIdentifier>{101b93ac-26b7-4c74-8da2-d4902c2d73bc}</UniqueIdentifier>
     </Filter>
@@ -37,16 +34,13 @@
     <Filter Include="src\app\game\systems">
       <UniqueIdentifier>{0b46fd61-c2f9-4826-a660-52806cc48ed4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\app\splash">
+      <UniqueIdentifier>{a94e95cb-6b98-4b72-b726-394d1b404a86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\app\states\state_game.cpp">
-      <Filter>src\app\states</Filter>
-    </ClCompile>
-    <ClCompile Include="src\app\states\state_splash.cpp">
-      <Filter>src\app\states</Filter>
     </ClCompile>
     <ClCompile Include="src\app\root.cpp">
       <Filter>src\app</Filter>
@@ -69,17 +63,14 @@
     <ClCompile Include="src\cmn\yuu\utils.cpp">
       <Filter>src\cmn\yuu</Filter>
     </ClCompile>
+    <ClCompile Include="src\app\splash\state.cpp">
+      <Filter>src\app\splash</Filter>
+    </ClCompile>
+    <ClCompile Include="src\app\game\state.cpp">
+      <Filter>src\app\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\app\states\state_base.h">
-      <Filter>src\app\states</Filter>
-    </ClInclude>
-    <ClInclude Include="src\app\states\state_game.h">
-      <Filter>src\app\states</Filter>
-    </ClInclude>
-    <ClInclude Include="src\app\states\state_splash.h">
-      <Filter>src\app\states</Filter>
-    </ClInclude>
     <ClInclude Include="src\app\root.h">
       <Filter>src\app</Filter>
     </ClInclude>
@@ -124,6 +115,27 @@
     </ClInclude>
     <ClInclude Include="src\cmn\yuu\utils.h">
       <Filter>src\cmn\yuu</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\types.h">
+      <Filter>src\app\game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\splash\types.h">
+      <Filter>src\app\splash</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\state_base.h">
+      <Filter>src\app</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\splash\state.h">
+      <Filter>src\app\splash</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\state.h">
+      <Filter>src\app\game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\types.h">
+      <Filter>src\app</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\splash\rect_data.h">
+      <Filter>src\app\splash</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

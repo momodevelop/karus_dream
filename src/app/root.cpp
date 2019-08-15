@@ -2,8 +2,10 @@
 #include <constants.h>
 #include <SDL.h>
 
-#include "root.h"
 
+#include "root.h"
+#include "splash/state.h"
+#include "game/state.h"
 
 namespace app {
 	
@@ -96,12 +98,12 @@ namespace app {
 		switch (e)
 		{
 		case STATE_SPLASH:
-			return std::make_unique<StateSplash>(renderer, [=](){
-				nextState = Root::STATE_GAME;
+			return std::make_unique<splash::State>(renderer, [=](){
+				nextState = STATE_GAME;
 			});
 			break;
 		case STATE_GAME:
-			return std::make_unique<StateGame>(renderer);
+			return std::make_unique<game::State>(renderer);
 			break;
 		default:
 			break;

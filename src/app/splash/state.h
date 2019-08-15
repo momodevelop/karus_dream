@@ -4,48 +4,35 @@
 #include <array>
 #include <ryoji/vector.h>
 #include <yuu/utils.h>
-#include "SDL.h"
-#include "state_base.h"
+#include <SDL.h>
 
-namespace app {
+#include "rect_data.h"
+#include "types.h"
+
+#include "../state_base.h"
+
+
+namespace app::splash {
 	
 	class Root;
-	class StateSplash : public StateBase {
+	class State : public StateBase {
 		using Vec2f = ryoji::math::Vec2f;
 
+	public:
 		enum { RECT_NUM = 2 };
-
-		enum TextureEnum : Uint8 {
-			TEXTURE_KARU,
-			TEXTURE_SUI,
-			TEXTURE_MAX
-		};
 
 		static constexpr float kDuration = 1.f;
 		static constexpr float kRectSize = 240.f;
 		static constexpr float kRectHalfSize = kRectSize / 2.f;
 
 		
-		struct SplashRectData {
-			Vec2f current;
-			Vec2f start;
-			Vec2f end;
-			Vec2f size;
-			TextureEnum textureHandler;
-			Uint8 alpha;
 
-			SplashRectData(Vec2f start = {}, Vec2f end = {}, Vec2f size = {}, TextureEnum textureHandler = {})
-				: start(start), end(end), size(size), textureHandler(textureHandler), 
-				alpha(255), current(start)
-			{
-			}
-		};
 
 	private: // variables
-		std::array<SplashRectData, RECT_NUM> splashRects;
+		std::array<RectData, RECT_NUM> splashRects;
 		std::array<yuu::SDL_TextureUniquePtr, TEXTURE_MAX> textures;
 		std::function<void()> completedCallback;
-		void (StateSplash::*stateUpdate)(float dt);
+		void (State::*stateUpdate)(float dt);
 		float timer;
 
 	private:
@@ -54,11 +41,11 @@ namespace app {
 
 
 	public:
-		StateSplash(
+		State(
 			SDL_Renderer& renderer, 
 			std::function<void()> completedCallback
 		) noexcept;
-		~StateSplash() noexcept;
+		~State() noexcept;
 
 		virtual void onEnter() noexcept override;
 		virtual void onUpdate(float dt) noexcept override;
