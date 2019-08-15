@@ -136,8 +136,8 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
     <ClCompile Include="src\app\states\state_game.cpp" />
     <ClCompile Include="src\app\states\state_splash.cpp" />
     <ClCompile Include="src\cmn\entt.h" />
-    <ClCompile Include="src\cmn\yuu\core.cpp" />
     <ClCompile Include="src\cmn\yuu\time.cpp" />
+    <ClCompile Include="src\cmn\yuu\utils.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -157,10 +157,8 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
     <ClInclude Include="src\cmn\ryoji\easing.h" />
     <ClInclude Include="src\cmn\ryoji\rect.h" />
     <ClInclude Include="src\cmn\ryoji\vector.h" />
-    <ClInclude Include="src\cmn\yuu\core.h" />
-    <ClInclude Include="src\cmn\yuu\surface_shelf.h" />
-    <ClInclude Include="src\cmn\yuu\texture_shelf.h" />
     <ClInclude Include="src\cmn\yuu\time.h" />
+    <ClInclude Include="src\cmn\yuu\utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

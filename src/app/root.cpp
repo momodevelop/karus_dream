@@ -1,5 +1,6 @@
 #include <yuu/time.h>
 #include <constants.h>
+#include <SDL.h>
 
 #include "root.h"
 
@@ -8,8 +9,8 @@ namespace app {
 	
 	using namespace yuu;
 
-	Root::Root(std::unique_ptr<SDL_Window> window, yuu::Time& time) :
-		window(std::move(window)), time(time),
+	Root::Root(SDL_Window& window, yuu::Time& time) :
+		window(window), time(time),
 		currentState(STATE_NONE), nextState(STATE_NONE)
 	{
 	}
@@ -43,7 +44,7 @@ namespace app {
 
 
 	void Root::render() {
-		auto& renderer = (*SDL_GetRenderer(window.get()));
+		auto& renderer = (*SDL_GetRenderer(&window));
 		SDL_RenderClear(&renderer);
 		state->onRender(renderer);
 		SDL_RenderPresent(&renderer);
@@ -91,7 +92,7 @@ namespace app {
 	std::unique_ptr<StateBase> Root::createState(StateEnum e)
 	{
 		StateBase * ret = nullptr;
-		auto& renderer = *SDL_GetRenderer(window.get());
+		auto& renderer = *SDL_GetRenderer(&window);
 		switch (e)
 		{
 		case STATE_SPLASH:

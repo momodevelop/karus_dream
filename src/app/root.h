@@ -1,10 +1,8 @@
 #ifndef __APP_ROOT_H__
 #define __APP_ROOT_H__
 
-#include <SDL.h>
-#include <yuu/time.h>
-#include <yuu/core.h>
 
+#include <yuu/time.h>
 #include "states/state_base.h"
 #include "states/state_splash.h"
 #include "states/state_game.h"
@@ -22,7 +20,7 @@ namespace app {
 		};
 
 	private:
-		std::unique_ptr<SDL_Window> window;
+		SDL_Window& window;
 		yuu::Time& time;
 		
 		//State
@@ -32,7 +30,7 @@ namespace app {
 		std::unique_ptr<StateBase> createState(StateEnum e);
 
 	public:
-		Root(std::unique_ptr<SDL_Window> window, yuu::Time& time);
+		Root(SDL_Window& window, yuu::Time& time);
 		~Root() noexcept;
 
 		void run();

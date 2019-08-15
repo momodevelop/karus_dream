@@ -17,15 +17,6 @@ namespace app {
 	class Root;
 	class StateGame : public StateBase {
 	public:
-		struct Tile {
-			enum Type {
-				NONE,
-				ONE,
-				TWO,
-				THREE,
-				MAX
-			} type;
-		};
 		enum TextureEnum {
 			TEXTURE_KARU_SPRITESHEET,
 			TEXTURE_GRID_SPRITESHEET,
@@ -35,7 +26,6 @@ namespace app {
 		
 	private: // typedefs
 		using texture_shelf_t = yuu::TextureShelf<TEXTURE_MAX>;
-		using tile_list_t = std::vector<Tile>;
 	private:
 		entt::registry ecs;
 		game::systems::SysRenderer sysRenderer;
@@ -44,7 +34,6 @@ namespace app {
 
 
 		texture_shelf_t textureShelf;
-		tile_list_t tileList; // grid
 
 	private:
 		StateGame(const StateGame&) = delete;

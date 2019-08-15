@@ -24,13 +24,6 @@ namespace app {
 		textureShelf.loadFromPath(&renderer, TEXTURE_KARU_SPRITESHEET, "img/spritesheet_karu.png");
 		textureShelf.loadFromPath(&renderer, TEXTURE_GRID_SPRITESHEET, "img/tiles.jpg");
 
-		tileList.resize(100);
-
-		// initialize tiles
-		for (int i = 0; i < 100; ++i) {
-			tileList[i].type = (Tile::Type)(i % Tile::MAX);
-		}
-
 
 		// initialize entities
 		for (int i = 0; i < kMaxEntities; ++i) {
