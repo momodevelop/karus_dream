@@ -150,6 +150,7 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\app\game\components\com_animation.h" />
+    <ClInclude Include="src\app\game\components\com_player_input.h" />
     <ClInclude Include="src\app\game\components\com_renderable.h" />
     <ClInclude Include="src\app\game\components\com_transform.h" />
     <ClInclude Include="src\app\game\state.h" />

@@ -137,5 +137,8 @@
     <ClInclude Include="src\app\splash\rect_data.h">
       <Filter>src\app\splash</Filter>
     </ClInclude>
+    <ClInclude Include="src\app\game\components\com_player_input.h">
+      <Filter>src\app\game\components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

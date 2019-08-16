@@ -10,6 +10,7 @@
 #include "components/com_renderable.h"
 #include "components/com_transform.h"
 #include "components/com_animation.h"
+#include "components/com_player_input.h"
 
 
 namespace app::game {
@@ -26,23 +27,23 @@ namespace app::game {
 		}
 	{
 		// initialize entities
-		for (int i = 0; i < kMaxEntities; ++i) {
-			using namespace character;
-			
-			auto entity = ecs.create();
-			
-			Vec2f position = { 10.f * i, 200.f };
-			Vec2f scale = { kSize, kSize };
-			ecs.assign<ComTransform>(entity, position, scale);
-			
-			auto& renderable = ecs.assign<ComRenderable>(entity);
-			renderable.texture = TEXTURE_KARU_SPRITESHEET;
+		using namespace character;
+		
+		auto entity = ecs.create();
+		
+		Vec2f position = { 10.f , 200.f };
+		Vec2f scale = { kSize, kSize };
+		ecs.assign<ComTransform>(entity, position, scale);
+		
+		auto& renderable = ecs.assign<ComRenderable>(entity);
+		renderable.texture = TEXTURE_KARU_SPRITESHEET;
 
-			auto& animation = ecs.assign<ComAnimation>(entity);
-			animation.indices.reserve(kAnimeMaxFrames);
-			animation.indices.assign(kAnimeIndices[ANIME_FRONT], kAnimeIndices[ANIME_FRONT] + kAnimeMaxFrames);
-			animation.speed = kAnimeSpeed;
-		}
+		auto& animation = ecs.assign<ComAnimation>(entity);
+		animation.indices.reserve(kAnimeMaxFrames);
+		animation.indices.assign(kAnimeIndices[ANIME_FRONT], kAnimeIndices[ANIME_FRONT] + kAnimeMaxFrames);
+		animation.speed = kAnimeSpeed;
+		
+		ecs.assign<ComPlayerInput>(entity);
 		
 	}
 
