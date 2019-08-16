@@ -30,7 +30,7 @@ namespace app::game {
 		systems::SysRenderer sysRenderer;
 		systems::SysAnimator sysAnimator;
 		systems::SysPlayerInput sysInput;
-		std::array<yuu::SDL_TextureUniquePtr, TEXTURE_MAX> textures;
+		texture_resources_t textures;
 
 	private:
 		State(const State&) = delete;

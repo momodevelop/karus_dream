@@ -21,8 +21,8 @@ namespace app::game {
 
 	State::State(SDL_Renderer& renderer) :
 		textures {
-			SDL_TextureUniquePtr(yuu::SDL_CreateTextureFromPathX(&renderer, "img/karu.png")),
-			SDL_TextureUniquePtr(yuu::SDL_CreateTextureFromPathX(&renderer, "img/sui.png")),
+			SDL_TextureUniquePtr(yuu::SDL_CreateTextureFromPathX(&renderer, "img/spritesheet_karu.png")),
+			SDL_TextureUniquePtr(yuu::SDL_CreateTextureFromPathX(&renderer, "img/tiles.png")),
 		}
 	{
 		// initialize entities
@@ -36,7 +36,7 @@ namespace app::game {
 			ecs.assign<ComTransform>(entity, position, scale);
 			
 			auto& renderable = ecs.assign<ComRenderable>(entity);
-			//renderable.texture = TEXTURE_KARU_SPRITESHEET;
+			renderable.texture = TEXTURE_KARU_SPRITESHEET;
 
 			auto& animation = ecs.assign<ComAnimation>(entity);
 			animation.indices.reserve(kAnimeMaxFrames);
@@ -68,7 +68,7 @@ namespace app::game {
 
 	void State::onRender(SDL_Renderer& renderer) noexcept
 	{
-		sysRenderer.render(ecs, renderer);
+		sysRenderer.render(ecs, renderer, textures);
 	}
 
 	void State::onHandleEvent(SDL_Event& e) noexcept

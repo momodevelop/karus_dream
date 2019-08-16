@@ -6,7 +6,7 @@
 
 namespace app::game::systems {
 	using namespace components;
-	void SysRenderer::render(entt::registry& registry, SDL_Renderer& renderer)
+	void SysRenderer::render(entt::registry& registry, SDL_Renderer& renderer, texture_resources_t& textures)
 	{
 		auto view = registry.view<ComTransform, ComRenderable>();
 		for (auto entity : view) {
@@ -20,8 +20,9 @@ namespace app::game::systems {
 				(int)transform.scale.y
 			};
 
-			SDL_SetTextureAlphaMod(renderable.texture, renderable.alpha);
-			SDL_RenderCopy(&renderer, renderable.texture, &renderable.srcRect, &renderable.destRect);
+			auto texture = textures[renderable.texture].get();
+			SDL_SetTextureAlphaMod(texture, renderable.alpha);
+			SDL_RenderCopy(&renderer, texture, &renderable.srcRect, &renderable.destRect);
 		}
 
 		
