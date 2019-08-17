@@ -6,6 +6,8 @@
 
 namespace app::game::systems {
 	class SysPlayerInput {
+		void handleKeyDown();
+		void handleKeyUp();
 	public:
 		void handleEvent(entt::registry& registry, SDL_Event& e);
 	};

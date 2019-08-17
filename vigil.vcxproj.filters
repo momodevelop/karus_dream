@@ -37,6 +37,9 @@
     <Filter Include="src\app\splash">
       <UniqueIdentifier>{a94e95cb-6b98-4b72-b726-394d1b404a86}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\app\game\shared">
+      <UniqueIdentifier>{95aa5139-7297-4b1b-9a52-6ea662b943c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -68,6 +71,9 @@
     </ClCompile>
     <ClCompile Include="src\app\game\state.cpp">
       <Filter>src\app\game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\app\game\shared\shared_textures.cpp">
+      <Filter>src\app\game\shared</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="src\app\game\components\com_player_input.h">
       <Filter>src\app\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\shared\shared_textures.h">
+      <Filter>src\app\game\shared</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

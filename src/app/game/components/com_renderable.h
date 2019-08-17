@@ -2,13 +2,13 @@
 #define __APP_GAME_COMPONENTS_RENDERABLE_H__
 
 #include <SDL.h>
-#include "../types.h"
+#include "../shared/shared_textures.h"
 
 namespace app::game::components {
 	struct ComRenderable {
 		SDL_Rect destRect = { 0, 0, 0, 0 };
 		SDL_Rect srcRect = { 0, 0, 0, 0 };
-		TextureHandler texture = {};
+		shared::SharedTextures::Handler texture = {};
 		Uint8 alpha = Uint8(-1);
 	};
 }

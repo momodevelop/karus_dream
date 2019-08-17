@@ -4,13 +4,17 @@
 #include <yuu/utils.h>
 
 namespace app::game {
-	enum TextureHandler {
-		TEXTURE_KARU_SPRITESHEET,
-		TEXTURE_GRID_SPRITESHEET,
-		TEXTURE_MAX
-	};
 
-	using texture_resources_t = std::array<yuu::SDL_TextureUniquePtr, TEXTURE_MAX>;
+
+	enum KeyboardHandler {
+		KB_UP,
+		KB_DOWN,
+		KB_LEFT,
+		KB_RIGHT,
+		KB_Z,
+		KB_MAX 
+	};
+	using keyboard_t = std::bitset<KB_MAX>;
 }
 
 #endif

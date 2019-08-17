@@ -1,6 +1,8 @@
 #ifndef __APP_STATE_GAME_H__
 #define __APP_STATE_GAME_H__
 
+#include <bitset>
+
 #include <SDL.h>
 #include <constants.h>
 #include <entt.h>
@@ -12,6 +14,7 @@
 #include "systems/sys_animator.h"
 #include "systems/sys_player_input.h"
 
+#include "shared/shared_textures.h"
 
 #include "../state_base.h"
 
@@ -21,8 +24,6 @@ namespace app::game {
 	// Forward declarations
 	class Root;
 	class State : public StateBase {
-	public:
-
 		constexpr static int kMaxEntities = 10;
 
 	private:
@@ -30,7 +31,8 @@ namespace app::game {
 		systems::SysRenderer sysRenderer;
 		systems::SysAnimator sysAnimator;
 		systems::SysPlayerInput sysInput;
-		texture_resources_t textures;
+		shared::SharedTextures sharedTextures;
+		keyboard_t keyboard;
 
 	private:
 		State(const State&) = delete;

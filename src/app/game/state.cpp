@@ -18,32 +18,36 @@ namespace app::game {
 	using namespace ryoji;
 	using namespace math;
 	using namespace components;
+	using namespace shared;
 	using namespace yuu;
 
-	State::State(SDL_Renderer& renderer) :
-		textures {
-			SDL_TextureUniquePtr(yuu::SDL_CreateTextureFromPathX(&renderer, "img/spritesheet_karu.png")),
-			SDL_TextureUniquePtr(yuu::SDL_CreateTextureFromPathX(&renderer, "img/tiles.png")),
-		}
+	State::State(SDL_Renderer& renderer)
 	{
-		// initialize entities
-		using namespace character;
-		
-		auto entity = ecs.create();
-		
-		Vec2f position = { 10.f , 200.f };
-		Vec2f scale = { kSize, kSize };
-		ecs.assign<ComTransform>(entity, position, scale);
-		
-		auto& renderable = ecs.assign<ComRenderable>(entity);
-		renderable.texture = TEXTURE_KARU_SPRITESHEET;
+		// init textures
+		if (!sharedTextures.init(renderer)) {
+			assert(false); // throw instead?
+		}
 
-		auto& animation = ecs.assign<ComAnimation>(entity);
-		animation.indices.reserve(kAnimeMaxFrames);
-		animation.indices.assign(kAnimeIndices[ANIME_FRONT], kAnimeIndices[ANIME_FRONT] + kAnimeMaxFrames);
-		animation.speed = kAnimeSpeed;
-		
-		ecs.assign<ComPlayerInput>(entity);
+
+		// initialize entities
+		{	
+			using namespace character;
+
+			auto entity = ecs.create();
+
+			Vec2f position = { 10.f , 200.f };
+			Vec2f scale = { kSize, kSize };
+			ecs.assign<ComTransform>(entity, position, scale);
+
+			auto& renderable = ecs.assign<ComRenderable>(entity);
+			renderable.texture = SharedTextures::KARU_SPRITESHEET;
+
+			auto& animation = ecs.assign<ComAnimation>(entity);
+			animation.indices.reserve(kAnimeMaxFrames);
+			animation.indices.assign(kAnimeIndices[ANIME_FRONT], kAnimeIndices[ANIME_FRONT] + kAnimeMaxFrames);
+			animation.speed = kAnimeSpeed;
+
+		}
 		
 	}
 
@@ -69,7 +73,7 @@ namespace app::game {
 
 	void State::onRender(SDL_Renderer& renderer) noexcept
 	{
-		sysRenderer.render(ecs, renderer, textures);
+		sysRenderer.render(ecs, renderer, sharedTextures);
 	}
 
 	void State::onHandleEvent(SDL_Event& e) noexcept

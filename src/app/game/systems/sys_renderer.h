@@ -4,12 +4,12 @@
 #include <SDL.h>
 #include <entt.h>
 #include <yuu/utils.h>
-#include "../types.h"
+#include "../shared/shared_textures.h"
 
 namespace app::game::systems {
 	class SysRenderer {
 	public:
-		static void render(entt::registry& registry, SDL_Renderer& renderer, texture_resources_t& textures);
+		static void render(entt::registry& registry, SDL_Renderer& renderer, shared::SharedTextures& textures);
 	};
 }
 

@@ -137,6 +137,7 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\app\game\shared\shared_textures.cpp" />
     <ClCompile Include="src\app\game\state.cpp" />
     <ClCompile Include="src\app\game\systems\sys_player_input.cpp" />
     <ClCompile Include="src\app\game\systems\sys_renderer.cpp" />
@@ -153,6 +154,7 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
     <ClInclude Include="src\app\game\components\com_player_input.h" />
     <ClInclude Include="src\app\game\components\com_renderable.h" />
     <ClInclude Include="src\app\game\components\com_transform.h" />
+    <ClInclude Include="src\app\game\shared\shared_textures.h" />
     <ClInclude Include="src\app\game\state.h" />
     <ClInclude Include="src\app\game\systems\sys_player_input.h" />
     <ClInclude Include="src\app\game\systems\sys_renderer.h" />

@@ -6,7 +6,7 @@
 
 namespace app::game::systems {
 	using namespace components;
-	void SysRenderer::render(entt::registry& registry, SDL_Renderer& renderer, texture_resources_t& textures)
+	void SysRenderer::render(entt::registry& registry, SDL_Renderer& renderer, shared::SharedTextures& textures)
 	{
 		auto view = registry.view<ComTransform, ComRenderable>();
 		for (auto entity : view) {

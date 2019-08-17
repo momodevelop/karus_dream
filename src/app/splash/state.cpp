@@ -66,7 +66,7 @@ namespace app::splash {
 
 	void State::onRender(SDL_Renderer& renderer) noexcept
 	{
-		std::for_each(splashRects.cbegin(), splashRects.cend(), [&renderer, this](const auto& splashRect) {
+		for (const auto& splashRect : splashRects)  {
 			SDL_Rect destRect = SDL_Rect { 
 				(int)splashRect.current.x, 
 				(int)splashRect.current.y, 
@@ -75,7 +75,7 @@ namespace app::splash {
 			};
 			SDL_SetTextureAlphaMod(textures[splashRect.textureHandler].get(), splashRect.alpha);
 			SDL_RenderCopy(&renderer, textures[splashRect.textureHandler].get(), NULL, &destRect);
-		});
+		}
 		
 	}
 
@@ -96,10 +96,10 @@ namespace app::splash {
 	void State::stateIntroUpdate(float dt) noexcept
 	{
 		float ease = easing::easeOutBounce(clamp(0.f, 1.0f, timer / kDuration));
-		std::for_each(splashRects.begin(), splashRects.end(), [ease](auto& splashRect) {
+		for (auto& splashRect : splashRects) {
 			Vec2f delta = splashRect.end - splashRect.start;
 			splashRect.current = splashRect.start + delta * ease;
-		});
+		}
 		
 		
 		if (timer > kDuration) {
@@ -117,9 +117,9 @@ namespace app::splash {
 			return;
 		}
 		
-		std::for_each(splashRects.begin(), splashRects.end(), [a](auto& splashRect) {
+		for (auto& splashRect : splashRects) {
 			splashRect.alpha = 255 + (Uint8)(a * -255);
-		});
+		}
 		
 		timer += dt;
 	}
