@@ -2,18 +2,14 @@
 #define __RYOJI_MATH_VECTOR_H__
 
 //http://www.reedbeta.com/blog/on-vector-math-libraries/#operations
-
+#include <assert.h>
 #include <cmath>
+
 namespace ryoji::math {
 
 	template<typename T = float, size_t N = 2>
 	struct Vector {
 		T arr[N];
-
-		Vector& operator+=(const Vector& rhs) noexcept;
-		Vector& operator-=(const Vector& rhs) noexcept;
-		Vector& operator*=(const T& rhs) noexcept;
-		Vector& operator/=(const T& rhs) noexcept;
 	};
 
 	template <typename T> struct Vector<T,2> { union { T arr[2]; struct { T x, y; }; }; };
@@ -21,28 +17,28 @@ namespace ryoji::math {
 	template <typename T> struct Vector<T,4> { union { T arr[4]; struct { T x, y, z, w; }; }; };
 
 	template<typename T, size_t N>
-	Vector<T,N>& Vector<T,N>::operator+=(const Vector& rhs) noexcept {
-		for (int i = 0; i < N; ++i)
-			this->arr[i] += rhs.arr[i];
+	Vector<T,N>& operator+=(const Vector<T, N>& rhs) noexcept {
+		for (size_t i = 0; i < N; ++i)
+			this->arr[i] = rhs.arr[i];
 		return (*this);
 	}
 
 	template<typename T, size_t N>
-	Vector<T,N>& Vector<T,N>::operator-=(const Vector& rhs) noexcept {
+	Vector<T,N>& operator-=(const Vector<T, N>& rhs) noexcept {
 		for (size_t i = 0; i < N; ++i)
 			this->arr[i] -= rhs.arr[i];
 		return (*this);
 	}
 
 	template<typename T, size_t N>
-	Vector<T,N>& Vector<T,N>::operator*=(const T& rhs) noexcept {
+	Vector<T,N>& operator*=(const T& rhs) noexcept {
 		for (size_t i = 0; i < N; ++i)
 			this->arr[i] *= rhs;
 		return (*this);
 	}
 
 	template<typename T, size_t N>
-	Vector<T,N>& Vector<T,N>::operator/=(const T& rhs) noexcept {
+	Vector<T,N>& operator/=(const T& rhs) noexcept {
 		for (size_t i = 0; i < N; ++i)
 			this->arr[i] /= rhs;
 		return (*this);
@@ -148,6 +144,17 @@ namespace ryoji::math {
 	T length(const Vector<T, N>& lhs) noexcept
 	{
 		return sqrt(lengthSq(lhs));
+	}
+
+	template<typename T, size_t N>
+	Vector<T, N> normalize(const Vector<T, N> & lhs) noexcept {
+		Vector<T, N> temp;
+		auto len = length(lhs);
+		assert(len == (T)0);
+
+		for (size_t i = 0; i < N; ++i)
+			temp.arr[i] = (lhs.arr[i]) / len;
+		return temp;
 	}
 
 	// global typedefs

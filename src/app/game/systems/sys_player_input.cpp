@@ -5,7 +5,7 @@
 #include "../components/com_animation.h"
 #include "sys_player_input.h"
 
-#define SPEED 500.f * dt;
+#define SPEED 500.f
 
 namespace app::game::systems {
 	using namespace components;
@@ -17,26 +17,26 @@ namespace app::game::systems {
 
 		auto view = registry.view<ComTransform, ComPlayerInput, ComAnimation>();
 		for (auto entity : view) {
-			
+			Vec2f velocity { 0.f, 0.f };
 
 			auto& transform = view.get<ComTransform>(entity);
 			if (sharedKeyboard.isKeyPressed(SharedKeyboard::UP)) {
-				transform.position.y -= SPEED;
+				velocity.y = 1.f;
 			}
-			else if (sharedKeyboard.isKeyPressed(SharedKeyboard::DOWN)) {
-				transform.position.y += SPEED;
+			if (sharedKeyboard.isKeyPressed(SharedKeyboard::DOWN)) {
+				velocity.y = -1.f;
 			}
+			if (sharedKeyboard.isKeyPressed(SharedKeyboard::LEFT)) {
+				velocity.x = -1.f;
+			}
+			if (sharedKeyboard.isKeyPressed(SharedKeyboard::RIGHT)) {
+				velocity.x = 1.f;
+			}
+			//velocity = normalize(velocity);
+		
 
-			else if (sharedKeyboard.isKeyPressed(SharedKeyboard::LEFT)) {
-				transform.position.x -= SPEED;
-			}
-
-			else if (sharedKeyboard.isKeyPressed(SharedKeyboard::RIGHT)) {
-				transform.position.x += SPEED;
-			}
-
-			
-			
+			//transform.position += velocity * SPEED * dt;
+			//transform.position += Vec2f{ 0.f, 0.f };
 		}
 	}
 
