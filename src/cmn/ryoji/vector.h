@@ -2,7 +2,7 @@
 #define __RYOJI_MATH_VECTOR_H__
 
 //http://www.reedbeta.com/blog/on-vector-math-libraries/#operations
-#include <assert.h>
+#include <optional>
 #include <cmath>
 
 namespace ryoji::math {
@@ -17,30 +17,30 @@ namespace ryoji::math {
 	template <typename T> struct Vector<T,4> { union { T arr[4]; struct { T x, y, z, w; }; }; };
 
 	template<typename T, size_t N>
-	Vector<T,N>& operator+=(const Vector<T, N>& rhs) noexcept {
+	Vector<T,N>& operator+=(Vector<T, N>& dis, const Vector<T, N>& dat) noexcept {
 		for (size_t i = 0; i < N; ++i)
-			this->arr[i] = rhs.arr[i];
+			dis.arr[i] += dat.arr[i];
+		return dis;
+	}
+
+	template<typename T, size_t N>
+	Vector<T,N>& operator-=(Vector<T, N>& dis, const Vector<T, N>& dat) noexcept {
+		for (size_t i = 0; i < N; ++i)
+			dis.arr[i] -= dat.arr[i];
 		return (*this);
 	}
 
 	template<typename T, size_t N>
-	Vector<T,N>& operator-=(const Vector<T, N>& rhs) noexcept {
+	Vector<T,N>& operator*=(Vector<T, N>& dis, const T& dat) noexcept {
 		for (size_t i = 0; i < N; ++i)
-			this->arr[i] -= rhs.arr[i];
+			dis.arr[i] *= dat;
 		return (*this);
 	}
 
 	template<typename T, size_t N>
-	Vector<T,N>& operator*=(const T& rhs) noexcept {
+	Vector<T,N>& operator/=(Vector<T, N>& dis, const T& dat) noexcept {
 		for (size_t i = 0; i < N; ++i)
-			this->arr[i] *= rhs;
-		return (*this);
-	}
-
-	template<typename T, size_t N>
-	Vector<T,N>& operator/=(const T& rhs) noexcept {
-		for (size_t i = 0; i < N; ++i)
-			this->arr[i] /= rhs;
+			dis.arr[i] /= dat;
 		return (*this);
 	}
 
@@ -133,7 +133,7 @@ namespace ryoji::math {
 	template<typename T, size_t N>
 	T lengthSq(const Vector<T, N>& lhs) noexcept
 	{
-		T ret();
+		T ret{};
 		for (size_t i = 0; i < N; ++i) {
 			ret += lhs.arr[i] * lhs.arr[i];
 		}
@@ -147,14 +147,17 @@ namespace ryoji::math {
 	}
 
 	template<typename T, size_t N>
-	Vector<T, N> normalize(const Vector<T, N> & lhs) noexcept {
+	std::optional<Vector<T, N>> normalize(const Vector<T, N> & lhs) noexcept {
 		Vector<T, N> temp;
-		auto len = length(lhs);
-		assert(len == (T)0);
+		auto len = lengthSq(lhs);
+		if (len == (T)0) {
+			return {};
+		}
 
+		len = sqrt(len);
 		for (size_t i = 0; i < N; ++i)
 			temp.arr[i] = (lhs.arr[i]) / len;
-		return temp;
+		return { temp };
 	}
 
 	// global typedefs

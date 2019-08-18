@@ -20,23 +20,14 @@ namespace app::game::systems {
 			Vec2f velocity { 0.f, 0.f };
 
 			auto& transform = view.get<ComTransform>(entity);
-			if (sharedKeyboard.isKeyPressed(SharedKeyboard::UP)) {
-				velocity.y = 1.f;
-			}
-			if (sharedKeyboard.isKeyPressed(SharedKeyboard::DOWN)) {
-				velocity.y = -1.f;
-			}
-			if (sharedKeyboard.isKeyPressed(SharedKeyboard::LEFT)) {
-				velocity.x = -1.f;
-			}
-			if (sharedKeyboard.isKeyPressed(SharedKeyboard::RIGHT)) {
-				velocity.x = 1.f;
-			}
-			//velocity = normalize(velocity);
-		
+			velocity.y += sharedKeyboard.isKeyPressed(SharedKeyboard::UP) ? -1.f : 0.f;
+			velocity.y += sharedKeyboard.isKeyPressed(SharedKeyboard::DOWN) ? 1.f : 0.f;
+			velocity.x += sharedKeyboard.isKeyPressed(SharedKeyboard::LEFT) ? -1.f : 0.f;
+			velocity.x += sharedKeyboard.isKeyPressed(SharedKeyboard::RIGHT) ? 1.f : 0.f;
 
-			//transform.position += velocity * SPEED * dt;
-			//transform.position += Vec2f{ 0.f, 0.f };
+			auto normVelocity = normalize(velocity);
+			if (normVelocity.has_value())
+				transform.position += normVelocity.value() * SPEED * dt;
 		}
 	}
 
