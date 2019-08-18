@@ -16,11 +16,11 @@ namespace app::game::shared {
 
 		bool init(SDL_Renderer&);
 
-		inline yuu::SDL_TextureUniquePtr& operator[](size_t index) {
+		inline yuu::SDL_TextureUniquePtr& operator[](Handler index) {
 			return textures[index];
 		}
 
-		inline const yuu::SDL_TextureUniquePtr& operator[](size_t index) const {
+		inline const yuu::SDL_TextureUniquePtr& operator[](Handler index) const {
 			return textures[index];
 		}
 
@@ -30,11 +30,5 @@ namespace app::game::shared {
 
 	};
 }
-
-
-
-
-
-
 
 #endif

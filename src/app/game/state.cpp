@@ -28,8 +28,12 @@ namespace app::game {
 			assert(false); // throw instead?
 		}
 
+		if (!sharedKeyboard.init()) {
+			assert(false); // throw instead?
 
-		// initialize entities
+		}
+
+		// initialize main character
 		{	
 			using namespace character;
 
@@ -47,6 +51,8 @@ namespace app::game {
 			animation.indices.assign(kAnimeIndices[ANIME_FRONT], kAnimeIndices[ANIME_FRONT] + kAnimeMaxFrames);
 			animation.speed = kAnimeSpeed;
 
+			ecs.assign<ComPlayerInput>(entity);
+
 		}
 		
 	}
@@ -63,7 +69,9 @@ namespace app::game {
 
 	void State::onUpdate(float dt) noexcept
 	{
+		sysPlayerInput.update(ecs, sharedKeyboard, dt);
 		sysAnimator.update(ecs, dt);
+		
 	}
 
 	void State::onExit() noexcept
@@ -78,7 +86,8 @@ namespace app::game {
 
 	void State::onHandleEvent(SDL_Event& e) noexcept
 	{
-		sysInput.handleEvent(ecs, e);
+		
+		sharedKeyboard.handleEvent(e);
 	}
 
 	void State::onClean() noexcept

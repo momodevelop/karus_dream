@@ -15,6 +15,7 @@
 #include "systems/sys_player_input.h"
 
 #include "shared/shared_textures.h"
+#include "shared/shared_keyboard.h"
 
 #include "../state_base.h"
 
@@ -30,9 +31,9 @@ namespace app::game {
 		entt::registry ecs;
 		systems::SysRenderer sysRenderer;
 		systems::SysAnimator sysAnimator;
-		systems::SysPlayerInput sysInput;
+		systems::SysPlayerInput sysPlayerInput;
 		shared::SharedTextures sharedTextures;
-		keyboard_t keyboard;
+		shared::SharedKeyboard sharedKeyboard;
 
 	private:
 		State(const State&) = delete;

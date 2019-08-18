@@ -3,14 +3,14 @@
 
 #include <entt.h>
 #include <SDL.h>
+#include "../shared/shared_keyboard.h"
 
 namespace app::game::systems {
 	class SysPlayerInput {
-		void handleKeyDown();
-		void handleKeyUp();
 	public:
-		void handleEvent(entt::registry& registry, SDL_Event& e);
+		void update(entt::registry& registry, shared::SharedKeyboard& sharedKeyboard, float dt);
 	};
+
 
 }
 

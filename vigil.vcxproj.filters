@@ -75,6 +75,9 @@
     <ClCompile Include="src\app\game\shared\shared_textures.cpp">
       <Filter>src\app\game\shared</Filter>
     </ClCompile>
+    <ClCompile Include="src\app\game\shared\shared_keyboard.cpp">
+      <Filter>src\app\game\shared</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\app\root.h">
@@ -147,6 +150,9 @@
       <Filter>src\app\game\components</Filter>
     </ClInclude>
     <ClInclude Include="src\app\game\shared\shared_textures.h">
+      <Filter>src\app\game\shared</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\shared\shared_keyboard.h">
       <Filter>src\app\game\shared</Filter>
     </ClInclude>
   </ItemGroup>
