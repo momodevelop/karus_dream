@@ -81,6 +81,9 @@
     <ClCompile Include="src\app\game\systems\sys_character_animator.cpp">
       <Filter>src\app\game\systems</Filter>
     </ClCompile>
+    <ClCompile Include="src\app\game\shared\shared_character_animations.cpp">
+      <Filter>src\app\game\shared</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\app\root.h">
@@ -163,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="src\app\game\systems\sys_character_animator.h">
       <Filter>src\app\game\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\shared\shared_character_animations.h">
+      <Filter>src\app\game\shared</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -12,18 +12,7 @@ constexpr static int gDisplayHalfHeight = gDisplayHeight / 2;
 namespace character {
 
 	namespace animation {
-		enum Direction { 
-			FRONT, 
-			LEFT, 
-			RIGHT, 
-			BACK, 
-			
-			FRONT_STOP,
-			LEFT_STOP,
-			RIGHT_STOP,
-			BACK_STOP,
 
-			MAX };
 		constexpr static uint8_t kMaxFrames = 4;
 		constexpr static std::array<std::array<uint8_t, kMaxFrames>, MAX> kIndicesSet = {
 			std::array<uint8_t, kMaxFrames>{ 1, 0, 1, 2 },
