@@ -78,6 +78,9 @@
     <ClCompile Include="src\app\game\shared\shared_keyboard.cpp">
       <Filter>src\app\game\shared</Filter>
     </ClCompile>
+    <ClCompile Include="src\app\game\systems\sys_character_animator.cpp">
+      <Filter>src\app\game\systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\app\root.h">
@@ -154,6 +157,12 @@
     </ClInclude>
     <ClInclude Include="src\app\game\shared\shared_keyboard.h">
       <Filter>src\app\game\shared</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\components\com_character_animation.h">
+      <Filter>src\app\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\systems\sys_character_animator.h">
+      <Filter>src\app\game\systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

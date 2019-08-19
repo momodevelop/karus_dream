@@ -7,7 +7,6 @@
 
 
 namespace app::game::systems {
-	// This animator will only work on 4x3 spritesheets
 
 	class SysAnimator {
 		inline constexpr static std::uint8_t kSpritesheetC = 3;

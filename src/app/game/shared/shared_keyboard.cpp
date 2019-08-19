@@ -27,21 +27,38 @@ namespace app::game::shared {
 
 	void SharedKeyboard::handleEvent(SDL_Event & e)
 	{
+		keyUp.reset();
+		keyDown.reset();
+
 		if (e.type == SDL_KEYDOWN) {
 			const auto& itr = mappings.find(e.key.keysym.sym);
-			if(itr != mappings.cend())
-				keyboard[itr->second] = true;
+			if (itr != mappings.cend()) {
+				keyHeld[itr->second] = true;
+				keyDown[itr->second] = true;
+			} 
 		}
 
 		else if (e.type == SDL_KEYUP) {
 			const auto& itr = mappings.find(e.key.keysym.sym);
-			if (itr != mappings.cend())
-				keyboard[itr->second] = false;
+			if (itr != mappings.cend()) {
+				keyHeld[itr->second] = false;
+				keyUp[itr->second] = true;
+			}
 		}
 	}
-	
-	bool SharedKeyboard::isKeyPressed(Handler index)
+
+	bool SharedKeyboard::isKeyUp(Handler index)
 	{
-		return keyboard[index];
+		return keyUp[index];
+	}
+
+	bool SharedKeyboard::isKeyDown(Handler index)
+	{
+		return keyDown[index];
+	}
+	
+	bool SharedKeyboard::isKeyHeld(Handler index)
+	{
+		return keyHeld[index];
 	}
 }

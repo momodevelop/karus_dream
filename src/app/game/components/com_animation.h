@@ -10,7 +10,7 @@ namespace app::game::components {
 
 		index_container_t indices;
 		float timer = 0.f;
-		float speed = 0.f ;
+		float speed = 0.f;
 
 	};
 

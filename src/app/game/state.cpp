@@ -11,6 +11,7 @@
 #include "components/com_transform.h"
 #include "components/com_animation.h"
 #include "components/com_player_input.h"
+#include "components/com_character_animation.h"
 
 
 namespace app::game {
@@ -53,6 +54,10 @@ namespace app::game {
 			animation.speed = kSpeed;
 
 			ecs.assign<ComPlayerInput>(entity);
+			
+
+			auto& characterAnimation = ecs.assign<ComCharacterAnimation>(entity);
+			characterAnimation.currentAnimeDir = characterAnimation.nextAnimeDir = FRONT;
 
 		}
 		
@@ -71,6 +76,7 @@ namespace app::game {
 	void State::onUpdate(float dt) noexcept
 	{
 		sysPlayerInput.update(ecs, sharedKeyboard, dt);
+		sysCharacterAnimator.update(ecs);
 		sysAnimator.update(ecs, dt);
 		
 	}

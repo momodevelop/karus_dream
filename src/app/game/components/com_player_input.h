@@ -3,7 +3,9 @@
 
 
 namespace app::game::components {
-	struct ComPlayerInput {};
+	struct ComPlayerInput {
+		
+	};
 }
 
 

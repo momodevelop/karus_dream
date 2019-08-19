@@ -13,6 +13,7 @@
 #include "systems/sys_renderer.h"
 #include "systems/sys_animator.h"
 #include "systems/sys_player_input.h"
+#include "systems/sys_character_animator.h"
 
 #include "shared/shared_textures.h"
 #include "shared/shared_keyboard.h"
@@ -32,6 +33,8 @@ namespace app::game {
 		systems::SysRenderer sysRenderer;
 		systems::SysAnimator sysAnimator;
 		systems::SysPlayerInput sysPlayerInput;
+		systems::SysCharacterAnimator sysCharacterAnimator;
+
 		shared::SharedTextures sharedTextures;
 		shared::SharedKeyboard sharedKeyboard;
 

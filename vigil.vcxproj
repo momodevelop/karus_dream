@@ -140,6 +140,7 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
     <ClCompile Include="src\app\game\shared\shared_keyboard.cpp" />
     <ClCompile Include="src\app\game\shared\shared_textures.cpp" />
     <ClCompile Include="src\app\game\state.cpp" />
+    <ClCompile Include="src\app\game\systems\sys_character_animator.cpp" />
     <ClCompile Include="src\app\game\systems\sys_player_input.cpp" />
     <ClCompile Include="src\app\game\systems\sys_renderer.cpp" />
     <ClCompile Include="src\app\game\systems\sys_animator.cpp" />
@@ -152,12 +153,14 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\app\game\components\com_animation.h" />
+    <ClInclude Include="src\app\game\components\com_character_animation.h" />
     <ClInclude Include="src\app\game\components\com_player_input.h" />
     <ClInclude Include="src\app\game\components\com_renderable.h" />
     <ClInclude Include="src\app\game\components\com_transform.h" />
     <ClInclude Include="src\app\game\shared\shared_keyboard.h" />
     <ClInclude Include="src\app\game\shared\shared_textures.h" />
     <ClInclude Include="src\app\game\state.h" />
+    <ClInclude Include="src\app\game\systems\sys_character_animator.h" />
     <ClInclude Include="src\app\game\systems\sys_player_input.h" />
     <ClInclude Include="src\app\game\systems\sys_renderer.h" />
     <ClInclude Include="src\app\game\systems\sys_animator.h" />

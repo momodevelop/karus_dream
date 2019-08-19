@@ -19,11 +19,15 @@ namespace app::game::shared {
 
 		bool init();
 		void handleEvent(SDL_Event& e);
-		bool isKeyPressed(Handler index);
+		bool isKeyDown(Handler index);
+		bool isKeyUp(Handler index);
+		bool isKeyHeld(Handler index);
 
 	private:
 		std::unordered_map<SDL_Keycode, Handler> mappings;
-		std::bitset<MAX> keyboard;
+		std::bitset<MAX> keyHeld;
+		std::bitset<MAX> keyUp;
+		std::bitset<MAX> keyDown;
 
 	};
 }
