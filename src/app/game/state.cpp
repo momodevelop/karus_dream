@@ -36,6 +36,7 @@ namespace app::game {
 		// initialize main character
 		{	
 			using namespace character;
+			using namespace animation;
 
 			auto entity = ecs.create();
 
@@ -47,9 +48,9 @@ namespace app::game {
 			renderable.texture = SharedTextures::KARU_SPRITESHEET;
 
 			auto& animation = ecs.assign<ComAnimation>(entity);
-			animation.indices.reserve(kAnimeMaxFrames);
-			animation.indices.assign(kAnimeIndices[ANIME_FRONT], kAnimeIndices[ANIME_FRONT] + kAnimeMaxFrames);
-			animation.speed = kAnimeSpeed;
+			animation.indices.reserve(kMaxFrames);
+			animation.indices.assign(kIndicesSet[FRONT].cbegin(), kIndicesSet[FRONT].cend());
+			animation.speed = kSpeed;
 
 			ecs.assign<ComPlayerInput>(entity);
 
