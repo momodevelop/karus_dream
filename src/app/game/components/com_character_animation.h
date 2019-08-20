@@ -11,8 +11,8 @@ namespace app::game::components {
 		shared::SharedCharacterAnimations::Direction nextAnimeDir;
 		
 		ComCharacterAnimation() noexcept :
-			currentAnimeDir(shared::SharedCharacterAnimations::FRONT),
-			nextAnimeDir(shared::SharedCharacterAnimations::FRONT)
+			currentAnimeDir(shared::SharedCharacterAnimations::STOP_DOWN),
+			nextAnimeDir(shared::SharedCharacterAnimations::STOP_DOWN)
 		{}
 
 	};

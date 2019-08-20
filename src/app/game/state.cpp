@@ -51,14 +51,14 @@ namespace app::game {
 			renderable.texture = SharedTextures::KARU_SPRITESHEET;
 
 			auto& animation = ecs.assign<ComAnimation>(entity);
-			auto& indices = sharedCharacterAnimations[SharedCharacterAnimations::FRONT_STOP];
+			auto& indices = sharedCharacterAnimations[SharedCharacterAnimations::STOP_DOWN];
 			animation.indices.assign( indices.cbegin(), indices.cend());
 			animation.speed = kAnimeSpeed;
 
 			ecs.assign<ComPlayerInput>(entity);
 			
 			auto& characterAnimation = ecs.assign<ComCharacterAnimation>(entity);
-			characterAnimation.currentAnimeDir = characterAnimation.nextAnimeDir = SharedCharacterAnimations::FRONT_STOP;
+			characterAnimation.currentAnimeDir = characterAnimation.nextAnimeDir = SharedCharacterAnimations::STOP_DOWN;
 
 		}
 		

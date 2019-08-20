@@ -12,15 +12,15 @@ namespace app::game::shared {
 		using indices_set_t = std::vector<indices_t>;
 
 		enum Direction {
-			FRONT,
-			LEFT,
-			RIGHT,
-			BACK,
-
-			FRONT_STOP,
-			LEFT_STOP,
-			RIGHT_STOP,
-			BACK_STOP,
+			NORM_DOWN,
+			NORM_LEFT,
+			NORM_RIGHT,
+			NORM_UP,
+			
+			STOP_DOWN,
+			STOP_LEFT,
+			STOP_RIGHT,
+			STOP_UP,
 
 			MAX
 		};
