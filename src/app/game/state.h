@@ -17,6 +17,7 @@
 
 #include "shared/shared_textures.h"
 #include "shared/shared_keyboard.h"
+#include "shared/shared_character_animations.h"
 
 #include "../state_base.h"
 
@@ -37,6 +38,7 @@ namespace app::game {
 
 		shared::SharedTextures sharedTextures;
 		shared::SharedKeyboard sharedKeyboard;
+		shared::SharedCharacterAnimations sharedCharacterAnimations;
 
 	private:
 		State(const State&) = delete;

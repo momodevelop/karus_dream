@@ -31,13 +31,15 @@ namespace app::game {
 
 		if (!sharedKeyboard.init()) {
 			assert(false); // throw instead?
+		}
 
+		if (!sharedCharacterAnimations.init()) {
+			assert(false);
 		}
 
 		// initialize main character
 		{	
 			using namespace character;
-			using namespace animation;
 
 			auto entity = ecs.create();
 
@@ -49,15 +51,14 @@ namespace app::game {
 			renderable.texture = SharedTextures::KARU_SPRITESHEET;
 
 			auto& animation = ecs.assign<ComAnimation>(entity);
-			animation.indices.reserve(kMaxFrames);
-			animation.indices.assign(kIndicesSet[FRONT].cbegin(), kIndicesSet[FRONT].cend());
-			animation.speed = kSpeed;
+			auto& indices = sharedCharacterAnimations[SharedCharacterAnimations::FRONT_STOP];
+			animation.indices.assign( indices.cbegin(), indices.cend());
+			animation.speed = kAnimeSpeed;
 
 			ecs.assign<ComPlayerInput>(entity);
 			
-
 			auto& characterAnimation = ecs.assign<ComCharacterAnimation>(entity);
-			characterAnimation.currentAnimeDir = characterAnimation.nextAnimeDir = FRONT;
+			characterAnimation.currentAnimeDir = characterAnimation.nextAnimeDir = SharedCharacterAnimations::FRONT_STOP;
 
 		}
 		
@@ -76,7 +77,7 @@ namespace app::game {
 	void State::onUpdate(float dt) noexcept
 	{
 		sysPlayerInput.update(ecs, sharedKeyboard, dt);
-		sysCharacterAnimator.update(ecs);
+		sysCharacterAnimator.update(ecs, sharedCharacterAnimations);
 		sysAnimator.update(ecs, dt);
 		
 	}

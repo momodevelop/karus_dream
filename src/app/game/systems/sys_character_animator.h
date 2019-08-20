@@ -5,12 +5,13 @@
 #include <entt.h>
 #include <ryoji/rect.h>
 
+#include "../shared/shared_character_animations.h"
 
 namespace app::game::systems {
 
 	class SysCharacterAnimator {
 	public:
-		void update(entt::registry& registry);
+		void update(entt::registry& registry, shared::SharedCharacterAnimations& characterAnimations);
 	};
 }
 

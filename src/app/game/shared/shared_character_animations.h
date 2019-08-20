@@ -5,8 +5,11 @@
 
 namespace app::game::shared {
 
+	// Stores indices to character animations
 	class SharedCharacterAnimations {
 	public:
+		using indices_t = std::vector<std::uint8_t>;
+		using indices_set_t = std::vector<indices_t>;
 
 		enum Direction {
 			FRONT,
@@ -22,11 +25,14 @@ namespace app::game::shared {
 			MAX
 		};
 
-		//bool init();
+		bool init();
+		
+		inline const indices_t& operator[](Direction index) {
+			return indicesSet[index];
+		}
 
 	private:
-		//std::vector<std::uint8_t>
-
+		indices_set_t indicesSet;
 	};
 
 }

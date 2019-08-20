@@ -156,7 +156,7 @@ namespace ryoji::math {
 
 		len = sqrt(len);
 		for (size_t i = 0; i < N; ++i)
-			temp.arr[i] = (lhs.arr[i]) / len;
+			temp.arr[i] = lhs.arr[i] / len;
 		return { temp };
 	}
 
