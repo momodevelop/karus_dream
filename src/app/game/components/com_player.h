@@ -5,7 +5,7 @@
 
 namespace app::game::components {
 	struct ComPlayer {
-		ryoji::math::Rectf boxCollider;
+		
 	};
 }
 
