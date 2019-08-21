@@ -4,11 +4,8 @@
 #include <ryoji/rect.h>
 
 namespace app::game::components {
-	using namespace ryoji::math;
-	
 	struct ComBoxCollider {
-		Rectf collider = { 0.f, 0.f, 0.f, 0.f };
-	//	bool isTrigger = false;
+		ryoji::math::Rectf box;
 	};
 
 }

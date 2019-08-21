@@ -84,9 +84,6 @@
     <ClCompile Include="src\app\game\shared\shared_character_animations.cpp">
       <Filter>src\app\game\shared</Filter>
     </ClCompile>
-    <ClCompile Include="src\app\game\systems\sys_box_collision.cpp">
-      <Filter>src\app\game\systems</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\app\root.h">
@@ -155,9 +152,6 @@
     <ClInclude Include="src\app\splash\rect_data.h">
       <Filter>src\app\splash</Filter>
     </ClInclude>
-    <ClInclude Include="src\app\game\components\com_player_input.h">
-      <Filter>src\app\game\components</Filter>
-    </ClInclude>
     <ClInclude Include="src\app\game\shared\shared_textures.h">
       <Filter>src\app\game\shared</Filter>
     </ClInclude>
@@ -173,11 +167,8 @@
     <ClInclude Include="src\app\game\shared\shared_character_animations.h">
       <Filter>src\app\game\shared</Filter>
     </ClInclude>
-    <ClInclude Include="src\app\game\components\com_box_collider.h">
+    <ClInclude Include="src\app\game\components\com_player.h">
       <Filter>src\app\game\components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\app\game\systems\sys_box_collision.h">
-      <Filter>src\app\game\systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

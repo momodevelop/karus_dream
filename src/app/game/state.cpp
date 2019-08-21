@@ -10,7 +10,7 @@
 #include "components/com_renderable.h"
 #include "components/com_transform.h"
 #include "components/com_animation.h"
-#include "components/com_player_input.h"
+#include "components/com_player.h"
 #include "components/com_character_animation.h"
 #include "components/com_box_collider.h"
 
@@ -43,6 +43,8 @@ namespace app::game {
 
 			auto entity = ecs.create();
 
+			ecs.assign<ComPlayer>(entity);
+
 			Vec2f position = { 10.f , 200.f };
 			Vec2f scale = { kSize, kSize };
 			ecs.assign<ComTransform>(entity, position, scale);
@@ -54,13 +56,12 @@ namespace app::game {
 			auto& indices = sharedCharacterAnimations[SharedCharacterAnimations::STOP_DOWN];
 			animation.indices.assign( indices.cbegin(), indices.cend());
 			animation.speed = kAnimeSpeed;
-
-			ecs.assign<ComPlayerInput>(entity);
+			
+			auto& boxCollider = ecs.assign<ComBoxCollider>(entity);
+			boxCollider.box = { -kTileSize / 2, kTileSize / 2, kTileSize / 2, kTileSize / 2 };
 			
 			auto& characterAnimation = ecs.assign<ComCharacterAnimation>(entity);
 			characterAnimation.currentAnimeDir = characterAnimation.nextAnimeDir = SharedCharacterAnimations::STOP_DOWN;
-
-			ecs.assign<ComBoxCollider>(entity);
 		}
 		
 	}
@@ -91,6 +92,7 @@ namespace app::game {
 	void State::onRender(SDL_Renderer& renderer) noexcept
 	{
 		sysRenderer.render(ecs, renderer, sharedTextures);
+		sysDebugRenderBoxCollider.render(ecs, renderer);
 	}
 
 	void State::onHandleEvent(SDL_Event& e) noexcept

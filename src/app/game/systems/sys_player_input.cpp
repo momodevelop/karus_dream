@@ -2,7 +2,7 @@
 #include <ryoji/vector.h>
 
 #include "../components/com_transform.h"
-#include "../components/com_player_input.h"
+#include "../components/com_player.h"
 #include "../components/com_animation.h"
 #include "../components/com_character_animation.h"
 
@@ -30,7 +30,7 @@ namespace app::game::systems {
 		
 		using SharedAnime = SharedCharacterAnimations; // so that I don't have to type lol
 
-		auto view = registry.view<ComTransform, ComPlayerInput, ComCharacterAnimation>();
+		auto view = registry.view<ComTransform, ComPlayer, ComCharacterAnimation>();
 		for (auto entity : view) {
 			Vec2f velocity { 0.f, 0.f };
 
