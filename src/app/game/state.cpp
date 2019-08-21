@@ -12,7 +12,7 @@
 #include "components/com_animation.h"
 #include "components/com_player_input.h"
 #include "components/com_character_animation.h"
-
+#include "components/com_box_collider.h"
 
 namespace app::game {
 
@@ -60,6 +60,7 @@ namespace app::game {
 			auto& characterAnimation = ecs.assign<ComCharacterAnimation>(entity);
 			characterAnimation.currentAnimeDir = characterAnimation.nextAnimeDir = SharedCharacterAnimations::STOP_DOWN;
 
+			ecs.assign<ComBoxCollider>(entity);
 		}
 		
 	}
