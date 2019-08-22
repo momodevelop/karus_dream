@@ -10,11 +10,11 @@ namespace app::game::systems {
 		auto obstacle = ecs.view<ComObstacle>();
 		auto player = ecs.view<ComPlayer>();
 
-		for (auto obstacle : view) {
+	/*	for (auto obstacle : view) {
 			auto& player = view.get<ComPlayer>(entity);
 			auto& obstacle = view.get<ComObstacle>(entity);
 
 
-		}
+		}*/
 	}
-}`
+}

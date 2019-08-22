@@ -58,7 +58,7 @@ namespace app::game {
 			animation.speed = kAnimeSpeed;
 			
 			auto& boxCollider = ecs.assign<ComBoxCollider>(entity);
-			boxCollider.box = { -kTileSize / 2, kTileSize / 2, kTileSize / 2, kTileSize / 2 };
+			boxCollider.box = { 0.f, 0.f, (float)character::kSize, (float)character::kSize };
 			
 			auto& characterAnimation = ecs.assign<ComCharacterAnimation>(entity);
 			characterAnimation.currentAnimeDir = characterAnimation.nextAnimeDir = SharedCharacterAnimations::STOP_DOWN;
@@ -91,8 +91,11 @@ namespace app::game {
 
 	void State::onRender(SDL_Renderer& renderer) noexcept
 	{
+		
 		sysRenderer.render(ecs, renderer, sharedTextures);
 		sysDebugRenderBoxCollider.render(ecs, renderer);
+
+		SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);
 	}
 
 	void State::onHandleEvent(SDL_Event& e) noexcept
