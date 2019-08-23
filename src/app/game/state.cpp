@@ -63,6 +63,22 @@ namespace app::game {
 			auto& characterAnimation = ecs.assign<ComCharacterAnimation>(entity);
 			characterAnimation.currentAnimeDir = characterAnimation.nextAnimeDir = SharedCharacterAnimations::STOP_DOWN;
 		}
+
+		{
+			using namespace character;
+			auto entity = ecs.create();
+			Vec2f position = { 200.f , 200.f };
+			Vec2f scale = { kSize, kSize };
+			ecs.assign<ComTransform>(entity, position, scale);
+
+		//	auto& renderable = ecs.assign<ComRenderable>(entity);
+		//	renderable.texture = SharedTextures::KARU_SPRITESHEET;
+
+			auto& boxCollider = ecs.assign<ComBoxCollider>(entity);
+			boxCollider.box = { 0.f, 0.f, (float)character::kSize, (float)character::kSize };
+
+
+		}
 		
 	}
 

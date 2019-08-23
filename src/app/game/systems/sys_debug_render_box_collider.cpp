@@ -16,36 +16,36 @@ namespace app::game::systems {
 			
 			// top
 			SDL_RenderDrawLine(&renderer,
-				int(transform.position.x + bc.box.x),
-				int(transform.position.y + bc.box.y),
-				int(transform.position.x + bc.box.x + bc.box.w),
-				int(transform.position.y + bc.box.y)
+				int(transform.position.x + bc.box.minX),
+				int(transform.position.y + bc.box.minY),
+				int(transform.position.x + bc.box.maxY),
+				int(transform.position.y + bc.box.minY)
 			);
 
 			// bottom
 			SDL_RenderDrawLine(&renderer,
-				int(transform.position.x + bc.box.x),
-				int(transform.position.y + bc.box.y + bc.box.h),
-				int(transform.position.x + bc.box.x + bc.box.w),
-				int(transform.position.y + bc.box.y + bc.box.h)
+				int(transform.position.x + bc.box.minX),
+				int(transform.position.y + bc.box.maxY),
+				int(transform.position.x + bc.box.maxX),
+				int(transform.position.y + bc.box.maxY)
 			);
 
 			// left
 			SDL_RenderDrawLine(&renderer,
-				int(transform.position.x + bc.box.x),
-				int(transform.position.y + bc.box.y),
-				int(transform.position.x + bc.box.x),
-				int(transform.position.y + bc.box.y + bc.box.h)
+				int(transform.position.x + bc.box.minX),
+				int(transform.position.y + bc.box.minY),
+				int(transform.position.x + bc.box.minX),
+				int(transform.position.y + bc.box.maxY)
 			);
 
 			// right
 			SDL_RenderDrawLine(&renderer,
-				int(transform.position.x + bc.box.x + bc.box.w),
-				int(transform.position.y + bc.box.y),
-				int(transform.position.x + bc.box.x + bc.box.w),
-				int(transform.position.y + bc.box.y + bc.box.h)
+				int(transform.position.x + bc.box.maxX),
+				int(transform.position.y + bc.box.minY),
+				int(transform.position.x + bc.box.maxX),
+				int(transform.position.y + bc.box.maxY)
 			);
-
+			
 		}
 		
 	}

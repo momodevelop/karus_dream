@@ -2,19 +2,23 @@
 
 #include "../components/com_player.h"
 #include "../components/com_obstacle.h"
+#include "../components/com_box_collider.h"
 
 namespace app::game::systems {
 	using namespace components;
 	void SysPlayerCollideObstacle::update(entt::registry & ecs)
 	{
-		auto obstacle = ecs.view<ComObstacle>();
-		auto player = ecs.view<ComPlayer>();
+		auto obstacles = ecs.view<ComBoxCollider, ComObstacle>();
+		auto players = ecs.view<ComBoxCollider, ComPlayer>();
 
-	/*	for (auto obstacle : view) {
-			auto& player = view.get<ComPlayer>(entity);
-			auto& obstacle = view.get<ComObstacle>(entity);
+		for (auto obstacle : obstacles) {
+			for (auto player : players) {
+				auto& obstacleBox = obstacles.get<ComBoxCollider>(obstacle);
+				auto& playerBox = players.get<ComBoxCollider>(player);
+			
 
+			}
 
-		}*/
+		}
 	}
 }

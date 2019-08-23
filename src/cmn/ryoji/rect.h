@@ -2,15 +2,14 @@
 #define __MATH_RECT_H__
 
 #include <cassert>
+#include "vector.h"
 
 namespace ryoji::math {
 
 	template <typename T>
 	struct Rect {
-		T x, y, w, h;
-		Rect(T x = T(), T y = T(), T w = T(), T h = T()) noexcept :
-			x(x), y(y), w(w), h(h) {}
-
+		//T x, y, w, h;
+		T minX, minY, maxX, maxY;
 	};
 
 	// Give a rectangle's width and height and the rows and columns you want to divide the rectangle by. Also provide an index
@@ -23,10 +22,10 @@ namespace ryoji::math {
 		assert(r != 0);
 
 		return Rect<T>(
-			(T)(x * (rect.w - rect.x)/c), 
-			(T)(y * (rect.h - rect.y) /r),
-			(T)((rect.w - rect.x)/c),
-			(T)((rect.h - rect.y)/r));
+			(T)(x * (rect.maxX - rect.minX)/c), 
+			(T)(y * (rect.maxY - rect.minY) /r),
+			(T)((rect.maxX - rect.minX)/c),
+			(T)((rect.maxY - rect.minY)/r));
 	}
 
 	// Give a rectangle's width and height and the rows and columns you want to divide the rectangle by. Also provide an index
@@ -39,6 +38,7 @@ namespace ryoji::math {
 
 		return getSubRect(rect, c, r, index % c, index / c);
 	}
+
 
 	typedef Rect<int> Recti;
 	typedef Rect<float> Rectf;
