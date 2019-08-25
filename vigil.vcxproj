@@ -78,6 +78,7 @@
       <ConformanceMode>true</ConformanceMode>
       <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
       <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -90,6 +91,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
       <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);</PreprocessorDefinitions>
     </ClCompile>
     <PostBuildEvent>
       <Command>xcopy /y /d img\* $(OutDir)\img\
@@ -107,6 +109,7 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
       <ConformanceMode>true</ConformanceMode>
       <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
       <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -125,6 +128,7 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
       <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -180,6 +184,7 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
     <ClInclude Include="src\app\state_base.h" />
     <ClInclude Include="src\app\types.h" />
     <ClInclude Include="src\cmn\constants.h" />
+    <ClInclude Include="src\cmn\ryoji\aabb.h" />
     <ClInclude Include="src\cmn\ryoji\common.h" />
     <ClInclude Include="src\cmn\ryoji\fixed_floats.h" />
     <ClInclude Include="src\cmn\ryoji\easing.h" />
@@ -187,7 +192,6 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
     <ClInclude Include="src\cmn\ryoji\vector.h" />
     <ClInclude Include="src\cmn\yuu\time.h" />
     <ClInclude Include="src\cmn\yuu\utils.h" />
-    <ClInclude Include="sys_player_collide_static.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

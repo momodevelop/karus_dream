@@ -15,6 +15,7 @@
 #include "systems/sys_player_input.h"
 #include "systems/sys_character_animator.h"
 #include "systems/sys_debug_render_box_collider.h"
+#include "systems/sys_player_collide_obstacle.h"
 
 #include "shared/shared_textures.h"
 #include "shared/shared_keyboard.h"
@@ -36,7 +37,10 @@ namespace app::game {
 		systems::SysAnimator sysAnimator;
 		systems::SysPlayerInput sysPlayerInput;
 		systems::SysCharacterAnimator sysCharacterAnimator;
+#ifdef DEBUG_BOX_COLLIDER
 		systems::SysDebugRenderBoxCollider sysDebugRenderBoxCollider;
+#endif
+		systems::SysPlayerCollideObstacle sysPlayerCollideObstacle;
 
 		shared::SharedTextures sharedTextures;
 		shared::SharedKeyboard sharedKeyboard;

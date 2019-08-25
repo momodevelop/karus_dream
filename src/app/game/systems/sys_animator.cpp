@@ -1,5 +1,6 @@
 #include <cassert>
 #include <ryoji/rect.h>
+#include <ryoji/aabb.h>
 
 #include "sys_animator.h"
 #include "../components/com_renderable.h"
@@ -7,8 +8,6 @@
 
 
 namespace app::game::systems {
-
-	using namespace ryoji::math;
 	using namespace components;
 
 	SDL_Rect SysAnimator::getSubRect(SDL_Rect rect, int c, int r, int index) {
@@ -22,7 +21,8 @@ namespace app::game::systems {
 
 	void SysAnimator::update(entt::registry& registry, float dt) {
 		auto view = registry.view<ComAnimation, ComRenderable>();
-		for (auto entity : view) {
+		for (auto entity : view) 
+		{
 			auto& renderable = view.get<ComRenderable>(entity);
 			auto& animation = view.get<ComAnimation>(entity);
 

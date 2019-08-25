@@ -13,6 +13,7 @@
 #include "components/com_player.h"
 #include "components/com_character_animation.h"
 #include "components/com_box_collider.h"
+#include "components/com_obstacle.h"
 
 namespace app::game {
 
@@ -67,6 +68,7 @@ namespace app::game {
 		{
 			using namespace character;
 			auto entity = ecs.create();
+			
 			Vec2f position = { 200.f , 200.f };
 			Vec2f scale = { kSize, kSize };
 			ecs.assign<ComTransform>(entity, position, scale);
@@ -76,6 +78,8 @@ namespace app::game {
 
 			auto& boxCollider = ecs.assign<ComBoxCollider>(entity);
 			boxCollider.box = { 0.f, 0.f, (float)character::kSize, (float)character::kSize };
+
+			ecs.assign<ComObstacle>(entity);
 
 
 		}
@@ -95,6 +99,8 @@ namespace app::game {
 	void State::onUpdate(float dt) noexcept
 	{
 		sysPlayerInput.update(ecs, sharedKeyboard, dt);
+		sysPlayerCollideObstacle.update(ecs);
+
 		sysCharacterAnimator.update(ecs, sharedCharacterAnimations);
 		sysAnimator.update(ecs, dt);
 		
@@ -109,7 +115,9 @@ namespace app::game {
 	{
 		
 		sysRenderer.render(ecs, renderer, sharedTextures);
+#ifdef DEBUG_BOX_COLLIDER
 		sysDebugRenderBoxCollider.render(ecs, renderer);
+#endif
 
 		SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);
 	}
