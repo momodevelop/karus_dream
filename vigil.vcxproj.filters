@@ -186,5 +186,8 @@
     <ClInclude Include="src\app\game\systems\sys_debug_render_box_collider.h">
       <Filter>src\app\game\systems\debug</Filter>
     </ClInclude>
+    <ClInclude Include="src\cmn\debug.h">
+      <Filter>src\cmn</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

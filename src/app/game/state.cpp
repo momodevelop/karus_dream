@@ -115,7 +115,9 @@ namespace app::game {
 	{
 		
 		sysRenderer.render(ecs, renderer, sharedTextures);
+#ifdef DEBUG_BOX_COLLIDER
 		sysDebugRenderBoxCollider.render(ecs, renderer);
+#endif
 		SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);
 	}
 

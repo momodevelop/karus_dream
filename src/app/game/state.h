@@ -6,6 +6,7 @@
 #include <SDL.h>
 #include <constants.h>
 #include <entt.h>
+#include <debug.h>
 #include <yuu/utils.h>
 
 #include "types.h"
@@ -37,8 +38,10 @@ namespace app::game {
 		systems::SysAnimator sysAnimator;
 		systems::SysPlayerInput sysPlayerInput;
 		systems::SysCharacterAnimator sysCharacterAnimator;
-		systems::SysDebugRenderBoxCollider sysDebugRenderBoxCollider;
 
+#ifdef DEBUG_BOX_COLLIDER
+		systems::SysDebugRenderBoxCollider sysDebugRenderBoxCollider;
+#endif 
 		systems::SysPlayerCollideObstacle sysPlayerCollideObstacle;
 
 		shared::SharedTextures sharedTextures;

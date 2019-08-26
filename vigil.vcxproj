@@ -184,6 +184,7 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
     <ClInclude Include="src\app\state_base.h" />
     <ClInclude Include="src\app\types.h" />
     <ClInclude Include="src\cmn\constants.h" />
+    <ClInclude Include="src\cmn\debug.h" />
     <ClInclude Include="src\cmn\ryoji\aabb.h" />
     <ClInclude Include="src\cmn\ryoji\common.h" />
     <ClInclude Include="src\cmn\ryoji\fixed_floats.h" />

@@ -39,8 +39,6 @@
 #pragma comment(lib, "lib/sdl2_image/lib/x86/SDL2_image.lib")
 #endif
 
-
-
 using namespace app;
 using namespace yuu;
 

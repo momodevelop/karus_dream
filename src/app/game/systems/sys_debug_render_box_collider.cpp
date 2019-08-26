@@ -1,4 +1,5 @@
 #include "sys_debug_render_box_collider.h"
+#ifdef DEBUG_BOX_COLLIDER
 
 #include "../components/com_transform.h"
 #include "../components/com_box_collider.h"
@@ -53,3 +54,5 @@ namespace app::game::systems {
 	}
 
 }
+
+#endif

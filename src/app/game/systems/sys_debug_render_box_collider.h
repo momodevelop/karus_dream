@@ -1,6 +1,10 @@
 #ifndef __APP_GAME_SYSTEMS_DEBUG_RENDER_BOX_COLLIDER_H__
 #define __APP_GAME_SYSTEMS_DEBUG_RENDER_BOX_COLLIDER_H__
 
+#include <debug.h>
+
+#ifdef DEBUG_BOX_COLLIDER
+
 #include <entt.h>
 #include <SDL.h>
 
@@ -11,4 +15,5 @@ namespace app::game::systems {
 	};
 }
 
+#endif
 #endif
