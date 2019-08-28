@@ -38,7 +38,7 @@ namespace app::game {
 		}
 
 		// initialize grid
-		sharedGrid.init(10, 10);
+		sharedGrid.init(0.f, 0.f, 48.f, 48.f, 10, 10);
 		for (int i = 0; i < 100; ++i) {
 			sharedGrid[i].value = 1;
 		}

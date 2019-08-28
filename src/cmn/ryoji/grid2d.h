@@ -9,12 +9,15 @@ namespace ryoji::grid {
 	template<typename Tile>
 	class Grid2D {
 	public:
-		bool init(unsigned rows, unsigned cols) {
+		void init(float x, float y, float tileWidth, float tileHeight, unsigned rows, unsigned cols) {
 			grid.clear();
 			this->rows = rows;
 			this->cols = cols;
+			this->x = x;
+			this->y = y;
+			this->tileHeight = tileHeight;
+			this->tileWidth = tileWidth;
 			grid.resize(rows * cols);
-			return true;
 		}
 
 		inline Tile& operator[](size_t index) {
