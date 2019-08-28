@@ -1,4 +1,5 @@
 #include <constants.h>
+#include <yuu/utils.h>
 
 #include "sys_grid_renderer.h"
 
@@ -14,15 +15,16 @@ namespace app::game::systems {
 					(int)sharedGrid.getTileWidth(),
 					(int)sharedGrid.getTileHeight()
 				};
-				SDL_Rect srcRect = {
-					(int)sharedGrid.getTilePosX(x),
-					(int)sharedGrid.getTilePosY(y),
-					(int)sharedGrid.getTileWidth(),
-					(int)sharedGrid.getTileHeight()
-				};
-				auto texture = sharedTextures[SharedTextures::GRID_SPRITESHEET].texture.get();
+				auto& textureData = sharedTextures[SharedTextures::GRID_SPRITESHEET];
 
-				SDL_RenderCopy(&renderer, texture, &srcRect, &destRect);
+				SDL_Rect srcRect = yuu::getSubRect(
+					SDL_Rect{ 0, 0, textureData.width, textureData.height },
+					textureData.cols,
+					textureData.rows,
+					sharedGrid.at(x,y).value);
+
+
+				SDL_RenderCopy(&renderer, textureData.texture.get(), &srcRect, &destRect);
 			}
 		}
 	}
