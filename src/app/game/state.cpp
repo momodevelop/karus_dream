@@ -38,7 +38,10 @@ namespace app::game {
 		}
 
 		// initialize grid
-		sharedGrid.resize(10 * 10); // row * col
+		sharedGrid.init(10, 10);
+		for (int i = 0; i < 100; ++i) {
+			sharedGrid[i].value = 1;
+		}
 
 		// initialize main character
 		{	
@@ -49,19 +52,19 @@ namespace app::game {
 			ecs.assign<ComPlayer>(entity);
 
 			Vec2f position = { 10.f , 200.f };
-			Vec2f scale = { kSize, kSize };
+			Vec2f scale = { gSize, gSize };
 			ecs.assign<ComTransform>(entity, position, scale);
 
 			auto& renderable = ecs.assign<ComRenderable>(entity);
-			renderable.texture = SharedTextures::KARU_SPRITESHEET;
+			renderable.textureHandler = SharedTextures::KARU_SPRITESHEET;
 
 			auto& animation = ecs.assign<ComAnimation>(entity);
 			auto& indices = sharedCharacterAnimations[SharedCharacterAnimations::STOP_DOWN];
 			animation.indices.assign( indices.cbegin(), indices.cend());
-			animation.speed = kAnimeSpeed;
+			animation.speed = gAnimeSpeed;
 			
 			auto& boxCollider = ecs.assign<ComBoxCollider>(entity);
-			boxCollider.box = { 0.f, 0.f, (float)character::kSize, (float)character::kSize };
+			boxCollider.box = { 0.f, 0.f, (float)character::gSize, (float)character::gSize };
 			
 			auto& characterAnimation = ecs.assign<ComCharacterAnimation>(entity);
 			characterAnimation.currentAnimeDir = characterAnimation.nextAnimeDir = SharedCharacterAnimations::STOP_DOWN;
@@ -72,14 +75,14 @@ namespace app::game {
 			auto entity = ecs.create();
 			
 			Vec2f position = { 200.f , 200.f };
-			Vec2f scale = { kSize, kSize };
+			Vec2f scale = { gSize, gSize };
 			ecs.assign<ComTransform>(entity, position, scale);
 
 		//	auto& renderable = ecs.assign<ComRenderable>(entity);
 		//	renderable.texture = SharedTextures::KARU_SPRITESHEET;
 
 			auto& boxCollider = ecs.assign<ComBoxCollider>(entity);
-			boxCollider.box = { 0.f, 0.f, (float)character::kSize, (float)character::kSize };
+			boxCollider.box = { 0.f, 0.f, (float)character::gSize, (float)character::gSize };
 
 			ecs.assign<ComObstacle>(entity);
 
@@ -104,7 +107,7 @@ namespace app::game {
 		sysPlayerCollideObstacle.update(ecs);
 
 		sysCharacterAnimator.update(ecs, sharedCharacterAnimations);
-		sysAnimator.update(ecs, dt);
+		sysAnimator.update(ecs, sharedTextures, dt);
 		
 	}
 
@@ -115,7 +118,7 @@ namespace app::game {
 
 	void State::onRender(SDL_Renderer& renderer) noexcept
 	{
-		
+		sysGridRenderer.render(renderer, sharedGrid, sharedTextures);
 		sysRenderer.render(ecs, renderer, sharedTextures);
 #ifdef DEBUG_BOX_COLLIDER
 		sysDebugRenderBoxCollider.render(ecs, renderer);

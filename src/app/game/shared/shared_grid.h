@@ -1,14 +1,15 @@
 #ifndef __SHARED_GRID_H__
 #define __SHARED_GRID_H__
 
-#include <vector>
+#include <SDL.h>
 #include <ryoji/grid2d.h>
 
 namespace app::game::shared {
-	struct Tile {
+	struct GridTile {
 		int value;
 	};
-	using sharedGrid = ryoji::grid::Grid2D<Tile>;
+	using SharedGrid = ryoji::grid::Grid2D<GridTile>;
+
 }
 
 #endif 

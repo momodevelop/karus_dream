@@ -14,19 +14,28 @@ namespace app::game::shared {
 			MAX
 		};
 
+		struct TextureData {
+			yuu::SDL_TextureUniquePtr texture;
+			Handler handler;
+			int width, height;
+			int rows, cols;
+		};
+
+	public:
+
 		bool init(SDL_Renderer&);
 
-		inline yuu::SDL_TextureUniquePtr& operator[](Handler index) {
+		inline TextureData& operator[](Handler index) {
 			return textures[index];
 		}
 
-		inline const yuu::SDL_TextureUniquePtr& operator[](Handler index) const {
+		inline const TextureData& operator[](Handler index) const {
 			return textures[index];
 		}
 
 	private:
-
-		std::array<yuu::SDL_TextureUniquePtr, MAX> textures;
+		bool initTextureData(SDL_Renderer& renderer, SharedTextures::Handler handler, const char * path, int width, int height, int rows, int cols);
+		std::array<TextureData, MAX> textures;
 
 	};
 }

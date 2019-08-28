@@ -20,7 +20,7 @@ namespace app::game::systems {
 				(int)transform.scale.y
 			};
 
-			auto texture = textures[renderable.texture].get();
+			auto texture = textures[renderable.textureHandler].texture.get();
 			SDL_SetTextureAlphaMod(texture, renderable.alpha);
 			SDL_RenderCopy(&renderer, texture, &renderable.srcRect, &renderable.destRect);
 		}

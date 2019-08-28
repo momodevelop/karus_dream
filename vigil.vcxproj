@@ -147,6 +147,7 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
     <ClCompile Include="src\app\game\state.cpp" />
     <ClCompile Include="src\app\game\systems\sys_character_animator.cpp" />
     <ClCompile Include="src\app\game\systems\sys_debug_render_box_collider.cpp" />
+    <ClCompile Include="src\app\game\systems\sys_grid_renderer.cpp" />
     <ClCompile Include="src\app\game\systems\sys_player_collide_obstacle.cpp" />
     <ClCompile Include="src\app\game\systems\sys_player_input.cpp" />
     <ClCompile Include="src\app\game\systems\sys_renderer.cpp" />
@@ -167,12 +168,13 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
     <ClInclude Include="src\app\game\components\com_renderable.h" />
     <ClInclude Include="src\app\game\components\com_transform.h" />
     <ClInclude Include="src\app\game\shared\shared_character_animations.h" />
-    <ClInclude Include="src\app\game\shared\shared_grid2d.h" />
+    <ClInclude Include="src\app\game\shared\shared_grid.h" />
     <ClInclude Include="src\app\game\shared\shared_keyboard.h" />
     <ClInclude Include="src\app\game\shared\shared_textures.h" />
     <ClInclude Include="src\app\game\state.h" />
     <ClInclude Include="src\app\game\systems\sys_character_animator.h" />
     <ClInclude Include="src\app\game\systems\sys_debug_render_box_collider.h" />
+    <ClInclude Include="src\app\game\systems\sys_grid_renderer.h" />
     <ClInclude Include="src\app\game\systems\sys_player_collide_obstacle.h" />
     <ClInclude Include="src\app\game\systems\sys_player_input.h" />
     <ClInclude Include="src\app\game\systems\sys_renderer.h" />

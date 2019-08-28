@@ -15,12 +15,16 @@
 #include "systems/sys_animator.h"
 #include "systems/sys_player_input.h"
 #include "systems/sys_character_animator.h"
+#ifdef DEBUG_BOX_COLLIDER
 #include "systems/sys_debug_render_box_collider.h"
+#endif 
 #include "systems/sys_player_collide_obstacle.h"
+#include "systems/sys_grid_renderer.h"
 
 #include "shared/shared_textures.h"
 #include "shared/shared_keyboard.h"
 #include "shared/shared_character_animations.h"
+#include "shared/shared_grid.h"
 
 #include "../state_base.h"
 
@@ -42,12 +46,13 @@ namespace app::game {
 		systems::SysDebugRenderBoxCollider sysDebugRenderBoxCollider;
 #endif 
 		systems::SysPlayerCollideObstacle sysPlayerCollideObstacle;
+		systems::SysGridRenderer sysGridRenderer;
 
 		shared::SharedTextures sharedTextures;
 		shared::SharedKeyboard sharedKeyboard;
 		shared::SharedCharacterAnimations sharedCharacterAnimations;
+		shared::SharedGrid sharedGrid;
 		
-		std::vector<int> sharedGrid;
 
 	private:
 		State(const State&) = delete;

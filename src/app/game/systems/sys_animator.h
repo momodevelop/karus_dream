@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include <entt.h>
+#include "../shared/shared_textures.h"
 
 namespace app::game::systems {
 
@@ -12,10 +13,8 @@ namespace app::game::systems {
 		inline constexpr static std::uint8_t kSpritesheetTileSize = 48;
 		inline constexpr static std::uint8_t kSpritesheetW = kSpritesheetC * kSpritesheetTileSize;
 		inline constexpr static std::uint8_t kSpritesheetH = kSpritesheetR * kSpritesheetTileSize;
-
-		SDL_Rect getSubRect(SDL_Rect rect, int c, int r, int index);
 	public:
-		void update(entt::registry& registry, float dt);
+		void update(entt::registry& registry, shared::SharedTextures& sharedTextures, float dt);
 	};
 }
 

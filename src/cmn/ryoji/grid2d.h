@@ -2,14 +2,18 @@
 #define __RYOJI_GRID2D_H__
 
 #include <vector>
+#include <type_traits>
 
 namespace ryoji::grid {
 	// useful class for a physical 2d grid
-	template<typename Tile, typename DimensionType = float>
+	template<typename Tile>
 	class Grid2D {
 	public:
-		bool init(size_t row, size_t col) {
-			grid.resize(row * col);
+		bool init(unsigned rows, unsigned cols) {
+			grid.clear();
+			this->rows = rows;
+			this->cols = cols;
+			grid.resize(rows * cols);
 			return true;
 		}
 
@@ -22,30 +26,30 @@ namespace ryoji::grid {
 		}
 
 		inline Tile& at(size_t x, size_t y) {
-			return grid[x + cols * y]
+			return grid[x + cols * y];
 		}
 
 		inline Tile& at(size_t x, size_t y) const {
 			return grid[x + cols * y];
 		}
 
-		inline size_t getRows() const { return rows; }
-		inline size_t getColumns() const { return cols; }
-		inline DimensionType getWidth() const { return tileWidth * cols; }
-		inline DimensionType getHeight() const { return tileHeight * rows; }
-		inline DimensionType getTileWidth() const { return tileWidth; }
-		inline DimensionType getTileHeight() const { return tileHeight; }
-		inline DimensionType getTilePosX(size_t x) const { return this->x + x * tileWidth; }
-		inline DimensionType getTilePosY(size_t y) const { return this->y + y * tileHeight; }
+		inline unsigned getRows() const { return rows; }
+		inline unsigned getColumns() const { return cols; }
+		inline float getWidth() const { return tileWidth * cols; }
+		inline float getHeight() const { return tileHeight * rows; }
+		inline float getTileWidth() const { return tileWidth; }
+		inline float getTileHeight() const { return tileHeight; }
+		inline float getTilePosX(size_t x) const { return this->x + x * tileWidth; }
+		inline float getTilePosY(size_t y) const { return this->y + y * tileHeight; }
 
 	public:
 		// public variables, can get/set freely
-		DimensionType x, y;
-		DimensionType tileWidth, tileHeight;
+		float x, y;
+		float tileWidth, tileHeight;
 
-	private:
+	protected:
 		std::vector<Tile> grid;
-		size_t rows, cols;
+		unsigned rows, cols;
 
 	};
 

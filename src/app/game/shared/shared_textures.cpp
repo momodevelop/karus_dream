@@ -3,26 +3,24 @@
 using namespace yuu;
 
 namespace app::game::shared {
-	struct Data {
-		SharedTextures::Handler index;
-		const char * path;
-	};
 
-	static constexpr std::array<Data, SharedTextures::MAX> datas = {
-		Data{ SharedTextures::KARU_SPRITESHEET, "img/spritesheet_karu.png" },
-		Data{ SharedTextures::GRID_SPRITESHEET, "img/tiles.jpg" }
-	};
-
+	bool SharedTextures::initTextureData(SDL_Renderer& renderer, SharedTextures::Handler handler, const char * path, int width, int height, int rows, int cols) {
+		textures[handler] = TextureData{
+			SDL_TextureUniquePtr(yuu::SDL_CreateTextureFromPathX(&renderer, path)),
+			handler,
+			width, height, 
+			rows, cols,
+		};
+		if (!textures[handler].texture)
+			return false;
+		return true;
+	}
 
 	bool SharedTextures::init(SDL_Renderer& renderer)
 	{
-		for (const auto& data : datas) {
-			textures[data.index] = SDL_TextureUniquePtr(yuu::SDL_CreateTextureFromPathX(&renderer, data.path));
-			if (!textures[data.index])
-				return false;			
-		}
-
-		return true;
+		return 
+			initTextureData(renderer, KARU_SPRITESHEET, "img/spritesheet_karu.png", 144, 192, 4, 3) &&
+			initTextureData(renderer, GRID_SPRITESHEET, "img/tiles.jpg", 160, 120, 3, 4);
 
 	}
 }

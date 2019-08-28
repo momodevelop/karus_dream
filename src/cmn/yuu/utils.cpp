@@ -25,6 +25,15 @@ namespace yuu {
 		return nullptr;
 	}
 
+	SDL_Rect getSubRect(SDL_Rect rect, int c, int r, int index) {
+		return SDL_Rect{
+			(index % c) * (rect.w - rect.x) / c,
+			(index / c) * (rect.h - rect.y) / r,
+			(rect.w - rect.x) / c,
+			(rect.h - rect.y) / r
+		};
+	}
+
 
 
 }

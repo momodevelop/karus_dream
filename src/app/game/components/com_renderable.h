@@ -8,7 +8,7 @@ namespace app::game::components {
 	struct ComRenderable {
 		SDL_Rect destRect = { 0, 0, 0, 0 };
 		SDL_Rect srcRect = { 0, 0, 0, 0 };
-		shared::SharedTextures::Handler texture = {};
+		shared::SharedTextures::Handler textureHandler = {};
 		Uint8 alpha = Uint8(-1);
 	};
 }

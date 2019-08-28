@@ -29,6 +29,7 @@ namespace yuu {
 		SDL_Renderer* renderer,
 		const char* path
 	);
+	SDL_Rect getSubRect(SDL_Rect rect, int c, int r, int index);
 
 	using SDL_TextureUniquePtr = std::unique_ptr<SDL_Texture, Functorize<SDL_DestroyTexture>>;
 	using SDL_WindowUniquePtr = std::unique_ptr<SDL_Window, Functorize<SDL_DestroyWindow>>;

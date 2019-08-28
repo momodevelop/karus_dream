@@ -85,6 +85,9 @@
     <ClCompile Include="src\app\game\systems\sys_debug_render_box_collider.cpp">
       <Filter>src\app\game\systems\debug</Filter>
     </ClCompile>
+    <ClCompile Include="src\app\game\systems\sys_grid_renderer.cpp">
+      <Filter>src\app\game\systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\app\root.h">
@@ -189,11 +192,14 @@
     <ClInclude Include="src\cmn\debug.h">
       <Filter>src\cmn</Filter>
     </ClInclude>
-    <ClInclude Include="src\app\game\shared\shared_grid2d.h">
-      <Filter>src\app\game\shared</Filter>
-    </ClInclude>
     <ClInclude Include="src\cmn\ryoji\grid2d.h">
       <Filter>src\cmn\ryoji</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\systems\sys_grid_renderer.h">
+      <Filter>src\app\game\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\shared\shared_grid.h">
+      <Filter>src\app\game\shared</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
