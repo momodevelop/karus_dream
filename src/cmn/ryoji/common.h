@@ -13,6 +13,10 @@ namespace ryoji::math {
 			return end;
 		return value;
 	}
+
+	inline size_t get1dFrom2d(size_t x, size_t y, size_t gridColumns) {
+		return x + gridColumns * y;
+	}
 }
 
 #endif

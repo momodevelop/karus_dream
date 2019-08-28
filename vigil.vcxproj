@@ -167,6 +167,7 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
     <ClInclude Include="src\app\game\components\com_renderable.h" />
     <ClInclude Include="src\app\game\components\com_transform.h" />
     <ClInclude Include="src\app\game\shared\shared_character_animations.h" />
+    <ClInclude Include="src\app\game\shared\shared_grid2d.h" />
     <ClInclude Include="src\app\game\shared\shared_keyboard.h" />
     <ClInclude Include="src\app\game\shared\shared_textures.h" />
     <ClInclude Include="src\app\game\state.h" />
@@ -189,6 +190,7 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
     <ClInclude Include="src\cmn\ryoji\common.h" />
     <ClInclude Include="src\cmn\ryoji\fixed_floats.h" />
     <ClInclude Include="src\cmn\ryoji\easing.h" />
+    <ClInclude Include="src\cmn\ryoji\grid2d.h" />
     <ClInclude Include="src\cmn\ryoji\rect.h" />
     <ClInclude Include="src\cmn\ryoji\vector.h" />
     <ClInclude Include="src\cmn\yuu\time.h" />

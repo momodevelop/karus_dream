@@ -25,7 +25,6 @@ namespace app::game {
 
 	State::State(SDL_Renderer& renderer)
 	{
-		// init textures
 		if (!sharedTextures.init(renderer)) {
 			assert(false); // throw instead?
 		}
@@ -37,6 +36,9 @@ namespace app::game {
 		if (!sharedCharacterAnimations.init()) {
 			assert(false);
 		}
+
+		// initialize grid
+		sharedGrid.resize(10 * 10); // row * col
 
 		// initialize main character
 		{	

@@ -189,5 +189,11 @@
     <ClInclude Include="src\cmn\debug.h">
       <Filter>src\cmn</Filter>
     </ClInclude>
+    <ClInclude Include="src\app\game\shared\shared_grid2d.h">
+      <Filter>src\app\game\shared</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cmn\ryoji\grid2d.h">
+      <Filter>src\cmn\ryoji</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

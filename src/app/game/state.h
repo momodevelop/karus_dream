@@ -31,7 +31,6 @@ namespace app::game {
 	class Root;
 	class State : public StateBase {
 		constexpr static int kMaxEntities = 10;
-
 	private:
 		entt::registry ecs;
 		systems::SysRenderer sysRenderer;
@@ -47,6 +46,8 @@ namespace app::game {
 		shared::SharedTextures sharedTextures;
 		shared::SharedKeyboard sharedKeyboard;
 		shared::SharedCharacterAnimations sharedCharacterAnimations;
+		
+		std::vector<int> sharedGrid;
 
 	private:
 		State(const State&) = delete;
