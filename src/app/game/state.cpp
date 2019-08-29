@@ -14,6 +14,16 @@
 #include "components/com_character_animation.h"
 #include "components/com_box_collider.h"
 #include "components/com_obstacle.h"
+#include "components/com_rigidbody.h"
+
+#include "systems/sys_renderer.h"
+#include "systems/sys_animation.h"
+#include "systems/sys_input.h"
+#include "systems/sys_collision.h"
+#include "systems/sys_physics.h"
+#include "systems/sys_debug.h"
+
+
 
 namespace app::game {
 
@@ -22,6 +32,7 @@ namespace app::game {
 	using namespace components;
 	using namespace shared;
 	using namespace yuu;
+	using namespace systems;
 
 	State::State(SDL_Renderer& renderer)
 	{
@@ -37,11 +48,6 @@ namespace app::game {
 			assert(false);
 		}
 
-		// initialize grid
-		sharedGrid.init(0.f, 0.f, character::gSize, character::gSize, 10, 10);
-		for (int i = 0; i < 100; ++i) {
-			sharedGrid[i].value = 1;
-		}
 
 		// initialize main character
 		{	
@@ -52,8 +58,9 @@ namespace app::game {
 			ecs.assign<ComPlayer>(entity);
 
 			Vec2f position = { 10.f , 200.f };
-			Vec2f scale = { gSize, gSize };
+			Vec2f scale = { gTileSize, gTileSize };
 			ecs.assign<ComTransform>(entity, position, scale);
+			ecs.assign<ComRigidBody>(entity);
 
 			auto& renderable = ecs.assign<ComRenderable>(entity);
 			renderable.textureHandler = SharedTextures::KARU_SPRITESHEET;
@@ -64,7 +71,7 @@ namespace app::game {
 			animation.speed = gAnimeSpeed;
 			
 			auto& boxCollider = ecs.assign<ComBoxCollider>(entity);
-			boxCollider.box = { 0.f, 0.f, (float)character::gSize, (float)character::gSize };
+			boxCollider.box = { 0.f, 0.f, (float)gTileSize, (float)gTileSize };
 			
 			auto& characterAnimation = ecs.assign<ComCharacterAnimation>(entity);
 			characterAnimation.currentAnimeDir = characterAnimation.nextAnimeDir = SharedCharacterAnimations::STOP_DOWN;
@@ -75,14 +82,14 @@ namespace app::game {
 			auto entity = ecs.create();
 			
 			Vec2f position = { 200.f , 200.f };
-			Vec2f scale = { gSize, gSize };
+			Vec2f scale = { gTileSize, gTileSize };
 			ecs.assign<ComTransform>(entity, position, scale);
 
 		//	auto& renderable = ecs.assign<ComRenderable>(entity);
 		//	renderable.texture = SharedTextures::KARU_SPRITESHEET;
 
 			auto& boxCollider = ecs.assign<ComBoxCollider>(entity);
-			boxCollider.box = { 0.f, 0.f, (float)character::gSize, (float)character::gSize };
+			boxCollider.box = { 0.f, 0.f, (float)gTileSize, (float)gTileSize };
 
 			ecs.assign<ComObstacle>(entity);
 
@@ -103,11 +110,16 @@ namespace app::game {
 
 	void State::onUpdate(float dt) noexcept
 	{
-		sysPlayerInput.update(ecs, sharedKeyboard, dt);
-		sysPlayerCollideObstacle.update(ecs);
+		// Input
+		SysInput::update(ecs, sharedKeyboard);
+		
+		// Physics
+		SysPhysics::update(ecs, dt);
+		SysCollision::resolvePlayerCollideObstacle(ecs);
 
-		sysCharacterAnimator.update(ecs, sharedCharacterAnimations);
-		sysAnimator.update(ecs, sharedTextures, dt);
+		// Rendering
+		SysAnimation::updateCharacterAnimationType(ecs, sharedCharacterAnimations);
+		SysAnimation::updateAnimation(ecs, sharedTextures, dt);
 		
 	}
 
@@ -118,10 +130,9 @@ namespace app::game {
 
 	void State::onRender(SDL_Renderer& renderer) noexcept
 	{
-		sysGridRenderer.render(renderer, sharedGrid, sharedTextures);
-		sysRenderer.render(ecs, renderer, sharedTextures);
-#ifdef DEBUG_BOX_COLLIDER
-		sysDebugRenderBoxCollider.render(ecs, renderer);
+		SysRenderer::render(ecs, renderer, sharedTextures);
+#ifdef _DEBUG
+		SysDebug::renderBoxColliders(ecs, renderer);
 #endif
 		SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);
 	}

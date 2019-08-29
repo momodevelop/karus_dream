@@ -1,11 +1,13 @@
 #include <ryoji/collision.h>
 
-#include "sys_player_collide_obstacle.h"
+
 
 #include "../components/com_player.h"
 #include "../components/com_obstacle.h"
 #include "../components/com_box_collider.h"
 #include "../components/com_transform.h"
+
+#include "sys_collision.h"
 
 namespace app::game::systems {
 	using namespace components;
@@ -13,7 +15,7 @@ namespace app::game::systems {
 
 
 
-	void SysPlayerCollideObstacle::update(entt::registry & ecs)
+	void SysCollision::resolvePlayerCollideObstacle(entt::registry & ecs)
 	{
 		auto obstacles = ecs.view<ComTransform, ComBoxCollider, ComObstacle>();
 		auto players = ecs.view<ComTransform, ComBoxCollider, ComPlayer>();

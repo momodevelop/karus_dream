@@ -32,9 +32,6 @@
     <Filter Include="src\app\game\shared">
       <UniqueIdentifier>{95aa5139-7297-4b1b-9a52-6ea662b943c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\app\game\systems\debug">
-      <UniqueIdentifier>{91cf54d6-6a7a-4c38-a417-ccee64b44eed}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -52,12 +49,6 @@
     <ClCompile Include="src\app\game\systems\sys_renderer.cpp">
       <Filter>src\app\game\systems</Filter>
     </ClCompile>
-    <ClCompile Include="src\app\game\systems\sys_animator.cpp">
-      <Filter>src\app\game\systems</Filter>
-    </ClCompile>
-    <ClCompile Include="src\app\game\systems\sys_player_input.cpp">
-      <Filter>src\app\game\systems</Filter>
-    </ClCompile>
     <ClCompile Include="src\cmn\yuu\utils.cpp">
       <Filter>src\cmn\yuu</Filter>
     </ClCompile>
@@ -73,19 +64,22 @@
     <ClCompile Include="src\app\game\shared\shared_keyboard.cpp">
       <Filter>src\app\game\shared</Filter>
     </ClCompile>
-    <ClCompile Include="src\app\game\systems\sys_character_animator.cpp">
-      <Filter>src\app\game\systems</Filter>
-    </ClCompile>
     <ClCompile Include="src\app\game\shared\shared_character_animations.cpp">
       <Filter>src\app\game\shared</Filter>
     </ClCompile>
-    <ClCompile Include="src\app\game\systems\sys_player_collide_obstacle.cpp">
+    <ClCompile Include="src\app\game\systems\sys_physics.cpp">
       <Filter>src\app\game\systems</Filter>
     </ClCompile>
-    <ClCompile Include="src\app\game\systems\sys_debug_render_box_collider.cpp">
-      <Filter>src\app\game\systems\debug</Filter>
+    <ClCompile Include="src\app\game\systems\sys_animation.cpp">
+      <Filter>src\app\game\systems</Filter>
     </ClCompile>
-    <ClCompile Include="src\app\game\systems\sys_grid_renderer.cpp">
+    <ClCompile Include="src\app\game\systems\sys_debug.cpp">
+      <Filter>src\app\game\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\app\game\systems\sys_input.cpp">
+      <Filter>src\app\game\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\app\game\systems\sys_collision.cpp">
       <Filter>src\app\game\systems</Filter>
     </ClCompile>
   </ItemGroup>
@@ -117,20 +111,11 @@
     <ClInclude Include="src\app\game\components\com_renderable.h">
       <Filter>src\app\game\components</Filter>
     </ClInclude>
-    <ClInclude Include="src\app\game\systems\sys_renderer.h">
-      <Filter>src\app\game\systems</Filter>
-    </ClInclude>
     <ClInclude Include="src\app\game\components\com_transform.h">
       <Filter>src\app\game\components</Filter>
     </ClInclude>
     <ClInclude Include="src\cmn\ryoji\fixed_floats.h">
       <Filter>src\cmn\ryoji</Filter>
-    </ClInclude>
-    <ClInclude Include="src\app\game\systems\sys_animator.h">
-      <Filter>src\app\game\systems</Filter>
-    </ClInclude>
-    <ClInclude Include="src\app\game\systems\sys_player_input.h">
-      <Filter>src\app\game\systems</Filter>
     </ClInclude>
     <ClInclude Include="src\cmn\yuu\utils.h">
       <Filter>src\cmn\yuu</Filter>
@@ -165,17 +150,11 @@
     <ClInclude Include="src\app\game\components\com_character_animation.h">
       <Filter>src\app\game\components</Filter>
     </ClInclude>
-    <ClInclude Include="src\app\game\systems\sys_character_animator.h">
-      <Filter>src\app\game\systems</Filter>
-    </ClInclude>
     <ClInclude Include="src\app\game\shared\shared_character_animations.h">
       <Filter>src\app\game\shared</Filter>
     </ClInclude>
     <ClInclude Include="src\app\game\components\com_player.h">
       <Filter>src\app\game\components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\app\game\systems\sys_player_collide_obstacle.h">
-      <Filter>src\app\game\systems</Filter>
     </ClInclude>
     <ClInclude Include="src\app\game\components\com_obstacle.h">
       <Filter>src\app\game\components</Filter>
@@ -186,20 +165,32 @@
     <ClInclude Include="src\cmn\ryoji\aabb.h">
       <Filter>src\cmn\ryoji</Filter>
     </ClInclude>
-    <ClInclude Include="src\app\game\systems\sys_debug_render_box_collider.h">
-      <Filter>src\app\game\systems\debug</Filter>
-    </ClInclude>
-    <ClInclude Include="src\cmn\debug.h">
-      <Filter>src\cmn</Filter>
-    </ClInclude>
     <ClInclude Include="src\cmn\ryoji\grid2d.h">
       <Filter>src\cmn\ryoji</Filter>
     </ClInclude>
-    <ClInclude Include="src\app\game\systems\sys_grid_renderer.h">
+    <ClInclude Include="src\app\game\components\com_rigidbody.h">
+      <Filter>src\app\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\components\com_gravity.h">
+      <Filter>src\app\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\systems\sys_renderer.h">
       <Filter>src\app\game\systems</Filter>
     </ClInclude>
-    <ClInclude Include="src\app\game\shared\shared_grid.h">
-      <Filter>src\app\game\shared</Filter>
+    <ClInclude Include="src\app\game\systems\sys_physics.h">
+      <Filter>src\app\game\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\systems\sys_animation.h">
+      <Filter>src\app\game\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\systems\sys_debug.h">
+      <Filter>src\app\game\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\systems\sys_input.h">
+      <Filter>src\app\game\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\systems\sys_collision.h">
+      <Filter>src\app\game\systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

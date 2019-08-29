@@ -6,25 +6,13 @@
 #include <SDL.h>
 #include <constants.h>
 #include <entt.h>
-#include <debug.h>
 #include <yuu/utils.h>
 
 #include "types.h"
 
-#include "systems/sys_renderer.h"
-#include "systems/sys_animator.h"
-#include "systems/sys_player_input.h"
-#include "systems/sys_character_animator.h"
-#ifdef DEBUG_BOX_COLLIDER
-#include "systems/sys_debug_render_box_collider.h"
-#endif 
-#include "systems/sys_player_collide_obstacle.h"
-#include "systems/sys_grid_renderer.h"
-
 #include "shared/shared_textures.h"
 #include "shared/shared_keyboard.h"
 #include "shared/shared_character_animations.h"
-#include "shared/shared_grid.h"
 
 #include "../state_base.h"
 
@@ -37,21 +25,11 @@ namespace app::game {
 		constexpr static int kMaxEntities = 10;
 	private:
 		entt::registry ecs;
-		systems::SysRenderer sysRenderer;
-		systems::SysAnimator sysAnimator;
-		systems::SysPlayerInput sysPlayerInput;
-		systems::SysCharacterAnimator sysCharacterAnimator;
 
-#ifdef DEBUG_BOX_COLLIDER
-		systems::SysDebugRenderBoxCollider sysDebugRenderBoxCollider;
-#endif 
-		systems::SysPlayerCollideObstacle sysPlayerCollideObstacle;
-		systems::SysGridRenderer sysGridRenderer;
 
 		shared::SharedTextures sharedTextures;
 		shared::SharedKeyboard sharedKeyboard;
 		shared::SharedCharacterAnimations sharedCharacterAnimations;
-		shared::SharedGrid sharedGrid;
 		
 
 	private:

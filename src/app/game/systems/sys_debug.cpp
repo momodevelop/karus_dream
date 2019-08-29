@@ -1,13 +1,18 @@
-#include "sys_debug_render_box_collider.h"
-#ifdef DEBUG_BOX_COLLIDER
+#include <entt.h>
+#include <SDL.h>
 
+#include "sys_debug.h"
+
+#ifdef _DEBUG
 #include "../components/com_transform.h"
 #include "../components/com_box_collider.h"
+
+
 
 namespace app::game::systems {
 	using namespace components;
 
-	void SysDebugRenderBoxCollider::render(entt::registry & ecs, SDL_Renderer & renderer)
+	void SysDebug::renderBoxColliders(entt::registry & ecs, SDL_Renderer & renderer)
 	{
 		
 		auto view = ecs.view<ComTransform, ComBoxCollider>();

@@ -1,17 +1,13 @@
 #ifndef __APP_GAME_SYSTEMS_DEBUG_RENDER_BOX_COLLIDER_H__
 #define __APP_GAME_SYSTEMS_DEBUG_RENDER_BOX_COLLIDER_H__
 
-#include <debug.h>
 
-#ifdef DEBUG_BOX_COLLIDER
-
-#include <entt.h>
-#include <SDL.h>
+#ifdef _DEBUG
 
 namespace app::game::systems {
-	class SysDebugRenderBoxCollider {
+	class SysDebug {
 	public:
-		void render(entt::registry& ecs, SDL_Renderer& renderer);
+		static void renderBoxColliders(entt::registry& ecs, SDL_Renderer& renderer);
 	};
 }
 
