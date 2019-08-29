@@ -15,6 +15,7 @@
 #include "components/com_box_collider.h"
 #include "components/com_obstacle.h"
 #include "components/com_rigidbody.h"
+#include "components/com_constant_force.h"
 
 #include "systems/sys_renderer.h"
 #include "systems/sys_animation.h"
@@ -61,7 +62,8 @@ namespace app::game {
 			Vec2f scale = { gTileSize, gTileSize };
 			ecs.assign<ComTransform>(entity, position, scale);
 			ecs.assign<ComRigidBody>(entity);
-
+			ecs.assign<ComConstantForce>(entity, Vec2f{ 0.f, 2000.f });
+			
 			auto& renderable = ecs.assign<ComRenderable>(entity);
 			renderable.textureHandler = SharedTextures::KARU_SPRITESHEET;
 
@@ -78,22 +80,35 @@ namespace app::game {
 		}
 
 		{
+
 			using namespace character;
 			auto entity = ecs.create();
-			
-			Vec2f position = { 200.f , 200.f };
-			Vec2f scale = { gTileSize, gTileSize };
-			ecs.assign<ComTransform>(entity, position, scale);
-
-		//	auto& renderable = ecs.assign<ComRenderable>(entity);
-		//	renderable.texture = SharedTextures::KARU_SPRITESHEET;
-
+			ecs.assign<ComTransform>(entity, Vec2f{ 0.f , gDisplayHalfHeight }, Vec2f{ 0.f, 0.f });
 			auto& boxCollider = ecs.assign<ComBoxCollider>(entity);
-			boxCollider.box = { 0.f, 0.f, (float)gTileSize, (float)gTileSize };
-
+			boxCollider.box = { 0.f, 0.f, (float)gDisplayWidth, (float)gDisplayHalfHeight };
 			ecs.assign<ComObstacle>(entity);
 
 
+		}
+
+		// left
+		{
+			using namespace character;
+			auto entity = ecs.create();
+			ecs.assign<ComTransform>(entity, Vec2f{-10.f, 0.f}, Vec2f{});
+			auto& boxCollider = ecs.assign<ComBoxCollider>(entity);
+			boxCollider.box = { 0.f, 0.f, float(10.f), float(gDisplayHeight) };
+			ecs.assign<ComObstacle>(entity);
+		}
+
+		// right
+		{
+			using namespace character;
+			auto entity = ecs.create();
+			ecs.assign<ComTransform>(entity, Vec2f{ gDisplayWidth, 0.f }, Vec2f{});
+			auto& boxCollider = ecs.assign<ComBoxCollider>(entity);
+			boxCollider.box = { 0.f, 0.f, float(10.f), float(gDisplayHeight) };
+			ecs.assign<ComObstacle>(entity);
 		}
 		
 	}
@@ -113,8 +128,9 @@ namespace app::game {
 		// Input
 		SysInput::update(ecs, sharedKeyboard);
 		
-		// Physics
-		SysPhysics::update(ecs, dt);
+		// Physics 
+		SysPhysics::updateConstantForces(ecs);
+		SysPhysics::updateMovement(ecs, 1/60.f); //fixed time step for physics
 		SysCollision::resolvePlayerCollideObstacle(ecs);
 
 		// Rendering

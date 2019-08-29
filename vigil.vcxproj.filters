@@ -171,9 +171,6 @@
     <ClInclude Include="src\app\game\components\com_rigidbody.h">
       <Filter>src\app\game\components</Filter>
     </ClInclude>
-    <ClInclude Include="src\app\game\components\com_gravity.h">
-      <Filter>src\app\game\components</Filter>
-    </ClInclude>
     <ClInclude Include="src\app\game\systems\sys_renderer.h">
       <Filter>src\app\game\systems</Filter>
     </ClInclude>
@@ -191,6 +188,9 @@
     </ClInclude>
     <ClInclude Include="src\app\game\systems\sys_collision.h">
       <Filter>src\app\game\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\components\com_constant_force.h">
+      <Filter>src\app\game\components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

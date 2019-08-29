@@ -1,11 +1,12 @@
 #include <ryoji/collision.h>
-
+#include <SDL.h>
 
 
 #include "../components/com_player.h"
 #include "../components/com_obstacle.h"
 #include "../components/com_box_collider.h"
 #include "../components/com_transform.h"
+#include "../components/com_rigidbody.h"
 
 #include "sys_collision.h"
 
@@ -18,7 +19,7 @@ namespace app::game::systems {
 	void SysCollision::resolvePlayerCollideObstacle(entt::registry & ecs)
 	{
 		auto obstacles = ecs.view<ComTransform, ComBoxCollider, ComObstacle>();
-		auto players = ecs.view<ComTransform, ComBoxCollider, ComPlayer>();
+		auto players = ecs.view<ComTransform, ComBoxCollider, ComRigidBody, ComPlayer>();
 
 		for (auto obstacle : obstacles) {
 			for (auto player : players) {
@@ -27,6 +28,7 @@ namespace app::game::systems {
 				
 				auto& playerTransform = players.get<ComTransform>(player);
 				auto playerBox = players.get<ComBoxCollider>(player); //copy
+				auto& playerRb = players.get<ComRigidBody>(player);
 
 				// Sync player and obstacle's rect to transform
 				aabb::translate(obstacleBox.box, obstacleTransform.position.x, 0);
@@ -35,13 +37,14 @@ namespace app::game::systems {
 				aabb::translate(playerBox.box, playerTransform.position.y, 1);
 
 				// check if it's overlapping
-				if (aabb::isAABBColliding(playerBox.box, obstacleBox.box)) {
-				}
-				
-				/*auto pushoutX = getLinesOverlapPushoutAmount(playerTransform.position.x + playerBox.box.minX, playerBox.box.maxX, obstacleBox.box.minX, obstacleBox.box.maxX);
-				auto pushoutY = getLinesOverlapPushoutAmount(playerBox.box.minY, playerBox.box.maxY, obstacleBox.box.minY, obstacleBox.box.maxY);
-				if (pushoutX < pushoutY) {
-				}*/
+			//	if (aabb::isAABBColliding(playerBox.box, obstacleBox.box)) {
+					// wao C++17
+					auto [pushout, index] = aabb::getCollidingAABBSmallestOverlap(playerBox.box, obstacleBox.box);
+					if (index != 2) {
+						playerRb.velocity.arr[index] = 0.f;
+						playerTransform.position.arr[index] += pushout;
+					}
+			//	}
 
 			}
 

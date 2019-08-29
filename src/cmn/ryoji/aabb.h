@@ -6,7 +6,13 @@
 #include <cassert>
 #include <array>
 
+
 namespace ryoji::aabb {
+
+	namespace _d {
+		template<typename T>
+		using try_make_signed =	typename std::conditional<std::is_integral<T>::value, std::make_signed<T>, T>::type;
+	}
 
 	template <typename T, size_t N>
 	struct AABB {
@@ -53,7 +59,6 @@ namespace ryoji::aabb {
 	// Collision detection
 	template<typename T, size_t N>
 	bool isAABBColliding(const AABB<T, N>& aAABB, const AABB<T, N>& bAABB) {
-		bool collision = false;
 		for (size_t i = 0; i < N; ++i) {
 			if (aAABB.max[i] < bAABB.min[i] || aAABB.min[i] > bAABB.max[i])
 				return false;
@@ -62,8 +67,51 @@ namespace ryoji::aabb {
 		return true;
 	}
 
+	template<typename T, size_t N> 
+	std::array<_d::try_make_signed<T>, N> getCollidingAABBOverlaps(const AABB<T, N>& aAABB, const AABB<T, N>& bAABB) {
+		using signed_t = _d::try_make_signed<T>;
+		std::array<signed_t, N> ret;
+
+		for (size_t i = 0; i < N; ++i) {
+			signed_t lhs = aAABB.max[i] - bAABB.min[i];
+			signed_t rhs = aAABB.max[i] - bAABB.min[i];
+
+			if (lhs < rhs)
+				ret[i] = -lhs;
+			else
+				ret[i] = rhs;
+		}
+
+		return ret;
+	}
 	
 
+	template<typename T, size_t N>
+	std::tuple<_d::try_make_signed<T>, size_t> getCollidingAABBSmallestOverlap(const AABB<T, N>& aAABB, const AABB<T, N>& bAABB) {
+		using signed_t = _d::try_make_signed<T>;
+		if (!isAABBColliding(aAABB, bAABB)) {
+			return { signed_t(), N };
+		}
+
+		
+		signed_t pushout = signed_t();
+
+
+		size_t index = N;
+
+		for (size_t i = 0; i < N; ++i) {
+			signed_t lhs = aAABB.max[i] - bAABB.min[i];
+			signed_t rhs = bAABB.max[i] - aAABB.min[i];
+
+			signed_t chosenOne = (lhs < rhs) ? -lhs : rhs;
+			if (std::abs(chosenOne) < std::abs(pushout) || index == N) {
+				pushout = chosenOne;
+				index = i;
+			}
+		}
+
+		return { pushout, index };
+	}
 
 }
 

@@ -30,7 +30,7 @@ namespace app::game::shared {
 		keyUp.reset();
 		keyDown.reset();
 
-		if (e.type == SDL_KEYDOWN) {
+		if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
 			const auto& itr = mappings.find(e.key.keysym.sym);
 			if (itr != mappings.cend()) {
 				keyHeld[itr->second] = true;

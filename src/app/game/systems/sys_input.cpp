@@ -18,6 +18,7 @@
 #include "sys_input.h"
 
 #define SPEED 250.f
+#define JUMP 500.f
 
 namespace app::game::systems {
 	using namespace components;
@@ -50,7 +51,7 @@ namespace app::game::systems {
 			}	
 
 			if (sharedKeyboard.isKeyDown(SharedKeyboard::UP)) {
-				rigidbody.velocity.y = -SPEED;
+				rigidbody.velocity.y = -JUMP;
 			}
 
 		}
