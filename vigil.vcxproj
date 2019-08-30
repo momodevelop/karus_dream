@@ -148,7 +148,7 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
     <ClCompile Include="src\app\game\systems\sys_debug.cpp" />
     <ClCompile Include="src\app\game\systems\sys_physics.cpp" />
     <ClCompile Include="src\app\game\systems\sys_collision.cpp" />
-    <ClCompile Include="src\app\game\systems\sys_input.cpp" />
+    <ClCompile Include="src\app\game\systems\sys_player.cpp" />
     <ClCompile Include="src\app\game\systems\sys_renderer.cpp" />
     <ClCompile Include="src\app\game\systems\sys_animation.cpp" />
     <ClCompile Include="src\app\root.cpp" />
@@ -166,6 +166,7 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
     <ClInclude Include="src\app\game\components\com_constant_force.h" />
     <ClInclude Include="src\app\game\components\com_obstacle.h" />
     <ClInclude Include="src\app\game\components\com_player.h" />
+    <ClInclude Include="src\app\game\components\com_player_jump_trigger.h" />
     <ClInclude Include="src\app\game\components\com_renderable.h" />
     <ClInclude Include="src\app\game\components\com_rigidbody.h" />
     <ClInclude Include="src\app\game\components\com_transform.h" />
@@ -177,7 +178,7 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
     <ClInclude Include="src\app\game\systems\sys_animation.h" />
     <ClInclude Include="src\app\game\systems\sys_debug.h" />
     <ClInclude Include="src\app\game\systems\sys_collision.h" />
-    <ClInclude Include="src\app\game\systems\sys_input.h" />
+    <ClInclude Include="src\app\game\systems\sys_player.h" />
     <ClInclude Include="src\app\game\systems\sys_renderer.h" />
     <ClInclude Include="src\app\game\types.h" />
     <ClInclude Include="src\app\root.h" />

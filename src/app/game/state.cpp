@@ -17,10 +17,11 @@
 #include "components/com_rigidbody.h"
 #include "components/com_constant_force.h"
 #include "components/com_collectible.h"
+#include "components/com_player_jump_trigger.h"
 
 #include "systems/sys_renderer.h"
 #include "systems/sys_animation.h"
-#include "systems/sys_input.h"
+#include "systems/sys_player.h"
 #include "systems/sys_collision.h"
 #include "systems/sys_physics.h"
 #include "systems/sys_debug.h"
@@ -78,6 +79,19 @@ namespace app::game {
 			characterAnimation.currentAnimeDir = characterAnimation.nextAnimeDir = SharedCharacterAnimations::STOP_DOWN;
 		}
 
+		// jump trigger
+		{
+			using namespace ryoji::aabb;
+			auto entity = ecs.create();
+
+			ecs.assign<ComPlayerJumpTrigger>(entity);
+
+			ecs.assign<ComTransform>(entity);
+			ecs.assign<ComBoxCollider>(entity, AABB2f{0.f, 0.f, });
+
+		}
+
+
 		// floor
 		{
 			auto entity = ecs.create();
@@ -128,7 +142,8 @@ namespace app::game {
 	void State::onUpdate(float dt) noexcept
 	{
 		// Input
-		SysInput::update(ecs, sharedKeyboard);
+		SysPlayer::updateJumpTriggerPosition(ecs);
+		SysPlayer::processInput(ecs, sharedKeyboard);
 		
 		// Physics 
 		SysPhysics::updateConstantForces(ecs);

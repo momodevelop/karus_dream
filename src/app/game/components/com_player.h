@@ -5,7 +5,7 @@
 
 namespace app::game::components {
 	struct ComPlayer {
-		
+		bool canJump = false;
 	};
 }
 
