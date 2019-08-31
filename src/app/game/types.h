@@ -4,7 +4,11 @@
 #include <yuu/utils.h>
 
 namespace app::game {
-
+	enum TextureHandler {
+		KARU_SPRITESHEET,
+		GRID_SPRITESHEET,
+		MAX
+	};
 }
 
 #endif

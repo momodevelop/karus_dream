@@ -3,6 +3,7 @@
 #include <ryoji/rect.h>
 #include <ryoji/aabb.h>
 #include <yuu/utils.h>
+#include <yuu/texture_manager.h>
 
 #include "../components/com_animation.h"
 #include "../components/com_renderable.h"

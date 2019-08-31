@@ -3,11 +3,12 @@
 
 #include <SDL.h>
 #include "../shared/shared_textures.h"
+#include "../types.h"
 
 namespace app::game::components {
 	struct ComRenderable {
 		SDL_Rect srcRect = { 0, 0, 0, 0 };
-		shared::SharedTextures::Handler textureHandler = {};
+		TextureHandler textureHandler = {};
 		Uint8 alpha = Uint8(-1);
 	};
 }

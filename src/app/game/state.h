@@ -7,6 +7,7 @@
 #include <constants.h>
 #include <entt.h>
 #include <yuu/utils.h>
+#include <yuu/texture_manager.h>
 
 #include "types.h"
 
@@ -27,6 +28,8 @@ namespace app::game {
 		entt::registry ecs;
 		entt::entity player;
 
+		//shared::SharedTextures sharedTextures;
+
 		shared::SharedTextures sharedTextures;
 		shared::SharedKeyboard sharedKeyboard;
 		shared::SharedCharacterAnimations sharedCharacterAnimations;
@@ -34,6 +37,8 @@ namespace app::game {
 	private:
 		State(const State&) = delete;
 		State& operator=(const State&) = delete;
+
+		void reset();
 		
 	public:
 		State(SDL_Renderer& renderer);

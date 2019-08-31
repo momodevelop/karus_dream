@@ -151,6 +151,7 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
     <ClCompile Include="src\app\game\systems\sys_player.cpp" />
     <ClCompile Include="src\app\game\systems\sys_renderer.cpp" />
     <ClCompile Include="src\app\game\systems\sys_animation.cpp" />
+    <ClCompile Include="src\app\menu\state.cpp" />
     <ClCompile Include="src\app\root.cpp" />
     <ClCompile Include="src\app\splash\state.cpp" />
     <ClCompile Include="src\cmn\entt.h" />
@@ -180,6 +181,8 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
     <ClInclude Include="src\app\game\systems\sys_player.h" />
     <ClInclude Include="src\app\game\systems\sys_renderer.h" />
     <ClInclude Include="src\app\game\types.h" />
+    <ClInclude Include="src\app\menu\state.h" />
+    <ClInclude Include="src\app\menu\types.h" />
     <ClInclude Include="src\app\root.h" />
     <ClInclude Include="src\app\splash\rect_data.h" />
     <ClInclude Include="src\app\splash\state.h" />
@@ -194,6 +197,7 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
     <ClInclude Include="src\cmn\ryoji\grid2d.h" />
     <ClInclude Include="src\cmn\ryoji\rect.h" />
     <ClInclude Include="src\cmn\ryoji\vector.h" />
+    <ClInclude Include="src\cmn\yuu\texture_manager.h" />
     <ClInclude Include="src\cmn\yuu\time.h" />
     <ClInclude Include="src\cmn\yuu\utils.h" />
   </ItemGroup>

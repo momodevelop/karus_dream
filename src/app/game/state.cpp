@@ -37,17 +37,26 @@ namespace app::game {
 	using namespace systems;
 
 
+	void State::reset()
+	{
+	}
+
 	State::State(SDL_Renderer& renderer)
 	{
-		if (!sharedTextures.init(renderer)) {
-			assert(false); // throw instead?
-		}
+	
 
 		if (!sharedKeyboard.init()) {
 			assert(false); // throw instead?
 		}
 
 		if (!sharedCharacterAnimations.init()) {
+			assert(false);
+		}
+
+		// init textures
+		
+		if (!sharedTextures.addTexture(renderer, KARU_SPRITESHEET, "img/spritesheet_karu.png", 144, 192, 4, 3) ||
+			!sharedTextures.addTexture(renderer, GRID_SPRITESHEET, "img/plains.png", 80, 48, 3, 5)) {
 			assert(false);
 		}
 
@@ -66,7 +75,7 @@ namespace app::game {
 			ecs.assign<ComConstantForce>(entity, Vec2f{ 0.f, 2000.f });
 			
 			auto& renderable = ecs.assign<ComRenderable>(entity);
-			renderable.textureHandler = SharedTextures::KARU_SPRITESHEET;
+			renderable.textureHandler = TextureHandler::KARU_SPRITESHEET;
 
 			auto& animation = ecs.assign<ComAnimation>(entity);
 			auto& indices = sharedCharacterAnimations[SharedCharacterAnimations::STOP_DOWN];

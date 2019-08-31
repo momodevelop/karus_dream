@@ -6,6 +6,7 @@
 #include "root.h"
 #include "splash/state.h"
 #include "game/state.h"
+#include "menu/state.h"
 
 namespace app {
 	
@@ -99,6 +100,11 @@ namespace app {
 		{
 		case STATE_SPLASH:
 			return std::make_unique<splash::State>(renderer, [=](){
+				nextState = STATE_GAME;
+			});
+			break;
+		case STATE_MENU:
+			return std::make_unique<menu::State>(renderer,[=]() {
 				nextState = STATE_GAME;
 			});
 			break;

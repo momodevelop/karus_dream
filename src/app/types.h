@@ -5,6 +5,7 @@ namespace app {
 	enum StateEnum : uint8_t {
 		STATE_NONE,
 		STATE_SPLASH,
+		STATE_MENU,
 		STATE_GAME,
 		STATE_EXIT,
 	};

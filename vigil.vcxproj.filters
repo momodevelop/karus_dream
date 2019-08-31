@@ -35,6 +35,9 @@
     <Filter Include="src\app\game\managers">
       <UniqueIdentifier>{3c11f86d-ae04-4c87-91e9-392aba4af53e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\app\menu">
+      <UniqueIdentifier>{9b24b8fc-aad2-46ef-be59-c260d3ceb107}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -84,6 +87,9 @@
     </ClCompile>
     <ClCompile Include="src\app\game\systems\sys_player.cpp">
       <Filter>src\app\game\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\app\menu\state.cpp">
+      <Filter>src\app\menu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -197,6 +203,15 @@
     </ClInclude>
     <ClInclude Include="src\app\game\systems\sys_player.h">
       <Filter>src\app\game\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\menu\state.h">
+      <Filter>src\app\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\menu\types.h">
+      <Filter>src\app\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cmn\yuu\texture_manager.h">
+      <Filter>src\cmn\yuu</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

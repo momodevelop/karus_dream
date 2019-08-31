@@ -7,32 +7,10 @@
 
 
 namespace app::game::systems {
-	using namespace components;
+
 	void SysRenderer::renderForeground(SDL_Renderer & renderer, shared::SharedTextures& textures)
 	{
-		auto& textureData = textures[shared::SharedTextures::GRID_SPRITESHEET];
-		std::array<SDL_Rect, 3> srcRects;
-		
-		srcRects[0] = yuu::getSubRect(
-			SDL_Rect{ 0, 0, (int)textureData.width, (int)textureData.height },
-			textureData.cols,
-			textureData.rows,
-			0U
-		);
-
-		srcRects[1] = yuu::getSubRect(
-			SDL_Rect{ 0, 0, (int)textureData.width, (int)textureData.height },
-			textureData.cols,
-			textureData.rows,
-			6
-		);
-
-		srcRects[2] = yuu::getSubRect(
-			SDL_Rect{ 0, 0, (int)textureData.width, (int)textureData.height },
-			textureData.cols,
-			textureData.rows,
-			11
-		);
+		auto& textureData = textures[TextureHandler::GRID_SPRITESHEET];
 
 		float offset = gDisplayWidth / 20;
 		for (float i = 0.f; i < gDisplayWidth; i += offset) {
@@ -46,12 +24,12 @@ namespace app::game::systems {
 					int(offset),
 					int(offset)
 				};
-				int index = 2;
+				int index = 11;
 				if (k == 0)	index = 0;
-				else if (k == 1) index = 1;
+				else if (k == 1) index = 6;
 
 				SDL_SetTextureAlphaMod(textureData.texture.get(), 255);
-				SDL_RenderCopy(&renderer, textureData.texture.get(), &srcRects[index], &destRect);
+				SDL_RenderCopy(&renderer, textureData.texture.get(), &textures.getFrame(textureData.handler, index), &destRect);
 			}
 
 
@@ -59,26 +37,7 @@ namespace app::game::systems {
 	}
 	void SysRenderer::renderBackground(SDL_Renderer & renderer, shared::SharedTextures& textures)
 	{
-		auto& textureData = textures[shared::SharedTextures::GRID_SPRITESHEET];
-		std::array<SDL_Rect, 2> srcRects;
-
-		// blue sky
-		srcRects[0] = yuu::getSubRect(
-			SDL_Rect{ 0, 0, (int)textureData.width, (int)textureData.height },
-			textureData.cols,
-			textureData.rows,
-			2
-		);
-
-		// shrubs
-		srcRects[1] = yuu::getSubRect(
-			SDL_Rect{ 0, 0, (int)textureData.width, (int)textureData.height },
-			textureData.cols,
-			textureData.rows,
-			8
-		);
-
-
+		auto& textureData = textures[TextureHandler::GRID_SPRITESHEET];
 		float offset = gDisplayWidth / 20;
 
 		int ii = 0;
@@ -96,15 +55,16 @@ namespace app::game::systems {
 
 				SDL_SetTextureAlphaMod(textureData.texture.get(), 255);
 				if (jj == 4 )
-					SDL_RenderCopy(&renderer, textureData.texture.get(), &srcRects[1], &destRect);
+					SDL_RenderCopy(&renderer, textureData.texture.get(), &textures.getFrame(textureData.handler, 8), &destRect);
 				else
-					SDL_RenderCopy(&renderer, textureData.texture.get(), &srcRects[0], &destRect);
+					SDL_RenderCopy(&renderer, textureData.texture.get(), &textures.getFrame(textureData.handler, 2), &destRect);
 			}
 		}
 
 	}
 	void SysRenderer::render(entt::registry& registry, SDL_Renderer& renderer, shared::SharedTextures& textures)
 	{
+		using namespace components;
 		auto view = registry.view<ComTransform, ComRenderable>();
 		for (auto entity : view) {
 			auto& renderable = view.get<ComRenderable>(entity);
