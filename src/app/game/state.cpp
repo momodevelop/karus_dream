@@ -54,7 +54,6 @@ namespace app::game {
 		}
 
 		// init textures
-		
 		if (!sharedTextures.addTexture(renderer, KARU_SPRITESHEET, "img/spritesheet_karu.png", 144, 192, 4, 3) ||
 			!sharedTextures.addTexture(renderer, GRID_SPRITESHEET, "img/plains.png", 80, 48, 3, 5)) {
 			assert(false);

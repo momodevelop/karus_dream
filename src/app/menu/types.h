@@ -3,6 +3,7 @@
 
 namespace app::menu {
 	enum TextureHandler : Uint8 {
+		GRID_SPRITESHEET,
 		TEXTURE_MAX
 	};
 

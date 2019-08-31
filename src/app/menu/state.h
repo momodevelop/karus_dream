@@ -1,11 +1,12 @@
 #ifndef __APP_SPLASH_MENU_STATE_H__
 #define __APP_SPLASH_MENU_STATE_H__
 
-#include <yuu/utils.h>
+
 #include <SDL.h>
+#include <yuu/utils.h>
+#include <yuu/texture_manager.h>
 
 #include "types.h"
-
 #include "../state_base.h"
 
 
@@ -17,7 +18,9 @@ namespace app::menu {
 	private: // variables
 		std::array<yuu::SDL_TextureUniquePtr, TEXTURE_MAX> textures;
 		std::function<void()> completedCallback;
+		yuu::TextureManager<TextureHandler> sharedTextures;
 
+		void renderBackground(SDL_Renderer& renderer);
 	public:
 		State(
 			SDL_Renderer& renderer,

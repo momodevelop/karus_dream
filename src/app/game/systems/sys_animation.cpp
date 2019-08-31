@@ -44,11 +44,8 @@ namespace app::game::systems {
 			int index = (int)(animation.timer * animation.speed) % animation.indices.size();
 			auto& textureData = sharedTextures[renderable.textureHandler];
 
-			renderable.srcRect = getSubRect(
-				SDL_Rect{ 0, 0, textureData.width, textureData.height }, 
-				textureData.cols, 
-				textureData.rows,
-				animation.indices[index]);
+			renderable.srcRect = sharedTextures.getFrame(renderable.textureHandler, animation.indices[index]);
+			
 
 			animation.timer += dt;
 		}
