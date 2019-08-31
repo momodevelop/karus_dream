@@ -36,6 +36,7 @@ namespace app::game {
 	using namespace yuu;
 	using namespace systems;
 
+
 	State::State(SDL_Renderer& renderer)
 	{
 		if (!sharedTextures.init(renderer)) {
@@ -153,10 +154,9 @@ namespace app::game {
 		SysCollision::resolvePlayerJumpTriggerCollision(ecs, player);
 		SysPlayer::updateJumpTriggerPosition(ecs, player);
 
-		// Rendering
+		// Animation
 		SysAnimation::updateCharacterAnimationType(ecs, sharedCharacterAnimations);
 		SysAnimation::updateAnimation(ecs, sharedTextures, dt);
-		
 	}
 
 	void State::onExit() noexcept
@@ -166,10 +166,12 @@ namespace app::game {
 
 	void State::onRender(SDL_Renderer& renderer) noexcept
 	{
+		SysRenderer::renderBackground(renderer, sharedTextures);
 		SysRenderer::render(ecs, renderer, sharedTextures);
 #ifdef _DEBUG
 		SysDebug::renderBoxColliders(ecs, renderer);
 #endif
+		SysRenderer::renderForeground(renderer, sharedTextures);
 		SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);
 	}
 

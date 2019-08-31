@@ -30,7 +30,6 @@ namespace app::game {
 		shared::SharedTextures sharedTextures;
 		shared::SharedKeyboard sharedKeyboard;
 		shared::SharedCharacterAnimations sharedCharacterAnimations;
-		
 
 	private:
 		State(const State&) = delete;

@@ -7,6 +7,7 @@
 namespace app::game::systems {
 	class SysCollision
 	{
+		static void syncBoxColliderToTransform(components::ComBoxCollider&, const components::ComTransform&);
 	public:
 		static void resolvePlayerJumpTriggerCollision(entt::registry& ecs, entt::entity player);
 		static void resolvePlayerCollideCollectible(entt::registry& ecs, entt::entity player);

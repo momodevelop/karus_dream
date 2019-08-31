@@ -1,3 +1,5 @@
+#include <constants.h>
+#include <yuu/utils.h>
 
 #include "sys_renderer.h"
 #include "../components/com_transform.h"
@@ -6,6 +8,101 @@
 
 namespace app::game::systems {
 	using namespace components;
+	void SysRenderer::renderForeground(SDL_Renderer & renderer, shared::SharedTextures& textures)
+	{
+		auto& textureData = textures[shared::SharedTextures::GRID_SPRITESHEET];
+		std::array<SDL_Rect, 3> srcRects;
+		
+		srcRects[0] = yuu::getSubRect(
+			SDL_Rect{ 0, 0, (int)textureData.width, (int)textureData.height },
+			textureData.cols,
+			textureData.rows,
+			0U
+		);
+
+		srcRects[1] = yuu::getSubRect(
+			SDL_Rect{ 0, 0, (int)textureData.width, (int)textureData.height },
+			textureData.cols,
+			textureData.rows,
+			6
+		);
+
+		srcRects[2] = yuu::getSubRect(
+			SDL_Rect{ 0, 0, (int)textureData.width, (int)textureData.height },
+			textureData.cols,
+			textureData.rows,
+			11
+		);
+
+		float offset = gDisplayWidth / 20;
+		for (float i = 0.f; i < gDisplayWidth; i += offset) {
+
+			int k = 0;
+			for (float j = gDisplayHalfHeight; j < gDisplayHeight; j += offset, ++k) {
+				// top
+				SDL_Rect destRect = {
+					int(i),
+					int(j),
+					int(offset),
+					int(offset)
+				};
+				int index = 2;
+				if (k == 0)	index = 0;
+				else if (k == 1) index = 1;
+
+				SDL_SetTextureAlphaMod(textureData.texture.get(), 255);
+				SDL_RenderCopy(&renderer, textureData.texture.get(), &srcRects[index], &destRect);
+			}
+
+
+		}
+	}
+	void SysRenderer::renderBackground(SDL_Renderer & renderer, shared::SharedTextures& textures)
+	{
+		auto& textureData = textures[shared::SharedTextures::GRID_SPRITESHEET];
+		std::array<SDL_Rect, 2> srcRects;
+
+		// blue sky
+		srcRects[0] = yuu::getSubRect(
+			SDL_Rect{ 0, 0, (int)textureData.width, (int)textureData.height },
+			textureData.cols,
+			textureData.rows,
+			2
+		);
+
+		// shrubs
+		srcRects[1] = yuu::getSubRect(
+			SDL_Rect{ 0, 0, (int)textureData.width, (int)textureData.height },
+			textureData.cols,
+			textureData.rows,
+			8
+		);
+
+
+		float offset = gDisplayWidth / 20;
+
+		int ii = 0;
+		for (float i = 0.f; i < gDisplayWidth; i += offset, ++ii) {
+			int jj = 0;
+			for (float j = 0.f; j < gDisplayHalfHeight; j += offset, ++jj) {
+
+				SDL_Rect destRect = {
+					int(i),
+					int(j),
+					int(offset),
+					int(offset)
+				};
+
+
+				SDL_SetTextureAlphaMod(textureData.texture.get(), 255);
+				if (jj == 4 )
+					SDL_RenderCopy(&renderer, textureData.texture.get(), &srcRects[1], &destRect);
+				else
+					SDL_RenderCopy(&renderer, textureData.texture.get(), &srcRects[0], &destRect);
+			}
+		}
+
+	}
 	void SysRenderer::render(entt::registry& registry, SDL_Renderer& renderer, shared::SharedTextures& textures)
 	{
 		auto view = registry.view<ComTransform, ComRenderable>();
@@ -13,7 +110,7 @@ namespace app::game::systems {
 			auto& renderable = view.get<ComRenderable>(entity);
 			auto& transform = view.get<ComTransform>(entity);
 			
-			renderable.destRect = {
+			SDL_Rect destRect = {
 				(int)transform.position.x,
 				(int)transform.position.y,
 				(int)transform.scale.x,
@@ -22,7 +119,7 @@ namespace app::game::systems {
 
 			auto texture = textures[renderable.textureHandler].texture.get();
 			SDL_SetTextureAlphaMod(texture, renderable.alpha);
-			SDL_RenderCopy(&renderer, texture, &renderable.srcRect, &renderable.destRect);
+			SDL_RenderCopy(&renderer, texture, &renderable.srcRect, &destRect);
 		}
 
 		

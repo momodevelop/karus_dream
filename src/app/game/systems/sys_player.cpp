@@ -76,7 +76,6 @@ namespace app::game::systems {
 			}	
 
 			if (sharedKeyboard.isKeyDown(SharedKeyboard::UP) && playerCom->jumpTimer >= playerCom->jumpCooldown) {
-				SDL_Log("Hello");
 				rigidbody->velocity.y = -character::gJump;
 				playerCom->jumpTimer = 0.f;
 

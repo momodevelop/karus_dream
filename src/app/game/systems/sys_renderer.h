@@ -9,6 +9,8 @@
 namespace app::game::systems {
 	class SysRenderer {
 	public:
+		static void renderForeground(SDL_Renderer& renderer, shared::SharedTextures& textures);
+		static void renderBackground(SDL_Renderer& renderer, shared::SharedTextures& textures);
 		static void render(entt::registry& registry, SDL_Renderer& renderer, shared::SharedTextures& textures);
 	};
 }

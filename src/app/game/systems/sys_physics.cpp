@@ -1,9 +1,11 @@
 #include <entt.h>
 
+#include <ryoji/aabb.h>
 
 #include "../components/com_transform.h"
 #include "../components/com_rigidbody.h"
 #include "../components/com_constant_force.h"
+#include "../components/com_box_collider.h"
 
 #include "sys_physics.h"
 

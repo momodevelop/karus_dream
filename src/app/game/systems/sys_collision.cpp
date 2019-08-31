@@ -17,6 +17,12 @@ namespace app::game::systems {
 
 
 
+	void SysCollision::syncBoxColliderToTransform(components::ComBoxCollider& collider, const components::ComTransform& transform)
+	{
+		aabb::translate(collider.box, transform.position.x, 0);
+		aabb::translate(collider.box, transform.position.y, 1);
+	}
+
 	void SysCollision::resolvePlayerJumpTriggerCollision(entt::registry & ecs, entt::entity playerEntity)
 	{
 		auto obstacles = ecs.view<ComTransform, ComBoxCollider, ComObstacle>();
@@ -35,8 +41,8 @@ namespace app::game::systems {
 			}
 
 			jumpTriggerBoxColliders[i] = *collider;
-			aabb::translate(jumpTriggerBoxColliders[i].box, transform->position.x, 0);
-			aabb::translate(jumpTriggerBoxColliders[i].box, transform->position.y, 1);
+
+			syncBoxColliderToTransform(jumpTriggerBoxColliders[i], *transform);
 		}
 
 
@@ -45,8 +51,7 @@ namespace app::game::systems {
 			auto obstacleBox = obstacles.get<ComBoxCollider>(obstacle); //copy
 
 			// Sync player and obstacle's rect to transform
-			aabb::translate(obstacleBox.box, obstacleTransform.position.x, 0);
-			aabb::translate(obstacleBox.box, obstacleTransform.position.y, 1);
+			syncBoxColliderToTransform(obstacleBox, obstacleTransform);
 
 			// check collision
 			for (auto& collider : jumpTriggerBoxColliders) {
@@ -73,8 +78,7 @@ namespace app::game::systems {
 		if (playerTransform && playerBox && playerRb) {
 			auto playerBoxCopy = *playerBox;
 
-			aabb::translate(playerBoxCopy.box, playerTransform->position.x, 0);
-			aabb::translate(playerBoxCopy.box, playerTransform->position.y, 1);
+			syncBoxColliderToTransform(playerBoxCopy, *playerTransform);
 
 			for (auto collectible : collectibles) {
 
@@ -106,8 +110,8 @@ namespace app::game::systems {
 
 		if(playerTransform && playerBox && playerRb) {
 			auto playerBoxCopy = *playerBox;
-			aabb::translate(playerBoxCopy.box, playerTransform->position.x, 0);
-			aabb::translate(playerBoxCopy.box, playerTransform->position.y, 1);
+
+			syncBoxColliderToTransform(playerBoxCopy, *playerTransform);
 
 			for (auto obstacle : obstacles) {
 			
@@ -115,8 +119,7 @@ namespace app::game::systems {
 				auto obstacleBox = obstacles.get<ComBoxCollider>(obstacle); //copy
 
 				// Sync player and obstacle's rect to transform
-				aabb::translate(obstacleBox.box, obstacleTransform.position.x, 0);
-				aabb::translate(obstacleBox.box, obstacleTransform.position.y, 1);
+				syncBoxColliderToTransform(obstacleBox, obstacleTransform);
 
 				auto [pushout, index] = aabb::getCollidingAABBSmallestOverlap(playerBoxCopy.box, obstacleBox.box);
 				if (index != 2) {

@@ -20,7 +20,7 @@ namespace app::game::shared {
 	{
 		return 
 			initTextureData(renderer, KARU_SPRITESHEET, "img/spritesheet_karu.png", 144, 192, 4, 3) &&
-			initTextureData(renderer, GRID_SPRITESHEET, "img/tiles.jpg", 160, 120, 3, 4);
+			initTextureData(renderer, GRID_SPRITESHEET, "img/plains.png", 80, 48, 3, 5);
 
 	}
 }
