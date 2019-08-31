@@ -26,7 +26,7 @@ namespace app::game::systems {
 			SDL_RenderDrawLine(&renderer,
 				int(transform.position.x + bc.box.min[0]),
 				int(transform.position.y + bc.box.min[1]),
-				int(transform.position.x + bc.box.max[1]),
+				int(transform.position.x + bc.box.max[0]),
 				int(transform.position.y + bc.box.min[1])
 			);
 
@@ -53,7 +53,7 @@ namespace app::game::systems {
 				int(transform.position.x + bc.box.max[0]),
 				int(transform.position.y + bc.box.max[1])
 			);
-			
+
 		}
 		
 	}

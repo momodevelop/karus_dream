@@ -1,11 +1,14 @@
 #ifndef __APP_GAME_COMPONENTS_PLAYER_H__
 #define __APP_GAME_COMPONENTS_PLAYER_H__
 
-#include <ryoji/rect.h>
+#include <entt.h>
+#include <array>
 
 namespace app::game::components {
 	struct ComPlayer {
-		bool canJump = false;
+		float jumpCooldown = 0.5f;
+		float jumpTimer = 0.f;
+		std::array<entt::entity,2> jumpTriggers;
 	};
 }
 

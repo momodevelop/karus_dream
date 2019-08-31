@@ -8,8 +8,9 @@ namespace app::game::systems {
 	class SysCollision
 	{
 	public:
-		static void resolvePlayerCollideCollectible(entt::registry& ecs);
-		static void resolvePlayerCollideObstacle(entt::registry& ecs);
+		static void resolvePlayerJumpTriggerCollision(entt::registry& ecs, entt::entity player);
+		static void resolvePlayerCollideCollectible(entt::registry& ecs, entt::entity player);
+		static void resolvePlayerCollideObstacle(entt::registry& ecs, entt::entity player);
 	};
 }
 

@@ -17,7 +17,6 @@
 #include "components/com_rigidbody.h"
 #include "components/com_constant_force.h"
 #include "components/com_collectible.h"
-#include "components/com_player_jump_trigger.h"
 
 #include "systems/sys_renderer.h"
 #include "systems/sys_animation.h"
@@ -54,9 +53,10 @@ namespace app::game {
 
 		// initialize main character
 		{	
+			using namespace ryoji::aabb;
 			auto entity = ecs.create();
 
-			ecs.assign<ComPlayer>(entity);
+			auto& playerEntity = ecs.assign<ComPlayer>(entity);
 
 			Vec2f position = { float(gDisplayHalfWidth - gHalfTileSize), gSpawnableHeight };
 			Vec2f scale = { gTileSize, gTileSize };
@@ -77,27 +77,25 @@ namespace app::game {
 			
 			auto& characterAnimation = ecs.assign<ComCharacterAnimation>(entity);
 			characterAnimation.currentAnimeDir = characterAnimation.nextAnimeDir = SharedCharacterAnimations::STOP_DOWN;
+
+			// jump trigger children
+			for (int i = 0; i < 2; ++i)
+			{
+				auto entity = ecs.create();
+				ecs.assign<ComTransform>(entity);
+				ecs.assign<ComBoxCollider>(entity, AABB2f{ 0.f, 0.f, gJumpTriggerSize, gJumpTriggerSize });
+				playerEntity.jumpTriggers[i] = entity;
+			}
+
+			this->player = entity;
 		}
-
-		// jump trigger
-		{
-			using namespace ryoji::aabb;
-			auto entity = ecs.create();
-
-			ecs.assign<ComPlayerJumpTrigger>(entity);
-
-			ecs.assign<ComTransform>(entity);
-			ecs.assign<ComBoxCollider>(entity, AABB2f{0.f, 0.f, });
-
-		}
-
 
 		// floor
 		{
 			auto entity = ecs.create();
 			ecs.assign<ComTransform>(entity, Vec2f{ 0.f , gDisplayHalfHeight }, Vec2f{ 0.f, 0.f });
 			auto& boxCollider = ecs.assign<ComBoxCollider>(entity);
-			boxCollider.box = { 0.f, 0.f, (float)gDisplayWidth, (float)gDisplayHalfHeight };
+			boxCollider.box = { 0.f, 0.f, (float)gDisplayWidth - 1, (float)gDisplayHalfHeight };
 			ecs.assign<ComObstacle>(entity);
 		}
 
@@ -112,7 +110,7 @@ namespace app::game {
 		// right wall for player
 		{
 			auto entity = ecs.create();
-			ecs.assign<ComTransform>(entity, Vec2f{ gDisplayWidth, 0.f }, Vec2f{});
+			ecs.assign<ComTransform>(entity, Vec2f{ gDisplayWidth - 1, 0.f }, Vec2f{});
 			auto& boxCollider = ecs.assign<ComBoxCollider>(entity);
 			boxCollider.box = { 0.f, 0.f, float(10.f), float(gDisplayHeight) };
 			ecs.assign<ComObstacle>(entity);
@@ -142,14 +140,18 @@ namespace app::game {
 	void State::onUpdate(float dt) noexcept
 	{
 		// Input
-		SysPlayer::updateJumpTriggerPosition(ecs);
-		SysPlayer::processInput(ecs, sharedKeyboard);
+		SysPlayer::processInput(ecs, sharedKeyboard, player);
 		
+		// update player variables
+		SysPlayer::update(ecs, player, dt);
+
 		// Physics 
 		SysPhysics::updateConstantForces(ecs);
 		SysPhysics::updateMovement(ecs, 1/60.f); //fixed time step for physics
-		SysCollision::resolvePlayerCollideObstacle(ecs);
-		SysCollision::resolvePlayerCollideCollectible(ecs);
+		SysCollision::resolvePlayerCollideObstacle(ecs, player);
+		SysCollision::resolvePlayerCollideCollectible(ecs, player);
+		SysCollision::resolvePlayerJumpTriggerCollision(ecs, player);
+		SysPlayer::updateJumpTriggerPosition(ecs, player);
 
 		// Rendering
 		SysAnimation::updateCharacterAnimationType(ecs, sharedCharacterAnimations);

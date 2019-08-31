@@ -17,58 +17,111 @@ namespace app::game::systems {
 
 
 
-	void SysCollision::resolvePlayerCollideCollectible(entt::registry & ecs)
+	void SysCollision::resolvePlayerJumpTriggerCollision(entt::registry & ecs, entt::entity playerEntity)
+	{
+		auto obstacles = ecs.view<ComTransform, ComBoxCollider, ComObstacle>();
+
+		auto* playerCom = ecs.try_get<ComPlayer>(playerEntity);
+		if (!playerCom)
+			return;
+
+		// Get the jump triggers
+		std::array<ComBoxCollider, 2> jumpTriggerBoxColliders;
+		for (size_t i = 0; i < 2; ++i) {
+			auto* collider = ecs.try_get<ComBoxCollider>(playerCom->jumpTriggers[i]);
+			auto* transform = ecs.try_get<ComTransform>(playerCom->jumpTriggers[i]);
+			if (!collider || !transform) {
+				return;
+			}
+
+			jumpTriggerBoxColliders[i] = *collider;
+			aabb::translate(jumpTriggerBoxColliders[i].box, transform->position.x, 0);
+			aabb::translate(jumpTriggerBoxColliders[i].box, transform->position.y, 1);
+		}
+
+
+		for (auto obstacle : obstacles) {
+			auto& obstacleTransform = obstacles.get<ComTransform>(obstacle);
+			auto obstacleBox = obstacles.get<ComBoxCollider>(obstacle); //copy
+
+			// Sync player and obstacle's rect to transform
+			aabb::translate(obstacleBox.box, obstacleTransform.position.x, 0);
+			aabb::translate(obstacleBox.box, obstacleTransform.position.y, 1);
+
+			// check collision
+			for (auto& collider : jumpTriggerBoxColliders) {
+				if (aabb::isAABBColliding(obstacleBox.box, collider.box)) {
+					playerCom->jumpTimer = playerCom->jumpCooldown;
+					return; // return... don't have to check for other obstacles. 
+				}
+			}
+
+
+		}
+		
+		
+	}
+
+	void SysCollision::resolvePlayerCollideCollectible(entt::registry & ecs, entt::entity playerEntity)
 	{
 		auto collectibles = ecs.view<ComTransform, ComBoxCollider, ComCollectible>();
-		auto players = ecs.view<ComTransform, ComBoxCollider, ComRigidBody, ComPlayer>();
 
-		for (auto collectible : collectibles) {
-			for (auto player : players) {
+		auto* playerTransform = ecs.try_get<ComTransform>(playerEntity);
+		auto* playerBox = ecs.try_get<ComBoxCollider>(playerEntity);
+		auto* playerRb = ecs.try_get<ComRigidBody>(playerEntity);
+
+		if (playerTransform && playerBox && playerRb) {
+			auto playerBoxCopy = *playerBox;
+
+			aabb::translate(playerBoxCopy.box, playerTransform->position.x, 0);
+			aabb::translate(playerBoxCopy.box, playerTransform->position.y, 1);
+
+			for (auto collectible : collectibles) {
+
 				auto& collectibleTransform = collectibles.get<ComTransform>(collectible);
 				auto collectibleBox = collectibles.get<ComBoxCollider>(collectible); //copy
-
-				auto& playerTransform = players.get<ComTransform>(player);
-				auto playerBox = players.get<ComBoxCollider>(player); //copy
-				auto& playerRb = players.get<ComRigidBody>(player);
 
 				// Sync player and collectible's rect to transform
 				aabb::translate(collectibleBox.box, collectibleTransform.position.x, 0);
 				aabb::translate(collectibleBox.box, collectibleTransform.position.y, 1);
-				aabb::translate(playerBox.box, playerTransform.position.x, 0);
-				aabb::translate(playerBox.box, playerTransform.position.y, 1);
+				
 
-				if (aabb::isAABBColliding(playerBox.box, collectibleBox.box)) {
+				if (aabb::isAABBColliding(playerBoxCopy.box, collectibleBox.box)) {
 					ecs.destroy(collectible);
 				}
-			}
 
+
+			}
 		}
 	}
 
-	void SysCollision::resolvePlayerCollideObstacle(entt::registry & ecs)
+	void SysCollision::resolvePlayerCollideObstacle(entt::registry & ecs, entt::entity playerEntity)
 	{
 		auto obstacles = ecs.view<ComTransform, ComBoxCollider, ComObstacle>();
 		auto players = ecs.view<ComTransform, ComBoxCollider, ComRigidBody, ComPlayer>();
 
-		for (auto obstacle : obstacles) {
-			for (auto player : players) {
+		auto* playerTransform = ecs.try_get<ComTransform>(playerEntity);
+		auto* playerBox = ecs.try_get<ComBoxCollider>(playerEntity);
+		auto* playerRb = ecs.try_get<ComRigidBody>(playerEntity);
+
+		if(playerTransform && playerBox && playerRb) {
+			auto playerBoxCopy = *playerBox;
+			aabb::translate(playerBoxCopy.box, playerTransform->position.x, 0);
+			aabb::translate(playerBoxCopy.box, playerTransform->position.y, 1);
+
+			for (auto obstacle : obstacles) {
+			
 				auto& obstacleTransform = obstacles.get<ComTransform>(obstacle);
 				auto obstacleBox = obstacles.get<ComBoxCollider>(obstacle); //copy
-				
-				auto& playerTransform = players.get<ComTransform>(player);
-				auto playerBox = players.get<ComBoxCollider>(player); //copy
-				auto& playerRb = players.get<ComRigidBody>(player);
 
 				// Sync player and obstacle's rect to transform
 				aabb::translate(obstacleBox.box, obstacleTransform.position.x, 0);
 				aabb::translate(obstacleBox.box, obstacleTransform.position.y, 1);
-				aabb::translate(playerBox.box, playerTransform.position.x, 0);
-				aabb::translate(playerBox.box, playerTransform.position.y, 1);
 
-				auto [pushout, index] = aabb::getCollidingAABBSmallestOverlap(playerBox.box, obstacleBox.box);
+				auto [pushout, index] = aabb::getCollidingAABBSmallestOverlap(playerBoxCopy.box, obstacleBox.box);
 				if (index != 2) {
-					playerRb.velocity.arr[index] = 0.f;
-					playerTransform.position.arr[index] += pushout;
+					playerRb->velocity.arr[index] = 0.f;
+					playerTransform->position.arr[index] += pushout;
 				}
 			}
 

@@ -25,7 +25,7 @@ namespace app::game {
 		constexpr static int kMaxEntities = 10;
 	private:
 		entt::registry ecs;
-
+		entt::entity player;
 
 		shared::SharedTextures sharedTextures;
 		shared::SharedKeyboard sharedKeyboard;

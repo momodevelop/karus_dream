@@ -7,7 +7,8 @@
 
 namespace character {
 	constexpr static float gAnimeSpeed = 10.f;
-	constexpr static float gMoveSpeed = 500.f;
+	constexpr static float gMoveSpeed = 200.f;
+	constexpr static float gJump = 650.f;
 }
 
 
@@ -19,6 +20,7 @@ constexpr static int gTileSize = 48;
 constexpr static int gHalfTileSize = gTileSize/2;
 constexpr static float gFloorY = float(gDisplayHalfHeight);
 constexpr static float gSpawnableHeight = float(gDisplayHalfHeight - gTileSize);
+constexpr static float gJumpTriggerSize = 1.f;
 
 
 #endif

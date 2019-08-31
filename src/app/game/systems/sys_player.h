@@ -5,8 +5,9 @@
 namespace app::game::systems {
 	class SysPlayer {
 	public:
-		static void updateJumpTriggerPosition(entt::registry& ecs);
-		static void processInput(entt::registry& registry, shared::SharedKeyboard& sharedKeyboard);
+		static void update(entt::registry& ecs, entt::entity player, float dt);
+		static void updateJumpTriggerPosition(entt::registry& ecs, entt::entity player);
+		static void processInput(entt::registry& registry, shared::SharedKeyboard& sharedKeyboard, entt::entity player);
 	};
 
 

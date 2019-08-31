@@ -11,7 +11,6 @@
 #include "../components/com_animation.h"
 #include "../components/com_character_animation.h"
 #include "../components/com_rigidbody.h"
-#include "../components/com_player_jump_trigger.h"
 #include "../components/com_box_collider.h"
 
 #include "../shared/shared_keyboard.h"
@@ -19,8 +18,6 @@
 
 #include "sys_player.h"
 
-#define SPEED 250.f
-#define JUMP 500.f
 
 namespace app::game::systems {
 	using namespace components;
@@ -29,50 +26,60 @@ namespace app::game::systems {
 	using namespace shared;
 
 
-	void SysPlayer::updateJumpTriggerPosition(entt::registry & ecs)
+	void SysPlayer::update(entt::registry & ecs, entt::entity player, float dt)
 	{
-		// there's really only 1 of each..
-		using namespace character;
-		auto players = ecs.view<ComPlayer, ComBoxCollider, ComTransform>();
-		auto triggers = ecs.view<ComPlayerJumpTrigger, ComTransform>();
-		for (auto player : players) {
-			for (auto trigger : triggers) {
-				// put it below the player
-				auto& playerTransform = players.get<ComTransform>(player);
-				auto& playerRb = players.get<ComBoxCollider>(player);
-				auto& triggerTransform = triggers.get<ComTransform>(trigger);
+		auto* playerCom = ecs.try_get<ComPlayer>(player);
+		if (playerCom) {
+			playerCom->jumpTimer += dt;
+		}
+	}
 
-				triggerTransform.position = playerTransform.position + ryoji::math::Vec2f{0.f, };
+	void SysPlayer::updateJumpTriggerPosition(entt::registry & ecs, entt::entity player)
+	{
+		auto* playerTransform = ecs.try_get<ComTransform>(player);
+		auto* playerBox = ecs.try_get<ComBoxCollider>(player);
+		auto* playerCom = ecs.try_get<ComPlayer>(player);
+		
 
+		if (playerTransform && playerBox && playerCom) {
+			auto* jumpTrigger1 = ecs.try_get<ComTransform>(playerCom->jumpTriggers[0]);
+			if (jumpTrigger1) {
+				jumpTrigger1->position = playerTransform->position + Vec2f{ 5.f, playerBox->box.max[1] };
+			}
+			auto jumpTrigger2 = ecs.try_get<ComTransform>(playerCom->jumpTriggers[1]);
+			if (jumpTrigger2) {
+				jumpTrigger2->position = playerTransform->position + Vec2f{ playerBox->box.max[0] - gJumpTriggerSize - 5.f, playerBox->box.max[1] };
 			}
 		}
 	}
 
-	void SysPlayer::processInput(entt::registry& registry, SharedKeyboard& sharedKeyboard) {
+	void SysPlayer::processInput(entt::registry& ecs, SharedKeyboard& sharedKeyboard, entt::entity player) {
 		using namespace character;
 		
 		using SharedAnime = SharedCharacterAnimations; // so that I don't have to type lol
 
-		auto view = registry.view<ComRigidBody, ComPlayer, ComCharacterAnimation>();
-		for (auto entity : view) {
-			Vec2f direction { 0.f, 0.f };
+		auto* rigidbody = ecs.try_get<ComRigidBody>(player);
+		auto* characterAnimation = ecs.try_get<ComCharacterAnimation>(player);
+		auto* playerCom = ecs.try_get<ComPlayer>(player);
 
-			auto& rigidbody = view.get<ComRigidBody>(entity);
-			auto& characterAnimation = view.get<ComCharacterAnimation>(entity);
-			auto& player = view.get<ComPlayer>(entity);
+		if (rigidbody && characterAnimation && playerCom) {
+			Vec2f direction { 0.f, 0.f };
 
 			// movement
 			if (sharedKeyboard.isKeyDown(SharedKeyboard::LEFT)) {
-				rigidbody.velocity.x = -SPEED;
-				characterAnimation.nextAnimeDir = SharedAnime::NORM_LEFT;
+				rigidbody->velocity.x = -character::gMoveSpeed;
+				characterAnimation->nextAnimeDir = SharedAnime::NORM_LEFT;
 			}
 			else if (sharedKeyboard.isKeyDown(SharedKeyboard::RIGHT)) {
-				rigidbody.velocity.x = SPEED;
-				characterAnimation.nextAnimeDir = SharedAnime::NORM_RIGHT;
+				rigidbody->velocity.x = character::gMoveSpeed;
+				characterAnimation->nextAnimeDir = SharedAnime::NORM_RIGHT;
 			}	
 
-			if (sharedKeyboard.isKeyDown(SharedKeyboard::UP) && player.canJump) {
-				rigidbody.velocity.y = -JUMP;
+			if (sharedKeyboard.isKeyDown(SharedKeyboard::UP) && playerCom->jumpTimer >= playerCom->jumpCooldown) {
+				SDL_Log("Hello");
+				rigidbody->velocity.y = -character::gJump;
+				playerCom->jumpTimer = 0.f;
+
 			}
 
 		}

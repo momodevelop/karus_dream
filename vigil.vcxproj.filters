@@ -195,9 +195,6 @@
     <ClInclude Include="src\app\game\components\com_collectible.h">
       <Filter>src\app\game\components</Filter>
     </ClInclude>
-    <ClInclude Include="src\app\game\components\com_player_jump_trigger.h">
-      <Filter>src\app\game\components</Filter>
-    </ClInclude>
     <ClInclude Include="src\app\game\systems\sys_player.h">
       <Filter>src\app\game\systems</Filter>
     </ClInclude>
