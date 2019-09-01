@@ -25,6 +25,15 @@ namespace yuu {
 		return nullptr;
 	}
 
+	SDL_Surface * SDL_CreateSurfromFromFontX(SDL_Renderer * renderer, const char * path, const char * message, SDL_Color color)
+	{
+		auto font = TTF_OpenFont("img/arcade.ttf", 28);
+		if (!font)
+			return false;
+
+		return TTF_RenderText_Solid(font, message, color);
+	}
+
 	SDL_Rect getSubRect(SDL_Rect rect, int c, int r, int index) {
 		return SDL_Rect{
 			(index % c) * (rect.w - rect.x) / c,

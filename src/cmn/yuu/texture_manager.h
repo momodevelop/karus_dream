@@ -13,6 +13,10 @@ namespace yuu {
 			yuu::SDL_TextureUniquePtr texture;
 			Handler handler;
 			int width, height;
+		};
+
+		struct SpritesheetData {
+			std::vector<SDL_Rect> frames;
 			int rows, cols;
 		};
 
@@ -25,29 +29,63 @@ namespace yuu {
 			return textures.at(index);
 		}
 
-		inline const SDL_Rect& getFrame(Handler index, size_t frameIndex) const {
-			return frames.at(index).at(frameIndex);
+		inline const SpritesheetData& getSpritesheetData(Handler index) const {
+			return spritesheetDatas.at(index);
 		}
 
+		inline const SDL_Rect& getFrame(Handler index, size_t frameIndex) const {
+			return spritesheetDatas.at(index).frames.at(frameIndex);
+		}
 
-		bool addTexture(SDL_Renderer& renderer, Handler handler, const char * path, int width, int height, int rows, int cols)
+		bool addTexture(SDL_Renderer& renderer, Handler handler, const char * path)
 		{
-			textures[handler] = TextureData{
-			SDL_TextureUniquePtr(yuu::SDL_CreateTextureFromPathX(&renderer, path)),
-				handler,
-				width, height,
-				rows, cols,
-			};
+			auto ptr = SDL_TextureUniquePtr(yuu::SDL_CreateTextureFromPathX(&renderer, path));
+			int w, h;
+			SDL_QueryTexture(ptr.get(), NULL, NULL, &w, &h);
+			textures[handler] = TextureData{ std::move(ptr), handler, w, h };
 
 			if (!textures[handler].texture)
 				return false;
 
-			// generate the SDL_Rects
-			auto insertPair = frames.try_emplace(handler);
-			if (!insertPair.second) {
-				textures.erase(handler);
+
+			return true;
+		}
+		bool addTexture(SDL_Renderer& renderer, Handler handler, SDL_Surface* surface) {
+			auto ptr = SDL_TextureUniquePtr(yuu::SDL_CreateTextureFromSurfaceX(&renderer, surface));
+			int w, h;
+			SDL_QueryTexture(ptr.get(), NULL, NULL, &w, &h);
+			textures[handler] = TextureData{ ptr, handler, w, h };
+
+			if (!textures[handler].texture)
+				return false;
+			return true;
+		}
+
+
+		bool addSpritesheet(SDL_Renderer& renderer, Handler handler, const char * path, int rows, int cols)
+		{
+			if (!addTexture(renderer, handler, path)) {
 				return false;
 			}
+			auto& textureData = textures[handler];
+			return addSpritesheetData(handler, textureData.width, textureData.height, rows, cols);
+
+		}
+
+		bool addSpritesheet(SDL_Renderer& renderer, Handler handler, SDL_Surface * surface, int rows, int cols) {
+			if (!addTexture(renderer, handler, surface)) {
+				return false;
+			}
+			auto& textureData = textures[handler];
+			return addSpritesheetData(handler, textureData.width, textureData.height, rows, cols);
+			
+		}
+
+	private:
+		bool addSpritesheetData(Handler handler, int width, int height, int rows, int cols) {
+			auto& data = spritesheetDatas[handler];
+			data.rows = rows;
+			data.cols = cols;
 
 
 			int tileWidth = width / cols;
@@ -55,21 +93,20 @@ namespace yuu {
 			for (int i = 0; i < rows; ++i) {
 				for (int j = 0; j < cols; ++j) {
 					auto index = j + cols * i;
-					(*insertPair.first).second.emplace_back(SDL_Rect{
+					data.frames.emplace_back(SDL_Rect{
 						j * tileWidth,
 						i * tileHeight,
 						tileWidth,
 						tileHeight
-						});
+					});
 				}
 			}
 
 			return true;
 		}
 
-	private:
 		std::unordered_map<Handler, TextureData> textures;
-		std::unordered_map<Handler, std::vector<SDL_Rect>> frames;
+		std::unordered_map<Handler, SpritesheetData> spritesheetDatas;
 
 	};
 }

@@ -5,6 +5,8 @@
 #include <SDL.h>
 #include <yuu/utils.h>
 #include <yuu/texture_manager.h>
+#include <SDL_ttf.h>
+
 
 #include "types.h"
 #include "../state_base.h"
@@ -19,6 +21,9 @@ namespace app::menu {
 		std::array<yuu::SDL_TextureUniquePtr, TEXTURE_MAX> textures;
 		std::function<void()> completedCallback;
 		yuu::TextureManager<TextureHandler> sharedTextures;
+
+		SDL_Texture* textTexture;
+		TTF_Font *font = NULL;
 
 		void renderBackground(SDL_Renderer& renderer);
 	public:

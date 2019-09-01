@@ -5,6 +5,7 @@
 #include <functional>
 #include "SDL.h"
 #include "SDL_image.h"
+#include "SDL_ttf.h"
 
 namespace yuu {
 	template<auto Func>
@@ -28,6 +29,12 @@ namespace yuu {
 	SDL_Surface* SDL_CreateSurfaceFromPathX(
 		SDL_Renderer* renderer,
 		const char* path
+	);
+	SDL_Surface* SDL_CreateSurfromFromFontX(
+		SDL_Renderer* renderer,
+		const char* path,
+		const char * message,
+		SDL_Color color = { 0, 0, 0 }
 	);
 	SDL_Rect getSubRect(SDL_Rect rect, int c, int r, int index);
 

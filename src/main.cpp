@@ -33,10 +33,12 @@
 #pragma comment(lib, "lib/sdl2/lib/x64/SDL2main.lib")
 #pragma comment(lib, "lib/sdl2/lib/x64/SDL2.lib")
 #pragma comment(lib, "lib/sdl2_image/lib/x64/SDL2_image.lib")
+#pragma comment(lib, "lib/sdl_ttf/lib/x64/SDL2_ttf.lib")
 #elif ENVIRONMENT32
 #pragma comment(lib, "lib/sdl2/lib/x86/SDL2main.lib")
 #pragma comment(lib, "lib/sdl2/lib/x86/SDL2.lib")
 #pragma comment(lib, "lib/sdl2_image/lib/x86/SDL2_image.lib")
+#pragma comment(lib, "lib/sdl_ttf/lib/x86/SDL2_ttf.lib")
 #endif
 
 using namespace app;

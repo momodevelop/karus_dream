@@ -79,6 +79,7 @@
       <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
       <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>lib/sdl2/include;src/cmn/;lib/sdl2_image/include;lib/sdl_ttf/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -87,7 +88,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>lib/sdl2/include;src/cmn/;lib/sdl2_image/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>lib/sdl2/include;src/cmn/;lib/sdl2_image/include;lib/sdl_ttf/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
       <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
@@ -96,7 +97,8 @@
     <PostBuildEvent>
       <Command>xcopy /y /d img\* $(OutDir)\img\
 copy lib\sdl2\lib\x64\SDL2.dll $(OutDir)
-copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
+copy lib\sdl2_image\lib\x64\*.dll $(OutDir)
+copy lib\sdl_ttf\lib\x64\*.dll $(OutDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -110,6 +112,7 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
       <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
       <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>lib/sdl2/include;src/cmn/;lib/sdl2_image/include;lib/sdl_ttf/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -124,7 +127,7 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>lib/sdl2/include;src/cmn/;lib/sdl2_image/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>lib/sdl2/include;src/cmn/;lib/sdl2_image/include;lib/sdl_ttf/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
       <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
@@ -137,7 +140,8 @@ copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
     <PostBuildEvent>
       <Command>xcopy /y /d img\* $(OutDir)\img\
 copy lib\sdl2\lib\x64\SDL2.dll $(OutDir)
-copy lib\sdl2_image\lib\x64\*.dll $(OutDir)</Command>
+copy lib\sdl2_image\lib\x64\*.dll $(OutDir)
+copy lib\sdl_ttf\lib\x64\*.dll $(OutDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

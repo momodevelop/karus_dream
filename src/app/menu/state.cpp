@@ -27,10 +27,20 @@ namespace app::menu {
 			SDL_TextureUniquePtr(yuu::SDL_CreateTextureFromPathX(&renderer, "img/karu.png")),
 		}
 	{
-		if (!sharedTextures.addTexture(renderer, GRID_SPRITESHEET, "img/plains.png", 80, 48, 3, 5)) {
+
+		font = TTF_OpenFont("img/arcade.ttf", 28);
+		if (!font)
+			assert(false);
+
+		SDL_Surface* textSurface = TTF_RenderText_Solid(font, "Hello World", { 0, 0, 0 });
+
+		if (!sharedTextures.addSpritesheet(renderer, GRID_SPRITESHEET, "img/plains.png", 3, 5)) {
 			assert(false);
 		}
 
+
+
+		
 	}
 
 	State::~State() noexcept
