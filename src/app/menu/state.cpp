@@ -23,21 +23,34 @@ namespace app::menu {
 		std::function<void()> completedCallback
 	) noexcept :
 		completedCallback(completedCallback),
-		textures {
-			SDL_TextureUniquePtr(yuu::SDL_CreateTextureFromPathX(&renderer, "img/karu.png")),
-		}
+		currentSelection(0)
 	{
 
-		font = TTF_OpenFont("img/arcade.ttf", 28);
-		if (!font)
-			assert(false);
-
-		SDL_Surface* textSurface = TTF_RenderText_Solid(font, "Hello World", { 0, 0, 0 });
-
-		if (!sharedTextures.addSpritesheet(renderer, GRID_SPRITESHEET, "img/plains.png", 3, 5)) {
+		auto font = TTF_OpenFont("img/arcade.ttf", 24);
+		if (!font) {
+			SDL_Log("Failed: %s\n", SDL_GetError());
 			assert(false);
 		}
 
+		auto* titleSurface = TTF_RenderText_Solid(font, "Karu's Dream", { 255, 255, 255 });
+		auto* arrowSurface = TTF_RenderText_Solid(font, ">", { 255, 255, 255 });
+		auto* startSurface = TTF_RenderText_Solid(font, "Start ", { 255, 255, 255 });
+		auto* quitSurface = TTF_RenderText_Solid(font, "Quit", { 255, 255, 255 });
+		auto* madeBySurface = TTF_RenderText_Solid(font, "A simple game by Gerald Wong (Momo)", { 255, 255, 255 });
+
+		if (!sharedTextures.addSpritesheet(renderer, GRID_SPRITESHEET, "img/plains.png", 3, 5) ||
+			!sharedTextures.addTexture(renderer, TITLE, titleSurface) ||
+			!sharedTextures.addTexture(renderer, ARROW, arrowSurface) ||
+			!sharedTextures.addTexture(renderer, START, startSurface) ||
+			!sharedTextures.addTexture(renderer, QUIT, quitSurface) ||
+			!sharedTextures.addTexture(renderer, MADE_BY, madeBySurface)			
+			)
+		{
+			SDL_Log("Failed: %s\n", SDL_GetError());
+			assert(false);
+		}
+
+		TTF_CloseFont(font);
 
 
 		
@@ -62,6 +75,8 @@ namespace app::menu {
 	void State::onRender(SDL_Renderer& renderer) noexcept
 	{
 		renderBackground(renderer);
+		renderTexts(renderer);
+
 
 	}
 
@@ -129,5 +144,34 @@ namespace app::menu {
 				}
 			}
 		}
+	}
+	void State::renderTexts(SDL_Renderer & renderer)
+	{
+		// render title
+		renderTextAt(renderer, TITLE, gDisplayHalfWidth - gDisplayHalfWidth / 2, 80, 2.f);
+	
+		// render menu
+		renderTextAt(renderer, START, gDisplayHalfWidth - 60, 230, 1.2f);
+		renderTextAt(renderer, QUIT, gDisplayHalfWidth - 50, 280, 1.2f);
+		
+		// render arrow
+		switch (currentSelection) {
+		case 1:
+			renderTextAt(renderer, ARROW, gDisplayHalfWidth - 60, 230, 1.2f);
+			break;
+		default:
+			renderTextAt(renderer, ARROW, gDisplayHalfWidth - 90, 230, 1.2f);
+		}
+
+
+		// render made by
+		renderTextAt(renderer, MADE_BY, 10, gDisplayHeight - 22, 0.8f);
+	}
+	void State::renderTextAt(SDL_Renderer & renderer, TextureHandler handler, int x, int y, float scale)
+	{
+		int w, h;
+		SDL_QueryTexture(sharedTextures[handler].texture.get(), 0, 0, &w, &h);
+		SDL_Rect destRec = { x, y, int(w * scale), int(h * scale) };
+		SDL_RenderCopy(&renderer, sharedTextures[handler].texture.get(), nullptr, &destRec);
 	}
 }

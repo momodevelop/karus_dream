@@ -54,7 +54,7 @@ namespace yuu {
 			auto ptr = SDL_TextureUniquePtr(yuu::SDL_CreateTextureFromSurfaceX(&renderer, surface));
 			int w, h;
 			SDL_QueryTexture(ptr.get(), NULL, NULL, &w, &h);
-			textures[handler] = TextureData{ ptr, handler, w, h };
+			textures[handler] = TextureData{ std::move(ptr), handler, w, h };
 
 			if (!textures[handler].texture)
 				return false;

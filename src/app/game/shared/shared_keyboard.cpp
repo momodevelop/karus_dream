@@ -25,17 +25,21 @@ namespace app::game::shared {
 		return true;
 	}
 
-	void SharedKeyboard::handleEvent(SDL_Event & e)
-	{
+	void SharedKeyboard::clear() {
 		keyUp.reset();
 		keyDown.reset();
+	}
 
+	void SharedKeyboard::handleEvent(SDL_Event & e)
+	{
 		if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
+			
 			const auto& itr = mappings.find(e.key.keysym.sym);
 			if (itr != mappings.cend()) {
 				keyHeld[itr->second] = true;
 				keyDown[itr->second] = true;
 			} 
+			
 		}
 
 		else if (e.type == SDL_KEYUP) {

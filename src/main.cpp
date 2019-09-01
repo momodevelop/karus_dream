@@ -50,6 +50,12 @@ SDL_WindowUniquePtr initSDL() {
 		return nullptr;
 	}
 
+	if (TTF_Init() != 0) {
+		SDL_Log(SDL_GetError());
+		return nullptr;
+	}
+	
+
 	auto window = SDL_CreateWindow(
 		"vigil",
 		SDL_WINDOWPOS_CENTERED,

@@ -23,9 +23,12 @@ namespace app::menu {
 		yuu::TextureManager<TextureHandler> sharedTextures;
 
 		SDL_Texture* textTexture;
-		TTF_Font *font = NULL;
+
+		int currentSelection;
 
 		void renderBackground(SDL_Renderer& renderer);
+		void renderTexts(SDL_Renderer& renderer);
+		void renderTextAt(SDL_Renderer & renderer, TextureHandler handler, int x, int y, float scale);
 	public:
 		State(
 			SDL_Renderer& renderer,

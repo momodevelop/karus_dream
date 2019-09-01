@@ -80,7 +80,6 @@ namespace app::game::systems {
 				playerCom->jumpTimer = 0.f;
 
 			}
-
 		}
 
 	}

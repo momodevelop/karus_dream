@@ -18,6 +18,7 @@ namespace app::game::shared {
 		};
 
 		bool init();
+		void clear();
 		void handleEvent(SDL_Event& e);
 		bool isKeyDown(Handler index);
 		bool isKeyUp(Handler index);

@@ -148,6 +148,8 @@ namespace app::game {
 
 	void State::onUpdate(float dt) noexcept
 	{
+		
+
 		// Input
 		SysPlayer::processInput(ecs, sharedKeyboard, player);
 		
@@ -165,6 +167,8 @@ namespace app::game {
 		// Animation
 		SysAnimation::updateCharacterAnimationType(ecs, sharedCharacterAnimations);
 		SysAnimation::updateAnimation(ecs, sharedTextures, dt);
+
+		sharedKeyboard.clear();
 	}
 
 	void State::onExit() noexcept
