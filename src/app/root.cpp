@@ -100,7 +100,7 @@ namespace app {
 		{
 		case STATE_SPLASH:
 			return std::make_unique<splash::State>(renderer, [=](){
-				nextState = STATE_GAME;
+				nextState = STATE_MENU;
 			});
 			break;
 		case STATE_MENU:

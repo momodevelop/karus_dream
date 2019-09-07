@@ -82,12 +82,15 @@ namespace app::menu {
 
 	void State::onHandleEvent(SDL_Event& e) noexcept
 	{
-		/*switch (e.type) {
-		case SDL_EventType::SDL_MOUSEBUTTONDOWN:
-		case SDL_EventType::SDL_KEYDOWN:
-			completedCallback();
-			break;
-		}*/
+		if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
+
+			switch (e.key.keysym.sym) {
+			case SDLK_UP:
+				break;
+			case SDLK_DOWN:
+				break;
+			}
+		}
 	}
 
 	void State::onClean() noexcept
