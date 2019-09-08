@@ -9,8 +9,6 @@ namespace app::game::shared {
 	};
 
 	static constexpr std::array<KeyboardMapping, SharedKeyboard::MAX> keyboardMappings = {
-		KeyboardMapping{ SharedKeyboard::UP, SDLK_UP },
-		KeyboardMapping{ SharedKeyboard::DOWN, SDLK_DOWN },
 		KeyboardMapping{ SharedKeyboard::RIGHT, SDLK_RIGHT },
 		KeyboardMapping{ SharedKeyboard::LEFT, SDLK_LEFT },
 		KeyboardMapping{ SharedKeyboard::Z, SDLK_z },

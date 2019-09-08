@@ -75,7 +75,7 @@ namespace app::game::systems {
 				characterAnimation->nextAnimeDir = SharedAnime::NORM_RIGHT;
 			}	
 
-			if (sharedKeyboard.isKeyDown(SharedKeyboard::UP) && playerCom->jumpTimer >= playerCom->jumpCooldown) {
+			if (sharedKeyboard.isKeyDown(SharedKeyboard::Z) && playerCom->jumpTimer >= playerCom->jumpCooldown) {
 				rigidbody->velocity.y = -character::gJump;
 				playerCom->jumpTimer = 0.f;
 

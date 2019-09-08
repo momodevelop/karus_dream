@@ -9,8 +9,6 @@ namespace app::game::shared {
 	class SharedKeyboard {
 	public:
 		enum Handler {
-			UP,
-			DOWN,
 			LEFT,
 			RIGHT,
 			Z,

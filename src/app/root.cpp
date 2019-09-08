@@ -104,9 +104,10 @@ namespace app {
 			});
 			break;
 		case STATE_MENU:
-			return std::make_unique<menu::State>(renderer,[=]() {
-				nextState = STATE_GAME;
-			});
+			return std::make_unique<menu::State>(renderer,
+				[=]() {	nextState = STATE_GAME; },
+				[=]() { nextState = STATE_EXIT; }			
+			);
 			break;
 		case STATE_GAME:
 			return std::make_unique<game::State>(renderer);

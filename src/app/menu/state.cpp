@@ -20,9 +20,11 @@ namespace app::menu {
 
 	State::State(
 		SDL_Renderer& renderer,
-		std::function<void()> completedCallback
+		std::function<void()> startCallback,
+		std::function<void()> quitCallback
 	) noexcept :
-		completedCallback(completedCallback),
+		startCallback(startCallback),
+		quitCallback(quitCallback),
 		currentSelection(0)
 	{
 
@@ -86,8 +88,20 @@ namespace app::menu {
 
 			switch (e.key.keysym.sym) {
 			case SDLK_UP:
+				--currentSelection;
 				break;
 			case SDLK_DOWN:
+				++currentSelection;
+				break;
+			case SDLK_z:
+				switch (currentSelection) {
+				case 0: // Start
+					startCallback();
+					break;
+				case 1: // Quit
+					quitCallback();
+					break;
+				};
 				break;
 			}
 		}
@@ -154,16 +168,19 @@ namespace app::menu {
 		renderTextAt(renderer, TITLE, gDisplayHalfWidth - gDisplayHalfWidth / 2, 80, 2.f);
 	
 		// render menu
-		renderTextAt(renderer, START, gDisplayHalfWidth - 60, 230, 1.2f);
-		renderTextAt(renderer, QUIT, gDisplayHalfWidth - 50, 280, 1.2f);
+		Vec2i startPosition = { gDisplayHalfWidth - 60, 230 };
+		Vec2i quitPosition = { gDisplayHalfWidth - 50, 280 };
+
+		renderTextAt(renderer, START, startPosition.x, startPosition.y, 1.2f);
+		renderTextAt(renderer, QUIT, quitPosition.x, quitPosition.y, 1.2f);
 		
 		// render arrow
-		switch (currentSelection) {
-		case 1:
-			renderTextAt(renderer, ARROW, gDisplayHalfWidth - 60, 230, 1.2f);
+		switch (currentSelection % 2) {
+		case 1: // QUIT
+			renderTextAt(renderer, ARROW, quitPosition.x - 30, quitPosition.y, 1.2f);
 			break;
-		default:
-			renderTextAt(renderer, ARROW, gDisplayHalfWidth - 90, 230, 1.2f);
+		default: // START 
+			renderTextAt(renderer, ARROW, startPosition.x - 30, startPosition.y, 1.2f);
 		}
 
 

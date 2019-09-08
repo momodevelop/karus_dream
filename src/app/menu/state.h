@@ -19,8 +19,11 @@ namespace app::menu {
 
 	private: // variables
 		std::array<yuu::SDL_TextureUniquePtr, TEXTURE_MAX> textures;
-		std::function<void()> completedCallback;
-		yuu::TextureManager<TextureHandler> sharedTextures;
+
+		std::function<void()> startCallback;
+		std::function<void()> quitCallback;
+		
+			yuu::TextureManager<TextureHandler> sharedTextures;
 
 		SDL_Texture* textTexture;
 
@@ -32,7 +35,8 @@ namespace app::menu {
 	public:
 		State(
 			SDL_Renderer& renderer,
-			std::function<void()> completedCallback
+			std::function<void()> startCallback,
+			std::function<void()> quitCallback
 		) noexcept;
 		~State() noexcept;
 
