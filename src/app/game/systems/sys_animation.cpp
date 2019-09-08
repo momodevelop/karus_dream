@@ -10,7 +10,7 @@
 #include "../components/com_character_animation.h"
 
 #include "../shared/shared_textures.h"
-#include "../shared/shared_character_animations.h"
+#include "../shared/shared_animation_indices.h"
 
 #include "sys_animation.h"
 
@@ -18,7 +18,7 @@
 namespace app::game::systems {
 	using namespace components;
 	using namespace yuu;
-	void SysAnimation::updateCharacterAnimationType(entt::registry & registry, shared::SharedCharacterAnimations & characterAnimations)
+	void SysAnimation::updateCharacterAnimationType(entt::registry & registry, shared::SharedAnimationIndices & characterAnimations)
 	{
 		auto view = registry.view<ComAnimation, ComCharacterAnimation>();
 		for (auto entity : view) {

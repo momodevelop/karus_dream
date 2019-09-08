@@ -49,13 +49,14 @@ namespace app::game {
 			assert(false); // throw instead?
 		}
 
-		if (!sharedCharacterAnimations.init()) {
+		if (!SharedAnimationIndices.init()) {
 			assert(false);
 		}
 
 		// init textures
 		if (!sharedTextures.addSpritesheet(renderer, KARU_SPRITESHEET, "img/spritesheet_karu.png", 4, 3) ||
-			!sharedTextures.addSpritesheet(renderer, GRID_SPRITESHEET, "img/plains.png", 3, 5)) {
+			!sharedTextures.addSpritesheet(renderer, GRID_SPRITESHEET, "img/plains.png", 3, 5) ||
+			!sharedTextures.addSpritesheet(renderer, COIN_SPRITESHEET, "img/coin.png", 1, 6)) {
 			assert(false);
 		}
 
@@ -77,7 +78,7 @@ namespace app::game {
 			renderable.textureHandler = TextureHandler::KARU_SPRITESHEET;
 
 			auto& animation = ecs.assign<ComAnimation>(entity);
-			auto& indices = sharedCharacterAnimations[SharedCharacterAnimations::STOP_DOWN];
+			auto& indices = SharedAnimationIndices[SharedAnimationIndices::CHARACTER_STOP_DOWN];
 			animation.indices.assign( indices.cbegin(), indices.cend());
 			animation.speed = character::gAnimeSpeed;
 			
@@ -85,7 +86,7 @@ namespace app::game {
 			boxCollider.box = { 0.f, 0.f, (float)gTileSize, (float)gTileSize };
 			
 			auto& characterAnimation = ecs.assign<ComCharacterAnimation>(entity);
-			characterAnimation.currentAnimeDir = characterAnimation.nextAnimeDir = SharedCharacterAnimations::STOP_DOWN;
+			characterAnimation.currentAnimeDir = characterAnimation.nextAnimeDir = SharedAnimationIndices::CHARACTER_STOP_DOWN;
 
 			// jump trigger children
 			for (int i = 0; i < 2; ++i)
@@ -114,6 +115,8 @@ namespace app::game {
 			ecs.assign<ComTransform>(entity, Vec2f{-10.f, 0.f}, Vec2f{});
 			ecs.assign<ComBoxCollider>(entity, ryoji::aabb::AABB2f{ 0.f, 0.f, float(10.f), float(gDisplayHeight) });
 			ecs.assign<ComObstacle>(entity);
+
+
 		}
 
 		// right wall for player
@@ -133,6 +136,13 @@ namespace app::game {
 			ecs.assign<ComCollectible>(entity);
 			ecs.assign<ComBoxCollider>(entity, ryoji::aabb::AABB2f{ 0.f, 0.f, float(gTileSize), float(gTileSize) });
 
+			auto& renderable = ecs.assign<ComRenderable>(entity);
+			renderable.textureHandler = TextureHandler::COIN_SPRITESHEET;
+
+			auto& animation = ecs.assign<ComAnimation>(entity);
+			auto& indices = SharedAnimationIndices[SharedAnimationIndices::CHARACTER_STOP_DOWN];
+			animation.indices.assign(indices.cbegin(), indices.cend());
+			animation.speed = character::gAnimeSpeed;
 		}
 	}
 
@@ -165,7 +175,7 @@ namespace app::game {
 		SysPlayer::updateJumpTriggerPosition(ecs, player);
 
 		// Animation
-		SysAnimation::updateCharacterAnimationType(ecs, sharedCharacterAnimations);
+		SysAnimation::updateCharacterAnimationType(ecs, SharedAnimationIndices);
 		SysAnimation::updateAnimation(ecs, sharedTextures, dt);
 
 		sharedKeyboard.clear();

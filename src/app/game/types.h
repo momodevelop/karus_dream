@@ -7,6 +7,7 @@ namespace app::game {
 	enum TextureHandler {
 		KARU_SPRITESHEET,
 		GRID_SPRITESHEET,
+		COIN_SPRITESHEET,
 		MAX
 	};
 }

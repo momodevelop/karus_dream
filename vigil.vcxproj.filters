@@ -64,13 +64,7 @@
     <ClCompile Include="src\app\game\state.cpp">
       <Filter>src\app\game</Filter>
     </ClCompile>
-    <ClCompile Include="src\app\game\shared\shared_textures.cpp">
-      <Filter>src\app\game\shared</Filter>
-    </ClCompile>
     <ClCompile Include="src\app\game\shared\shared_keyboard.cpp">
-      <Filter>src\app\game\shared</Filter>
-    </ClCompile>
-    <ClCompile Include="src\app\game\shared\shared_character_animations.cpp">
       <Filter>src\app\game\shared</Filter>
     </ClCompile>
     <ClCompile Include="src\app\game\systems\sys_physics.cpp">
@@ -90,6 +84,12 @@
     </ClCompile>
     <ClCompile Include="src\app\menu\state.cpp">
       <Filter>src\app\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="src\app\game\managers\manager_spawn.cpp">
+      <Filter>src\app\game\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\app\game\shared\shared_animation_indices.cpp">
+      <Filter>src\app\game\shared</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -159,9 +159,6 @@
     <ClInclude Include="src\app\game\components\com_character_animation.h">
       <Filter>src\app\game\components</Filter>
     </ClInclude>
-    <ClInclude Include="src\app\game\shared\shared_character_animations.h">
-      <Filter>src\app\game\shared</Filter>
-    </ClInclude>
     <ClInclude Include="src\app\game\components\com_player.h">
       <Filter>src\app\game\components</Filter>
     </ClInclude>
@@ -212,6 +209,12 @@
     </ClInclude>
     <ClInclude Include="src\cmn\yuu\texture_manager.h">
       <Filter>src\cmn\yuu</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\managers\manager_spawn.h">
+      <Filter>src\app\game\managers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\shared\shared_animation_indices.h">
+      <Filter>src\app\game\shared</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

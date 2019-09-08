@@ -14,7 +14,7 @@
 #include "../components/com_box_collider.h"
 
 #include "../shared/shared_keyboard.h"
-#include "../shared/shared_character_animations.h"
+#include "../shared/shared_animation_indices.h"
 
 #include "sys_player.h"
 
@@ -56,7 +56,7 @@ namespace app::game::systems {
 	void SysPlayer::processInput(entt::registry& ecs, SharedKeyboard& sharedKeyboard, entt::entity player) {
 		using namespace character;
 		
-		using SharedAnime = SharedCharacterAnimations; // so that I don't have to type lol
+		using SharedAnime = SharedAnimationIndices; // so that I don't have to type lol
 
 		auto* rigidbody = ecs.try_get<ComRigidBody>(player);
 		auto* characterAnimation = ecs.try_get<ComCharacterAnimation>(player);
@@ -68,11 +68,11 @@ namespace app::game::systems {
 			// movement
 			if (sharedKeyboard.isKeyDown(SharedKeyboard::LEFT)) {
 				rigidbody->velocity.x = -character::gMoveSpeed;
-				characterAnimation->nextAnimeDir = SharedAnime::NORM_LEFT;
+				characterAnimation->nextAnimeDir = SharedAnime::CHARACTER_NORM_LEFT;
 			}
 			else if (sharedKeyboard.isKeyDown(SharedKeyboard::RIGHT)) {
 				rigidbody->velocity.x = character::gMoveSpeed;
-				characterAnimation->nextAnimeDir = SharedAnime::NORM_RIGHT;
+				characterAnimation->nextAnimeDir = SharedAnime::CHARACTER_NORM_RIGHT;
 			}	
 
 			if (sharedKeyboard.isKeyDown(SharedKeyboard::Z) && playerCom->jumpTimer >= playerCom->jumpCooldown) {

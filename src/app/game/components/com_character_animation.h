@@ -2,17 +2,17 @@
 #define __APP_GAME_COMPONENTS_CHARACTER_ANIMATION_H__
 
 #include <constants.h>
-#include "../shared/shared_character_animations.h"
+#include "../shared/shared_animation_indices.h"
 
 
 namespace app::game::components {
 	struct ComCharacterAnimation {
-		shared::SharedCharacterAnimations::Direction currentAnimeDir;
-		shared::SharedCharacterAnimations::Direction nextAnimeDir;
+		shared::SharedAnimationIndices::Indices currentAnimeDir;
+		shared::SharedAnimationIndices::Indices nextAnimeDir;
 		
 		ComCharacterAnimation() noexcept :
-			currentAnimeDir(shared::SharedCharacterAnimations::STOP_DOWN),
-			nextAnimeDir(shared::SharedCharacterAnimations::STOP_DOWN)
+			currentAnimeDir(shared::SharedAnimationIndices::CHARACTER_STOP_DOWN),
+			nextAnimeDir(shared::SharedAnimationIndices::CHARACTER_STOP_DOWN)
 		{}
 
 	};

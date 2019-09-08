@@ -145,9 +145,9 @@ copy lib\sdl_ttf\lib\x64\*.dll $(OutDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\app\game\shared\shared_character_animations.cpp" />
+    <ClCompile Include="src\app\game\managers\manager_spawn.cpp" />
+    <ClCompile Include="src\app\game\shared\shared_animation_indices.cpp" />
     <ClCompile Include="src\app\game\shared\shared_keyboard.cpp" />
-    <ClCompile Include="src\app\game\shared\shared_textures.cpp" />
     <ClCompile Include="src\app\game\state.cpp" />
     <ClCompile Include="src\app\game\systems\sys_debug.cpp" />
     <ClCompile Include="src\app\game\systems\sys_physics.cpp" />
@@ -174,7 +174,8 @@ copy lib\sdl_ttf\lib\x64\*.dll $(OutDir)</Command>
     <ClInclude Include="src\app\game\components\com_renderable.h" />
     <ClInclude Include="src\app\game\components\com_rigidbody.h" />
     <ClInclude Include="src\app\game\components\com_transform.h" />
-    <ClInclude Include="src\app\game\shared\shared_character_animations.h" />
+    <ClInclude Include="src\app\game\managers\manager_spawn.h" />
+    <ClInclude Include="src\app\game\shared\shared_animation_indices.h" />
     <ClInclude Include="src\app\game\shared\shared_keyboard.h" />
     <ClInclude Include="src\app\game\shared\shared_textures.h" />
     <ClInclude Include="src\app\game\state.h" />
