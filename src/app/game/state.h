@@ -14,6 +14,8 @@
 #include "shared/shared_textures.h"
 #include "shared/shared_keyboard.h"
 #include "shared/shared_animation_indices.h"
+#include "shared/shared_spawner.h"
+#include "shared/shared_score.h"
 
 #include "../state_base.h"
 
@@ -32,7 +34,9 @@ namespace app::game {
 
 		shared::SharedTextures sharedTextures;
 		shared::SharedKeyboard sharedKeyboard;
-		shared::SharedAnimationIndices SharedAnimationIndices;
+		shared::SharedAnimationIndices sharedAnimationIndices;
+		shared::SharedSpawner SharedSpawner;
+		shared::SharedScore SharedScore;
 
 	private:
 		State(const State&) = delete;

@@ -41,16 +41,30 @@ namespace app::game {
 	{
 	}
 
-	State::State(SDL_Renderer& renderer)
+	State::State(SDL_Renderer& renderer) :
+		SharedSpawner(ecs, sharedAnimationIndices),
+		SharedScore(ecs, sharedTextures)
 	{
-	
-
 		if (!sharedKeyboard.init()) {
 			assert(false); // throw instead?
 		}
 
-		if (!SharedAnimationIndices.init()) {
+		if (!sharedAnimationIndices.init()) {
 			assert(false);
+		}
+
+		auto font = TTF_OpenFont("img/arcade.ttf", 24);
+		if (!font) {
+			SDL_Log("Failed: %s\n", SDL_GetError());
+			assert(false);
+		}
+
+		// init score
+		for (char c = '0'; c <= '9'; ++c) {
+			auto* text = TTF_RenderText_Solid(font, "0", { 255, 255, 255 });
+			if (!sharedTextures.addTexture(renderer, (TextureHandler)(ZERO + c - '0'), text)) {
+				assert(false);
+			}
 		}
 
 		// init textures
@@ -78,7 +92,7 @@ namespace app::game {
 			renderable.textureHandler = TextureHandler::KARU_SPRITESHEET;
 
 			auto& animation = ecs.assign<ComAnimation>(entity);
-			auto& indices = SharedAnimationIndices[SharedAnimationIndices::CHARACTER_STOP_DOWN];
+			auto& indices = sharedAnimationIndices[SharedAnimationIndices::CHARACTER_STOP_DOWN];
 			animation.indices.assign( indices.cbegin(), indices.cend());
 			animation.speed = character::gAnimeSpeed;
 			
@@ -129,21 +143,7 @@ namespace app::game {
 		}
 		
 
-		// Test for collectible
-		{
-			auto entity = ecs.create();
-			ecs.assign<ComTransform>(entity, Vec2f{10.f, gSpawnableHeight }, Vec2f{});
-			ecs.assign<ComCollectible>(entity);
-			ecs.assign<ComBoxCollider>(entity, ryoji::aabb::AABB2f{ 0.f, 0.f, float(gTileSize), float(gTileSize) });
 
-			auto& renderable = ecs.assign<ComRenderable>(entity);
-			renderable.textureHandler = TextureHandler::COIN_SPRITESHEET;
-
-			auto& animation = ecs.assign<ComAnimation>(entity);
-			auto& indices = SharedAnimationIndices[SharedAnimationIndices::CHARACTER_STOP_DOWN];
-			animation.indices.assign(indices.cbegin(), indices.cend());
-			animation.speed = character::gAnimeSpeed;
-		}
 	}
 
 	State::~State()
@@ -152,17 +152,16 @@ namespace app::game {
 
 	void State::onEnter() noexcept
 	{
-		SDL_Log("game::State::onEnter()");
-
 	}
 
 	void State::onUpdate(float dt) noexcept
 	{
-		
-
 		// Input
 		SysPlayer::processInput(ecs, sharedKeyboard, player);
 		
+
+
+
 		// update player variables
 		SysPlayer::update(ecs, player, dt);
 
@@ -175,15 +174,16 @@ namespace app::game {
 		SysPlayer::updateJumpTriggerPosition(ecs, player);
 
 		// Animation
-		SysAnimation::updateCharacterAnimationType(ecs, SharedAnimationIndices);
+		SysAnimation::updateCharacterAnimationType(ecs, sharedAnimationIndices);
 		SysAnimation::updateAnimation(ecs, sharedTextures, dt);
 
+
+		SharedSpawner.update(dt);
 		sharedKeyboard.clear();
 	}
 
 	void State::onExit() noexcept
 	{
-		SDL_Log("game::State::onExit()");
 	}
 
 	void State::onRender(SDL_Renderer& renderer) noexcept
@@ -194,12 +194,12 @@ namespace app::game {
 		SysDebug::renderBoxColliders(ecs, renderer);
 #endif
 		SysRenderer::renderForeground(renderer, sharedTextures);
+		SharedScore.render(renderer);
 		SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);
 	}
 
 	void State::onHandleEvent(SDL_Event& e) noexcept
 	{
-		
 		sharedKeyboard.handleEvent(e);
 	}
 

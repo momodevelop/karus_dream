@@ -32,9 +32,6 @@
     <Filter Include="src\app\game\shared">
       <UniqueIdentifier>{95aa5139-7297-4b1b-9a52-6ea662b943c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\app\game\managers">
-      <UniqueIdentifier>{3c11f86d-ae04-4c87-91e9-392aba4af53e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\app\menu">
       <UniqueIdentifier>{9b24b8fc-aad2-46ef-be59-c260d3ceb107}</UniqueIdentifier>
     </Filter>
@@ -85,10 +82,13 @@
     <ClCompile Include="src\app\menu\state.cpp">
       <Filter>src\app\menu</Filter>
     </ClCompile>
-    <ClCompile Include="src\app\game\managers\manager_spawn.cpp">
-      <Filter>src\app\game\managers</Filter>
-    </ClCompile>
     <ClCompile Include="src\app\game\shared\shared_animation_indices.cpp">
+      <Filter>src\app\game\shared</Filter>
+    </ClCompile>
+    <ClCompile Include="src\app\game\shared\shared_score.cpp">
+      <Filter>src\app\game\shared</Filter>
+    </ClCompile>
+    <ClCompile Include="src\app\game\shared\shared_spawner.cpp">
       <Filter>src\app\game\shared</Filter>
     </ClCompile>
   </ItemGroup>
@@ -210,10 +210,13 @@
     <ClInclude Include="src\cmn\yuu\texture_manager.h">
       <Filter>src\cmn\yuu</Filter>
     </ClInclude>
-    <ClInclude Include="src\app\game\managers\manager_spawn.h">
-      <Filter>src\app\game\managers</Filter>
-    </ClInclude>
     <ClInclude Include="src\app\game\shared\shared_animation_indices.h">
+      <Filter>src\app\game\shared</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\shared\shared_spawner.h">
+      <Filter>src\app\game\shared</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\shared\shared_score.h">
       <Filter>src\app\game\shared</Filter>
     </ClInclude>
   </ItemGroup>

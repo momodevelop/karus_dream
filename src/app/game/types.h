@@ -8,6 +8,10 @@ namespace app::game {
 		KARU_SPRITESHEET,
 		GRID_SPRITESHEET,
 		COIN_SPRITESHEET,
+
+		ZERO, ONE, TWO, THREE, FOUR,
+		FIVE, SIX, SEVEN, EIGHT, NINE,
+
 		MAX
 	};
 }
