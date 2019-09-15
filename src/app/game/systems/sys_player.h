@@ -6,7 +6,7 @@ namespace app::game::systems {
 	class SysPlayer {
 	public:
 		static void update(entt::registry& ecs, entt::entity player, float dt);
-		static void updateJumpTriggerPosition(entt::registry& ecs, entt::entity player);
+		static void updateTriggerPositions(entt::registry& ecs, entt::entity player);
 		static void processInput(entt::registry& registry, shared::SharedKeyboard& sharedKeyboard, entt::entity player);
 	};
 

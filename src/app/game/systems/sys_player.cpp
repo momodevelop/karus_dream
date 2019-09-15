@@ -34,7 +34,7 @@ namespace app::game::systems {
 		}
 	}
 
-	void SysPlayer::updateJumpTriggerPosition(entt::registry & ecs, entt::entity player)
+	void SysPlayer::updateTriggerPositions(entt::registry & ecs, entt::entity player)
 	{
 		auto* playerTransform = ecs.try_get<ComTransform>(player);
 		auto* playerBox = ecs.try_get<ComBoxCollider>(player);
@@ -49,6 +49,13 @@ namespace app::game::systems {
 			auto jumpTrigger2 = ecs.try_get<ComTransform>(playerCom->jumpTriggers[1]);
 			if (jumpTrigger2) {
 				jumpTrigger2->position = playerTransform->position + Vec2f{ playerBox->box.max[0] - gJumpTriggerSize - 5.f, playerBox->box.max[1] };
+			}
+
+			auto stickTrigger = ecs.try_get<ComTransform>(playerCom->stickTrigger);
+			if (stickTrigger) {
+				stickTrigger->position = playerTransform->position + Vec2f{ 
+					(playerBox->box.max[0] - playerBox->box.min[0])/2 - gStickTriggerWidth * 0.5f,
+					(playerBox->box.max[1] - playerBox->box.min[1])/2 - gStickTriggerHeight * 0.5f };
 			}
 		}
 	}

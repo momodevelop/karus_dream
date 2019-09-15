@@ -9,6 +9,7 @@ namespace app::game::components {
 		float jumpCooldown = 0.5f;
 		float jumpTimer = 0.f;
 		std::array<entt::entity,2> jumpTriggers;
+		entt::entity stickTrigger;
 	};
 }
 

@@ -21,6 +21,8 @@ constexpr static int gHalfTileSize = gTileSize/2;
 constexpr static float gFloorY = float(gDisplayHalfHeight);
 constexpr static float gSpawnableHeight = float(gDisplayHalfHeight - gTileSize);
 constexpr static float gJumpTriggerSize = 1.f;
+constexpr static float gStickTriggerWidth = 96.f;
+constexpr static float gStickTriggerHeight = 24.f;
 
 
 #endif

@@ -117,6 +117,14 @@ namespace app::game {
 				playerEntity.jumpTriggers[i] = entity;
 			}
 
+			// stick child
+			{
+				auto entity = ecs.create();
+				ecs.assign<ComTransform>(entity);
+				ecs.assign<ComBoxCollider>(entity, AABB2f{ 0.f, 0.f, gStickTriggerWidth, gStickTriggerHeight });
+				playerEntity.stickTrigger = entity;
+			}
+
 			this->player = entity;
 		}
 
@@ -177,7 +185,7 @@ namespace app::game {
 		SysCollision::resolvePlayerCollideObstacle(ecs, player);
 		SysCollision::resolvePlayerCollideCollectible(ecs, player, sharedScore);
 		SysCollision::resolvePlayerJumpTriggerCollision(ecs, player);
-		SysPlayer::updateJumpTriggerPosition(ecs, player);
+		SysPlayer::updateTriggerPositions(ecs, player);
 
 		// Animation
 		SysAnimation::updateCharacterAnimationType(ecs, sharedAnimationIndices);
