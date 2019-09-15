@@ -26,7 +26,7 @@ namespace app::game::shared {
 	SharedScore::SharedScore(entt::registry& ecs, SharedTextures& textures)
 		: textures(textures), ecs(ecs)
 	{
-		addScore(9999);
+		addScore(0);
 	}
 	SharedScore::~SharedScore()
 	{

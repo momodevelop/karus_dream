@@ -60,9 +60,11 @@ namespace app::game {
 		}
 
 		// init score
-		for (char c = '0'; c <= '9'; ++c) {
-			auto* text = TTF_RenderText_Solid(font, "0", { 255, 255, 255 });
-			if (!sharedTextures.addTexture(renderer, (TextureHandler)(ZERO + c - '0'), text)) {
+		char buffer[2] = " ";
+		for (int i = 0; i < 10; ++i) {
+			buffer[0] = '0' + i;
+			auto* text = TTF_RenderText_Solid(font, buffer, { 255, 255, 255 });
+			if (!sharedTextures.addTexture(renderer, (TextureHandler)(ZERO + i), text)) {
 				assert(false);
 			}
 		}
