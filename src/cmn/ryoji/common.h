@@ -17,6 +17,16 @@ namespace ryoji::math {
 	inline size_t get1dFrom2d(size_t x, size_t y, size_t gridColumns) {
 		return x + gridColumns * y;
 	}
+
+	template<typename T>
+	T pow(T lhs, T rhs) {
+		T result = lhs;
+		for (size_t i = 0; i < rhs - 1; ++i) {
+			result *= lhs;
+		}
+
+		return result;
+	}
 }
 
 #endif

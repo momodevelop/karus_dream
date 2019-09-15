@@ -11,6 +11,7 @@ namespace app::game {
 
 		ZERO, ONE, TWO, THREE, FOUR,
 		FIVE, SIX, SEVEN, EIGHT, NINE,
+		TEXT_SCORE,
 
 		MAX
 	};

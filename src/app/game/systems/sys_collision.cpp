@@ -9,6 +9,8 @@
 #include "../components/com_collectible.h"
 #include "../components/com_rigidbody.h"
 
+#include "../shared/shared_score.h"
+
 #include "sys_collision.h"
 
 namespace app::game::systems {
@@ -67,7 +69,7 @@ namespace app::game::systems {
 		
 	}
 
-	void SysCollision::resolvePlayerCollideCollectible(entt::registry & ecs, entt::entity playerEntity)
+	void SysCollision::resolvePlayerCollideCollectible(entt::registry & ecs, entt::entity playerEntity, shared::SharedScore& sharedScore)
 	{
 		auto collectibles = ecs.view<ComTransform, ComBoxCollider, ComCollectible>();
 
@@ -92,6 +94,7 @@ namespace app::game::systems {
 
 				if (aabb::isAABBColliding(playerBoxCopy.box, collectibleBox.box)) {
 					ecs.destroy(collectible);
+					sharedScore.addScore(1);
 				}
 
 

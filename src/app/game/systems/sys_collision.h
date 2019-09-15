@@ -10,7 +10,7 @@ namespace app::game::systems {
 		static void syncBoxColliderToTransform(components::ComBoxCollider&, const components::ComTransform&);
 	public:
 		static void resolvePlayerJumpTriggerCollision(entt::registry& ecs, entt::entity player);
-		static void resolvePlayerCollideCollectible(entt::registry& ecs, entt::entity player);
+		static void resolvePlayerCollideCollectible(entt::registry& ecs, entt::entity player, shared::SharedScore& sharedScore);
 		static void resolvePlayerCollideObstacle(entt::registry& ecs, entt::entity player);
 	};
 }

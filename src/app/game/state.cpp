@@ -42,8 +42,8 @@ namespace app::game {
 	}
 
 	State::State(SDL_Renderer& renderer) :
-		SharedSpawner(ecs, sharedAnimationIndices),
-		SharedScore(ecs, sharedTextures)
+		sharedSpawner(ecs, sharedAnimationIndices),
+		sharedScore(ecs, sharedTextures)
 	{
 		if (!sharedKeyboard.init()) {
 			assert(false); // throw instead?
@@ -65,6 +65,10 @@ namespace app::game {
 			if (!sharedTextures.addTexture(renderer, (TextureHandler)(ZERO + c - '0'), text)) {
 				assert(false);
 			}
+		}
+		auto* scoreText = TTF_RenderText_Solid(font, "Score: ", { 255, 255, 255 });
+		if (!sharedTextures.addTexture(renderer, TEXT_SCORE, scoreText)) {
+			assert(false);
 		}
 
 		// init textures
@@ -169,7 +173,7 @@ namespace app::game {
 		SysPhysics::updateConstantForces(ecs);
 		SysPhysics::updateMovement(ecs, 1/60.f); //fixed time step for physics
 		SysCollision::resolvePlayerCollideObstacle(ecs, player);
-		SysCollision::resolvePlayerCollideCollectible(ecs, player);
+		SysCollision::resolvePlayerCollideCollectible(ecs, player, sharedScore);
 		SysCollision::resolvePlayerJumpTriggerCollision(ecs, player);
 		SysPlayer::updateJumpTriggerPosition(ecs, player);
 
@@ -178,7 +182,7 @@ namespace app::game {
 		SysAnimation::updateAnimation(ecs, sharedTextures, dt);
 
 
-		SharedSpawner.update(dt);
+		sharedSpawner.update(dt);
 		sharedKeyboard.clear();
 	}
 
@@ -194,7 +198,7 @@ namespace app::game {
 		SysDebug::renderBoxColliders(ecs, renderer);
 #endif
 		SysRenderer::renderForeground(renderer, sharedTextures);
-		SharedScore.render(renderer);
+		sharedScore.render(renderer);
 		SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);
 	}
 

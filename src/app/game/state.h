@@ -35,8 +35,8 @@ namespace app::game {
 		shared::SharedTextures sharedTextures;
 		shared::SharedKeyboard sharedKeyboard;
 		shared::SharedAnimationIndices sharedAnimationIndices;
-		shared::SharedSpawner SharedSpawner;
-		shared::SharedScore SharedScore;
+		shared::SharedSpawner sharedSpawner;
+		shared::SharedScore sharedScore;
 
 	private:
 		State(const State&) = delete;
