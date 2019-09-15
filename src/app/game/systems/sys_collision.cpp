@@ -27,7 +27,7 @@ namespace app::game::systems {
 
 	void SysCollision::resolvePlayerJumpTriggerCollision(entt::registry & ecs, entt::entity playerEntity)
 	{
-		auto obstacles = ecs.view<ComTransform, ComBoxCollider, ComObstacle>();
+		auto obstacles = ecs.view<ComTransform, ComBoxCollider, ComPlayerObstacle>();
 
 		auto* playerCom = ecs.try_get<ComPlayer>(playerEntity);
 		if (!playerCom)
@@ -104,8 +104,7 @@ namespace app::game::systems {
 
 	void SysCollision::resolvePlayerCollideObstacle(entt::registry & ecs, entt::entity playerEntity)
 	{
-		auto obstacles = ecs.view<ComTransform, ComBoxCollider, ComObstacle>();
-		auto players = ecs.view<ComTransform, ComBoxCollider, ComRigidBody, ComPlayer>();
+		auto obstacles = ecs.view<ComTransform, ComBoxCollider, ComPlayerObstacle>();
 
 		auto* playerTransform = ecs.try_get<ComTransform>(playerEntity);
 		auto* playerBox = ecs.try_get<ComBoxCollider>(playerEntity);

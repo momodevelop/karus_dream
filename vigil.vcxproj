@@ -170,6 +170,7 @@ copy lib\sdl_ttf\lib\x64\*.dll $(OutDir)</Command>
     <ClInclude Include="src\app\game\components\com_character_animation.h" />
     <ClInclude Include="src\app\game\components\com_collectible.h" />
     <ClInclude Include="src\app\game\components\com_constant_force.h" />
+    <ClInclude Include="src\app\game\components\com_enemy.h" />
     <ClInclude Include="src\app\game\components\com_obstacle.h" />
     <ClInclude Include="src\app\game\components\com_player.h" />
     <ClInclude Include="src\app\game\components\com_renderable.h" />

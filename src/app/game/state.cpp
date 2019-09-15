@@ -17,6 +17,7 @@
 #include "components/com_rigidbody.h"
 #include "components/com_constant_force.h"
 #include "components/com_collectible.h"
+#include "components/com_enemy.h"
 
 #include "systems/sys_renderer.h"
 #include "systems/sys_animation.h"
@@ -134,7 +135,8 @@ namespace app::game {
 			ecs.assign<ComTransform>(entity, Vec2f{ 0.f , gDisplayHalfHeight }, Vec2f{ 0.f, 0.f });
 			auto& boxCollider = ecs.assign<ComBoxCollider>(entity);
 			boxCollider.box = { 0.f, 0.f, (float)gDisplayWidth - 1, (float)gDisplayHalfHeight };
-			ecs.assign<ComObstacle>(entity);
+			ecs.assign<ComPlayerObstacle>(entity);
+			ecs.assign<ComEnemyObstacle>(entity);
 		}
 
 		// left wall for player
@@ -142,7 +144,7 @@ namespace app::game {
 			auto entity = ecs.create();
 			ecs.assign<ComTransform>(entity, Vec2f{-10.f, 0.f}, Vec2f{});
 			ecs.assign<ComBoxCollider>(entity, ryoji::aabb::AABB2f{ 0.f, 0.f, float(10.f), float(gDisplayHeight) });
-			ecs.assign<ComObstacle>(entity);
+			ecs.assign<ComPlayerObstacle>(entity);
 
 
 		}
@@ -153,9 +155,17 @@ namespace app::game {
 			ecs.assign<ComTransform>(entity, Vec2f{ gDisplayWidth - 1, 0.f }, Vec2f{});
 			auto& boxCollider = ecs.assign<ComBoxCollider>(entity);
 			boxCollider.box = { 0.f, 0.f, float(10.f), float(gDisplayHeight) };
-			ecs.assign<ComObstacle>(entity);
+			ecs.assign<ComPlayerObstacle>(entity);
 		}
 		
+		// test enemy
+		{
+			auto entity = ecs.create();
+			ecs.assign<ComTransform>(entity, Vec2f{ 100.f, 100.f }, Vec2f{});
+			auto& boxCollider = ecs.assign<ComBoxCollider>(entity);
+			boxCollider.box = { 0.f, 0.f, gTileSize, gTileSize };
+			ecs.assign<ComEnemy>(entity);
+		}
 
 
 	}

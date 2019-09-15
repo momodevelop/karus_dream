@@ -219,5 +219,8 @@
     <ClInclude Include="src\app\game\shared\shared_score.h">
       <Filter>src\app\game\shared</Filter>
     </ClInclude>
+    <ClInclude Include="src\app\game\components\com_enemy.h">
+      <Filter>src\app\game\components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
