@@ -24,5 +24,8 @@ constexpr static float gJumpTriggerSize = 1.f;
 constexpr static float gStickTriggerWidth = 96.f;
 constexpr static float gStickTriggerHeight = 24.f;
 
+inline bool isWithinScreen(int x, int y) {
+	return x >= 0 && x < gDisplayWidth && y >= 0 && y < gDisplayHeight;
+}
 
 #endif

@@ -24,6 +24,7 @@
 #include "systems/sys_player.h"
 #include "systems/sys_collision.h"
 #include "systems/sys_physics.h"
+#include "systems/sys_ai.h"
 #include "systems/sys_debug.h"
 
 
@@ -191,6 +192,7 @@ namespace app::game {
 		// Physics 
 		SysPhysics::updateConstantForces(ecs);
 		SysPhysics::updateMovement(ecs, 1/60.f); //fixed time step for physics
+		SysAi::updateAiMovement(ecs, dt);
 		SysCollision::resolvePlayerCollideObstacle(ecs, player);
 		SysCollision::resolvePlayerCollideCollectible(ecs, player, sharedScore);
 		SysCollision::resolvePlayerJumpTriggerCollision(ecs, player);
@@ -200,6 +202,7 @@ namespace app::game {
 		SysAnimation::updateCharacterAnimationType(ecs, sharedAnimationIndices);
 		SysAnimation::updateAnimation(ecs, sharedTextures, dt);
 
+		
 
 		sharedSpawner.update(dt);
 		sharedKeyboard.clear();
