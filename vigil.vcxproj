@@ -150,6 +150,7 @@ copy lib\sdl_ttf\lib\x64\*.dll $(OutDir)</Command>
     <ClCompile Include="src\app\game\shared\shared_score.cpp" />
     <ClCompile Include="src\app\game\shared\shared_spawner.cpp" />
     <ClCompile Include="src\app\game\state.cpp" />
+    <ClCompile Include="src\app\game\systems\sys_ai.cpp" />
     <ClCompile Include="src\app\game\systems\sys_debug.cpp" />
     <ClCompile Include="src\app\game\systems\sys_physics.cpp" />
     <ClCompile Include="src\app\game\systems\sys_collision.cpp" />
@@ -182,6 +183,7 @@ copy lib\sdl_ttf\lib\x64\*.dll $(OutDir)</Command>
     <ClInclude Include="src\app\game\shared\shared_spawner.h" />
     <ClInclude Include="src\app\game\shared\shared_textures.h" />
     <ClInclude Include="src\app\game\state.h" />
+    <ClInclude Include="src\app\game\systems\sys_ai.h" />
     <ClInclude Include="src\app\game\systems\sys_physics.h" />
     <ClInclude Include="src\app\game\systems\sys_animation.h" />
     <ClInclude Include="src\app\game\systems\sys_debug.h" />

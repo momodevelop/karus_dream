@@ -4,7 +4,8 @@
 
 namespace app::game::components {
 	struct ComEnemy {
-		uint8_t hp{};
+		uint8_t hp{3};
+		bool entered{false};
 	};
 }
 

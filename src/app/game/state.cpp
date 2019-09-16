@@ -136,7 +136,6 @@ namespace app::game {
 			auto& boxCollider = ecs.assign<ComBoxCollider>(entity);
 			boxCollider.box = { 0.f, 0.f, (float)gDisplayWidth - 1, (float)gDisplayHalfHeight };
 			ecs.assign<ComPlayerObstacle>(entity);
-			ecs.assign<ComEnemyObstacle>(entity);
 		}
 
 		// left wall for player

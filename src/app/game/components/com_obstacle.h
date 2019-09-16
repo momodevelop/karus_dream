@@ -4,8 +4,6 @@
 namespace app::game::components {
 	struct ComPlayerObstacle {
 	};
-	struct ComEnemyObstacle {
-	};
 }
 
 
