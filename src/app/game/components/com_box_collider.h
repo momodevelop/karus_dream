@@ -5,7 +5,7 @@
 
 namespace app::game::components {
 	struct ComBoxCollider {
-		ryoji::aabb::AABB2f box;
+		ryoji::aabb::AABB2f box{};
 	};
 
 }

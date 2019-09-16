@@ -5,7 +5,7 @@ namespace app::game::components {
 	struct ComCollectible {
 		enum Type {
 			COIN
-		} type;
+		} type{};
 
 	};
 }

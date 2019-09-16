@@ -5,9 +5,8 @@
 
 namespace app::game::components {
 	struct ComTransform {
-		
-		ryoji::math::Vec2f position;
-		ryoji::math::Vec2f scale;
+		ryoji::math::Vec2f position{};
+		ryoji::math::Vec2f scale{};
 	};
 }
 

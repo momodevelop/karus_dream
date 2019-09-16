@@ -6,8 +6,8 @@
 
 namespace app::game::components {
 	struct ComPlayer {
-		float jumpCooldown = 0.5f;
-		float jumpTimer = 0.f;
+		float jumpCooldown{ 0.5f };
+		float jumpTimer{};
 		std::array<entt::entity,2> jumpTriggers;
 		entt::entity stickTrigger;
 	};

@@ -9,8 +9,8 @@ namespace app::game::components {
 		using index_container_t = std::vector<std::uint8_t>;
 
 		index_container_t indices;
-		float timer = 0.f;
-		float speed = 0.f;
+		float timer{};
+		float speed{};
 
 	};
 

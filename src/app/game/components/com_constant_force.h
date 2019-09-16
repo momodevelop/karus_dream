@@ -5,7 +5,7 @@
 
 namespace app::game::components {
 	struct ComConstantForce {
-		ryoji::math::Vec2f force;
+		ryoji::math::Vec2f force {};
 	};
 }
 

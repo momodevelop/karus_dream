@@ -7,8 +7,8 @@
 
 namespace app::game::components {
 	struct ComCharacterAnimation {
-		shared::SharedAnimationIndices::Indices currentAnimeDir;
-		shared::SharedAnimationIndices::Indices nextAnimeDir;
+		shared::SharedAnimationIndices::Indices currentAnimeDir{};
+		shared::SharedAnimationIndices::Indices nextAnimeDir{};
 		
 		ComCharacterAnimation() noexcept :
 			currentAnimeDir(shared::SharedAnimationIndices::CHARACTER_STOP_DOWN),

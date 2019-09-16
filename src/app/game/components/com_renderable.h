@@ -7,9 +7,9 @@
 
 namespace app::game::components {
 	struct ComRenderable {
-		SDL_Rect srcRect = { 0, 0, 0, 0 };
+		SDL_Rect srcRect{};
 		TextureHandler textureHandler = {};
-		Uint8 alpha = Uint8(-1);
+		Uint8 alpha{ Uint8(-1) };
 	};
 }
 
