@@ -21,9 +21,21 @@ namespace app::game::systems {
 			auto& transform = view.get<ComTransform>(entity);
 			auto& enemy = view.get<ComEnemy>(entity);
 
-			enemy.entered = isWithinScreen(transform.position.x, transform.position.y);
-			transform.position.x += GROUND_AI_SPEED * dt;
-
+			switch (enemy.state) {
+			case ComEnemy::STATE_MOVING_LEFT:
+				transform.position.x -= GROUND_AI_SPEED * dt;
+				if (transform.position.x < gEnemySize) {
+					enemy.state = ComEnemy::STATE_MOVING_RIGHT;
+				}
+				break;
+			case ComEnemy::STATE_MOVING_RIGHT:
+				transform.position.x += GROUND_AI_SPEED * dt;
+				if (transform.position.x >= gDisplayWidth - gEnemySize) {
+					enemy.state = ComEnemy::STATE_MOVING_LEFT;
+				}
+				break;
+			}
+			
 		}
 	}
 

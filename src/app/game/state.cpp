@@ -163,7 +163,7 @@ namespace app::game {
 			auto entity = ecs.create();
 			ecs.assign<ComTransform>(entity, Vec2f{ 100.f, 100.f }, Vec2f{});
 			auto& boxCollider = ecs.assign<ComBoxCollider>(entity);
-			boxCollider.box = { 0.f, 0.f, gTileSize, gTileSize };
+			boxCollider.box = { 0.f, 0.f, gEnemySize, gEnemySize };
 			ecs.assign<ComEnemy>(entity);
 		}
 
