@@ -1,5 +1,6 @@
 #define SDL_MAIN_HANDLED
 
+#include <random>
 #include <SDL.h>
 #include <yuu/time.h>
 #include <yuu/utils.h>
@@ -79,11 +80,13 @@ SDL_WindowUniquePtr initSDL() {
 }
 
 int main(int argc, char* argv[]) {
+
 	auto window = initSDL();
 	if (!window)
 		return 1;
 
 	Time time;
+	
 
 	// Create the app
 	Root{ (*window), time }.run();

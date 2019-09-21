@@ -11,7 +11,6 @@ namespace character {
 	constexpr static float gJump = 650.f;
 }
 
-
 constexpr static int gDisplayWidth = 800;
 constexpr static int gDisplayHeight = 400;
 constexpr static int gDisplayHalfWidth = gDisplayWidth / 2;
@@ -28,5 +27,6 @@ constexpr static int gEnemySize = 24;
 inline bool isWithinScreen(int x, int y) {
 	return x >= 0 && x < gDisplayWidth && y >= 0 && y < gDisplayHeight;
 }
+
 
 #endif
