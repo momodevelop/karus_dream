@@ -24,14 +24,16 @@ namespace app::game::systems {
 			switch (enemy.state) {
 			case ComEnemy::STATE_MOVING_LEFT:
 				transform.position.x -= GROUND_AI_SPEED * dt;
-				if (transform.position.x < gEnemySize) {
+				if (transform.position.x < 0) {
 					enemy.state = ComEnemy::STATE_MOVING_RIGHT;
+					transform.flipState = SDL_FLIP_NONE;
 				}
 				break;
 			case ComEnemy::STATE_MOVING_RIGHT:
 				transform.position.x += GROUND_AI_SPEED * dt;
 				if (transform.position.x >= gDisplayWidth - gEnemySize) {
 					enemy.state = ComEnemy::STATE_MOVING_LEFT;
+					transform.flipState = SDL_FLIP_HORIZONTAL;
 				}
 				break;
 			}

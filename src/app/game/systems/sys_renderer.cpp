@@ -79,7 +79,7 @@ namespace app::game::systems {
 
 			auto texture = textures[renderable.textureHandler].texture.get();
 			SDL_SetTextureAlphaMod(texture, renderable.alpha);
-			SDL_RenderCopy(&renderer, texture, &renderable.srcRect, &destRect);
+			SDL_RenderCopyEx(&renderer, texture, &renderable.srcRect, &destRect, (double)transform.rotation, nullptr, transform.flipState);
 		}
 
 		

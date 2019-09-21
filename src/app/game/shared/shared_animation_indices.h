@@ -23,6 +23,10 @@ namespace app::game::shared {
 
 			COIN,
 
+			ENEMY_BAT,
+			ENEMY_FROG,
+			ENEMY_GHOST,
+			ENEMY_SKELETON,
 
 			MAX
 		};

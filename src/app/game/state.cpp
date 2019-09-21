@@ -75,10 +75,16 @@ namespace app::game {
 			assert(false);
 		}
 
+
 		// init textures
-		if (!sharedTextures.addSpritesheet(renderer, KARU_SPRITESHEET, "img/spritesheet_karu.png", 4, 3) ||
-			!sharedTextures.addSpritesheet(renderer, GRID_SPRITESHEET, "img/plains.png", 3, 5) ||
-			!sharedTextures.addSpritesheet(renderer, COIN_SPRITESHEET, "img/coin.png", 1, 6)) {
+		if (!sharedTextures.addSpritesheet(renderer, KARU_SPRITESHEET,		"img/spritesheet_karu.png", 4, 3) ||
+			!sharedTextures.addSpritesheet(renderer, GRID_SPRITESHEET,		"img/plains.png", 3, 5) ||
+			!sharedTextures.addSpritesheet(renderer, BAT_SPRITESHEET,		"img/bat.png", 1, 3) ||
+			!sharedTextures.addSpritesheet(renderer, SKELETON_SPRITESHEET,	"img/skeleton.png", 1, 4) ||
+			!sharedTextures.addSpritesheet(renderer, FROG_SPRITESHEET,		"img/frog.png", 1, 3) ||
+			!sharedTextures.addSpritesheet(renderer, GHOST_SPRITESHEET,		"img/ghost.png", 1, 3) ||
+			!sharedTextures.addSpritesheet(renderer, COIN_SPRITESHEET,		"img/coin.png", 1, 6)) 
+		{
 			assert(false);
 		}
 
@@ -159,13 +165,7 @@ namespace app::game {
 		}
 		
 		// test enemy
-		{
-			auto entity = ecs.create();
-			ecs.assign<ComTransform>(entity, Vec2f{ 100.f, 100.f }, Vec2f{});
-			auto& boxCollider = ecs.assign<ComBoxCollider>(entity);
-			boxCollider.box = { 0.f, 0.f, gEnemySize, gEnemySize };
-			ecs.assign<ComEnemy>(entity);
-		}
+	
 
 
 	}

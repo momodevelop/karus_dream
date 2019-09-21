@@ -14,6 +14,11 @@ namespace app::game::shared {
 		indicesSet.emplace_back(indices_t{ 10 }); // RIGHT_STOP
 
 		indicesSet.emplace_back(indices_t{ 0, 1, 2, 3, 4, 5 }); // COIN
+
+		indicesSet.emplace_back(indices_t{ 0, 1, 2 });		//ENEMY_BAT,
+		indicesSet.emplace_back(indices_t{ 0, 1, 2 });		//ENEMY_FROG,
+		indicesSet.emplace_back(indices_t{ 0, 1, 2 });		//ENEMY_GHOST,
+		indicesSet.emplace_back(indices_t{ 0, 1, 2, 3 });	//ENEMY_SKELETON,
 		return true;
 	}
 
