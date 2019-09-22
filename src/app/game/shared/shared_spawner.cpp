@@ -31,11 +31,6 @@ namespace app::game::shared {
 		{ TextureHandler::BAT_SPRITESHEET, SharedAnimationIndices::ENEMY_BAT, 3, {gEnemySize, gEnemySize} }, // BAT
 	};
 
-	struct LevelInfo {
-
-	};
-
-
 	SharedSpawner::SharedSpawner(entt::registry& ecs, SharedAnimationIndices& animationIndices)
 		: coinTimer(0.f), coinDuration(10.f), ecs(ecs), 
 		animationIndices(animationIndices),
@@ -57,6 +52,10 @@ namespace app::game::shared {
 			spawnCoin(Vec2f{ float(x), float(y) });
 			coinTimer = 0.f;
 		}
+
+		// enemy spawner
+
+
 	}
 
 	void SharedSpawner::spawnEnemy(Vec2f pos, bool facingRight, EnemyType type)

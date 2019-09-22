@@ -16,6 +16,9 @@ namespace app::game::shared {
 		};
 		float coinTimer;
 		float coinDuration;
+		float enemyTimer;
+		float enemyDuration;
+
 		entt::registry& ecs;
 		shared::SharedAnimationIndices& animationIndices;
 
@@ -24,6 +27,8 @@ namespace app::game::shared {
 		std::mt19937 randomCoinGenerator;
 		std::uniform_int_distribution<> randomCoinX;
 		std::uniform_int_distribution<> randomCoinY;
+		std::uniform_int_distribution<> randomEnemyType;
+		std::uniform_int_distribution<> randomCoinFlip;
 
 		void spawnCoin(ryoji::math::Vec2f pos);
 		void spawnEnemy(ryoji::math::Vec2f pos, bool facingRight, EnemyType type);
