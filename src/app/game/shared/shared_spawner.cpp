@@ -31,6 +31,7 @@ namespace app::game::shared {
 		{ TextureHandler::BAT_SPRITESHEET, SharedAnimationIndices::ENEMY_BAT, 3, {gEnemySize, gEnemySize} }, // BAT
 	};
 
+	
 	SharedSpawner::SharedSpawner(entt::registry& ecs, SharedAnimationIndices& animationIndices) :
 		coinTimer(0.f), coinDuration(5.f),
 		enemyTimer(0.f), enemyDuration(5.f),
@@ -61,14 +62,14 @@ namespace app::game::shared {
 		enemyTimer += dt;
 		if (enemyTimer > enemyDuration) {
 			EnemyType type = (EnemyType)randomEnemyType(randomGenerator);
-			spawnEnemy(Vec2f{ 0.f, gDisplayHalfHeight - gEnemySize }, true, type);
+			spawnEnemy(true, type);
 			enemyTimer = 0.f;
 		}
 
 
 	}
 
-	void SharedSpawner::spawnEnemy(Vec2f pos, bool facingRight, EnemyType type)
+	void SharedSpawner::spawnEnemy(bool facingRight, EnemyType type)
 	{
 		auto entity = ecs.create();
 		auto& transform = ecs.assign<ComTransform>(entity, 

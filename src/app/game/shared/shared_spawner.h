@@ -32,7 +32,7 @@ namespace app::game::shared {
 		std::uniform_int_distribution<> randomCoinFlip;
 
 		void spawnCoin(ryoji::math::Vec2f pos);
-		void spawnEnemy(ryoji::math::Vec2f pos, bool facingRight, EnemyType type);
+		void spawnEnemy(bool facingRight, EnemyType type);
 	public:
 		SharedSpawner(entt::registry& ecs, shared::SharedAnimationIndices& animationIndices);
 		~SharedSpawner();
