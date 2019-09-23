@@ -14,6 +14,7 @@ namespace app::game::shared {
 			FROG,
 			BAT,
 		};
+
 		float coinTimer;
 		float coinDuration;
 		float enemyTimer;
@@ -23,8 +24,8 @@ namespace app::game::shared {
 		shared::SharedAnimationIndices& animationIndices;
 
 		// for randoming
-		std::random_device randomCoinDevice; 
-		std::mt19937 randomCoinGenerator;
+		std::random_device randomDevice; 
+		std::mt19937 randomGenerator;
 		std::uniform_int_distribution<> randomCoinX;
 		std::uniform_int_distribution<> randomCoinY;
 		std::uniform_int_distribution<> randomEnemyType;

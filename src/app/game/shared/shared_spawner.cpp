@@ -31,12 +31,16 @@ namespace app::game::shared {
 		{ TextureHandler::BAT_SPRITESHEET, SharedAnimationIndices::ENEMY_BAT, 3, {gEnemySize, gEnemySize} }, // BAT
 	};
 
-	SharedSpawner::SharedSpawner(entt::registry& ecs, SharedAnimationIndices& animationIndices)
-		: coinTimer(0.f), coinDuration(10.f), ecs(ecs), 
+	SharedSpawner::SharedSpawner(entt::registry& ecs, SharedAnimationIndices& animationIndices) :
+		coinTimer(0.f), coinDuration(5.f),
+		enemyTimer(0.f), enemyDuration(5.f),
+		ecs(ecs), 
 		animationIndices(animationIndices),
-		randomCoinGenerator(randomCoinDevice()),
+		randomGenerator(randomDevice()),
 		randomCoinX(gTileSize, gDisplayWidth - gHalfTileSize),
-		randomCoinY(gTileSize, gDisplayHalfHeight - gHalfTileSize)
+		randomCoinY(gTileSize, gDisplayHalfHeight - gHalfTileSize),
+		randomEnemyType(GHOST, BAT),
+		randomCoinFlip(false, true)
 	{
 	}
 	SharedSpawner::~SharedSpawner()
@@ -47,13 +51,19 @@ namespace app::game::shared {
 		// coin spawn logic here
 		coinTimer += dt;
 		if (coinTimer > coinDuration) {
-			int x = randomCoinX(randomCoinGenerator);
-			int y = randomCoinY(randomCoinGenerator);
+			int x = randomCoinX(randomGenerator);
+			int y = randomCoinY(randomGenerator);
 			spawnCoin(Vec2f{ float(x), float(y) });
 			coinTimer = 0.f;
 		}
 
 		// enemy spawner
+		enemyTimer += dt;
+		if (enemyTimer > enemyDuration) {
+			EnemyType type = (EnemyType)randomEnemyType(randomGenerator);
+			spawnEnemy(Vec2f{ 0.f, gDisplayHalfHeight - gEnemySize }, true, type);
+			enemyTimer = 0.f;
+		}
 
 
 	}
