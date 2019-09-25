@@ -17,21 +17,60 @@ namespace app::game::shared {
 	using namespace components;
 	using namespace ryoji::math;
 	using namespace shared;
+	const static Vec2f enemySizes[SharedSpawner::MAX]{
+		{ gEnemySize, gEnemySize }, // GHOST
+		{ gEnemySize, gEnemySize }, // SKELETON
+		{ gEnemySize, gEnemySize }, // FROG
+		{ gEnemySize, gEnemySize }, // BAT
+	};
 
 	struct EnemyTypeInfo {
 		TextureHandler texture;
 		SharedAnimationIndices::Indices animationIndex;
 		uint8_t hp;
-		Vec2f size;
+		std::array<Vec2f, 2> spawnLocations;
 	};
-	const static EnemyTypeInfo enemyTypings[] = {
-		{ TextureHandler::GHOST_SPRITESHEET, SharedAnimationIndices::ENEMY_GHOST, 3, {gEnemySize, gEnemySize} }, // GHOST
-		{ TextureHandler::SKELETON_SPRITESHEET, SharedAnimationIndices::ENEMY_SKELETON, 3, {gEnemySize, gEnemySize} }, // SKELETON
-		{ TextureHandler::FROG_SPRITESHEET, SharedAnimationIndices::ENEMY_FROG, 3, {gEnemySize, gEnemySize} }, // FROG
-		{ TextureHandler::BAT_SPRITESHEET, SharedAnimationIndices::ENEMY_BAT, 3, {gEnemySize, gEnemySize} }, // BAT
+	const static EnemyTypeInfo enemyInfos[SharedSpawner::MAX] = {
+		{ 
+			TextureHandler::GHOST_SPRITESHEET, 
+			SharedAnimationIndices::ENEMY_GHOST, 
+			3, 
+			{
+				Vec2f{-enemySizes[SharedSpawner::GHOST].x, 100.f},
+				Vec2f{enemySizes[SharedSpawner::GHOST].x, 100.f}
+			}
+		}, // GHOST
+
+		{ 
+			TextureHandler::SKELETON_SPRITESHEET, 
+			SharedAnimationIndices::ENEMY_SKELETON, 
+			3, 
+			{
+				Vec2f{-enemySizes[SharedSpawner::SKELETON].x, 100.f},
+				Vec2f{enemySizes[SharedSpawner::SKELETON].x, 100.f}
+			}
+		}, // SKELETON
+		{ 
+			TextureHandler::FROG_SPRITESHEET, 
+			SharedAnimationIndices::ENEMY_FROG, 
+			3,
+			{
+				Vec2f{-enemySizes[SharedSpawner::FROG].x, 100.f},
+				Vec2f{enemySizes[SharedSpawner::FROG].x, 100.f}
+			}
+		}, // FROG
+		{
+			TextureHandler::BAT_SPRITESHEET,
+			SharedAnimationIndices::ENEMY_BAT,
+			3,
+			{
+				Vec2f{-enemySizes[SharedSpawner::BAT].x, 100.f},
+				Vec2f{enemySizes[SharedSpawner::BAT].x, 100.f}
+			}
+		},// BAT
 	};
 
-	
+
 	SharedSpawner::SharedSpawner(entt::registry& ecs, SharedAnimationIndices& animationIndices) :
 		coinTimer(0.f), coinDuration(5.f),
 		enemyTimer(0.f), enemyDuration(5.f),
@@ -73,15 +112,15 @@ namespace app::game::shared {
 	{
 		auto entity = ecs.create();
 		auto& transform = ecs.assign<ComTransform>(entity, 
-			pos, 
-			enemyTypings[type].size, 
+			enemyInfos[type].spawnLocations[facingRight], 
+			enemySizes[type],
 			0.f, 
 			facingRight ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL
 		);
 
 		auto& enemy = ecs.assign<ComEnemy>(entity,
 			facingRight ? ComEnemy::STATE_MOVING_RIGHT : ComEnemy::STATE_MOVING_LEFT,
-			enemyTypings[type].hp
+			enemyInfos[type].hp
 		);
 		auto& boxCollider = ecs.assign<ComBoxCollider>(entity,
 			ryoji::aabb::AABB2f{ 0.f, 0.f, gEnemySize, gEnemySize }
@@ -89,9 +128,9 @@ namespace app::game::shared {
 		
 		auto& renderable = ecs.assign<ComRenderable>(entity);
 
-		renderable.textureHandler = enemyTypings[type].texture;
+		renderable.textureHandler = enemyInfos[type].texture;
 		auto& animation = ecs.assign<ComAnimation>(entity);
-		auto& indices = animationIndices[enemyTypings[type].animationIndex];
+		auto& indices = animationIndices[enemyInfos[type].animationIndex];
 		animation.indices.assign(indices.cbegin(), indices.cend());
 		animation.speed = character::gAnimeSpeed;
 	}

@@ -8,13 +8,15 @@
 
 namespace app::game::shared {
 	class SharedSpawner {
+	public:
 		enum EnemyType {
 			GHOST,
 			SKELETON,
 			FROG,
 			BAT,
+			MAX
 		};
-
+	private:
 		float coinTimer;
 		float coinDuration;
 		float enemyTimer;
@@ -34,6 +36,7 @@ namespace app::game::shared {
 		void spawnCoin(ryoji::math::Vec2f pos);
 		void spawnEnemy(bool facingRight, EnemyType type);
 	public:
+
 		SharedSpawner(entt::registry& ecs, shared::SharedAnimationIndices& animationIndices);
 		~SharedSpawner();
 
