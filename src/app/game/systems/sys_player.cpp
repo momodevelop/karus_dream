@@ -51,11 +51,11 @@ namespace app::game::systems {
 				jumpTrigger2->position = playerTransform->position + Vec2f{ playerBox->box.max[0] - gJumpTriggerSize - 5.f, playerBox->box.max[1] };
 			}
 
-			auto stickTrigger = ecs.try_get<ComTransform>(playerCom->stickTrigger);
-			if (stickTrigger) {
-				stickTrigger->position = playerTransform->position + Vec2f{ 
-					(playerBox->box.max[0] - playerBox->box.min[0])/2 - gStickTriggerWidth * 0.5f,
-					(playerBox->box.max[1] - playerBox->box.min[1])/2 - gStickTriggerHeight * 0.5f };
+			auto weaponTrigger = ecs.try_get<ComTransform>(playerCom->weaponTrigger);
+			if (weaponTrigger) {
+				weaponTrigger->position = playerTransform->position + Vec2f{ 
+					(playerBox->box.max[0] - playerBox->box.min[0])/2 - gweaponTriggerWidth * 0.5f,
+					(playerBox->box.max[1] - playerBox->box.min[1])/2 - gweaponTriggerHeight * 0.5f };
 			}
 		}
 	}

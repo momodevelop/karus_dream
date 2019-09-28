@@ -19,7 +19,7 @@ namespace app::game::shared {
 	using namespace shared;
 	const static Vec2f enemySizes[SharedSpawner::MAX]{
 		{ gEnemySize, gEnemySize }, // GHOST
-		{ gEnemySize, gEnemySize }, // SKELETON
+		{ gEnemySize * 2, gEnemySize * 2 }, // SKELETON
 		{ gEnemySize, gEnemySize }, // FROG
 		{ gEnemySize, gEnemySize }, // BAT
 	};
@@ -46,8 +46,8 @@ namespace app::game::shared {
 			SharedAnimationIndices::ENEMY_SKELETON, 
 			3, 
 			{
-				Vec2f{-enemySizes[SharedSpawner::SKELETON].x, 100.f},
-				Vec2f{enemySizes[SharedSpawner::SKELETON].x, 100.f}
+				Vec2f{-enemySizes[SharedSpawner::SKELETON].x, gDisplayHalfHeight - enemySizes[SharedSpawner::SKELETON].y},
+				Vec2f{enemySizes[SharedSpawner::SKELETON].x, gDisplayHalfHeight - enemySizes[SharedSpawner::SKELETON].y}
 			}
 		}, // SKELETON
 		{ 
@@ -55,8 +55,8 @@ namespace app::game::shared {
 			SharedAnimationIndices::ENEMY_FROG, 
 			3,
 			{
-				Vec2f{-enemySizes[SharedSpawner::FROG].x, 100.f},
-				Vec2f{enemySizes[SharedSpawner::FROG].x, 100.f}
+				Vec2f{-enemySizes[SharedSpawner::FROG].x, gDisplayHalfHeight - enemySizes[SharedSpawner::FROG].y},
+				Vec2f{enemySizes[SharedSpawner::FROG].x, gDisplayHalfHeight - enemySizes[SharedSpawner::FROG].y}
 			}
 		}, // FROG
 		{
@@ -101,7 +101,7 @@ namespace app::game::shared {
 		enemyTimer += dt;
 		if (enemyTimer > enemyDuration) {
 			EnemyType type = (EnemyType)randomEnemyType(randomGenerator);
-			spawnEnemy(true, type);
+			spawnEnemy(randomCoinFlip(randomGenerator), type);
 			enemyTimer = 0.f;
 		}
 
@@ -123,7 +123,7 @@ namespace app::game::shared {
 			enemyInfos[type].hp
 		);
 		auto& boxCollider = ecs.assign<ComBoxCollider>(entity,
-			ryoji::aabb::AABB2f{ 0.f, 0.f, gEnemySize, gEnemySize }
+			ryoji::aabb::AABB2f{ 0.f, 0.f, enemySizes[type].x, enemySizes[type].y }
 		);
 		
 		auto& renderable = ecs.assign<ComRenderable>(entity);

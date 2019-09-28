@@ -133,5 +133,70 @@ namespace app::game::systems {
 		}
 	}
 
+	void SysCollision::resolvePlayerCollideEnemy(entt::registry & ecs, entt::entity playerEntity)
+	{
+		auto enemies = ecs.view<ComTransform, ComBoxCollider, ComPlayerObstacle>();
+
+		auto* playerTransform = ecs.try_get<ComTransform>(playerEntity);
+		auto* playerBox = ecs.try_get<ComBoxCollider>(playerEntity);
+		auto* playerRb = ecs.try_get<ComRigidBody>(playerEntity);
+
+		if (playerTransform && playerBox && playerRb) {
+			auto playerBoxCopy = *playerBox;
+
+			syncBoxColliderToTransform(playerBoxCopy, *playerTransform);
+
+			for (auto enemy : enemies) {
+
+				auto& enemyTransform = enemies.get<ComTransform>(enemy);
+				auto enemyBox = enemies.get<ComBoxCollider>(enemy); //copy
+
+				// Sync player and obstacle's rect to transform
+				syncBoxColliderToTransform(enemyBox, enemyTransform);
+
+				auto[pushout, index] = aabb::getCollidingAABBSmallestOverlap(playerBoxCopy.box, enemyBox.box);
+				if (index != 2) {
+					// TODO death code for player
+				}
+			}
+
+		}
+	}
+
+	void SysCollision::resolveEnemyCollideWeapon(entt::registry & ecs, entt::entity playerEntity)
+	{
+		auto enemies = ecs.view<ComTransform, ComBoxCollider, ComPlayerObstacle>();
+		
+		
+		auto* playerCom = ecs.try_get<ComPlayer>(playerEntity);
+		if (!playerCom)
+			return;
+		
+		auto* collider = ecs.try_get<ComBoxCollider>(playerCom->weaponTrigger);
+		auto* transform = ecs.try_get<ComTransform>(playerCom->weaponTrigger);
+
+		if (!collider || !transform)
+			return;
+			
+		auto weaponBoxCopy = *collider;
+		syncBoxColliderToTransform(weaponBoxCopy, *transform);
+
+		for (auto enemy : enemies) {
+
+			auto& enemyTransform = enemies.get<ComTransform>(enemy);
+			auto enemyBox = enemies.get<ComBoxCollider>(enemy); //copy
+
+			// Sync player and obstacle's rect to transform
+			syncBoxColliderToTransform(enemyBox, enemyTransform);
+
+			auto[pushout, index] = aabb::getCollidingAABBSmallestOverlap(weaponBoxCopy.box, enemyBox.box);
+			if (index != 2) {
+				// TODO death code for enemy
+			}
+		}
+
+		
+	}
+
 	
 }

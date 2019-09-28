@@ -129,8 +129,8 @@ namespace app::game {
 			{
 				auto entity = ecs.create();
 				ecs.assign<ComTransform>(entity);
-				ecs.assign<ComBoxCollider>(entity, AABB2f{ 0.f, 0.f, gStickTriggerWidth, gStickTriggerHeight });
-				playerEntity.stickTrigger = entity;
+				ecs.assign<ComBoxCollider>(entity, AABB2f{ 0.f, 0.f, gweaponTriggerWidth, gweaponTriggerHeight });
+				playerEntity.weaponTrigger = entity;
 			}
 
 			this->player = entity;
