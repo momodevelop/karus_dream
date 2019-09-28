@@ -183,9 +183,6 @@ namespace app::game {
 		// Input
 		SysPlayer::processInput(ecs, sharedKeyboard, player);
 		
-
-
-
 		// update player variables
 		SysPlayer::update(ecs, player, dt);
 
@@ -196,6 +193,7 @@ namespace app::game {
 		SysCollision::resolvePlayerCollideObstacle(ecs, player);
 		SysCollision::resolvePlayerCollideCollectible(ecs, player, sharedScore);
 		SysCollision::resolvePlayerJumpTriggerCollision(ecs, player);
+		SysCollision::resolveEnemyCollideWeapon(ecs, player, sharedScore);
 		SysPlayer::updateTriggerPositions(ecs, player);
 
 		// Animation
@@ -217,7 +215,7 @@ namespace app::game {
 		SysRenderer::renderBackground(renderer, sharedTextures);
 		SysRenderer::render(ecs, renderer, sharedTextures);
 #ifdef _DEBUG
-		SysDebug::renderBoxColliders(ecs, renderer);
+		//SysDebug::renderBoxColliders(ecs, renderer);
 #endif
 		SysRenderer::renderForeground(renderer, sharedTextures);
 		sharedScore.render(renderer);

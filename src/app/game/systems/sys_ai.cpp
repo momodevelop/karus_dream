@@ -14,6 +14,10 @@
 namespace app::game::systems {
 	using namespace components;
 	
+	void SysAi::updateAiDamageTakeCooldown(entt::registry & ecs, float dt)
+	{
+	}
+
 	void SysAi::updateAiMovement(entt::registry & ecs, float dt)
 	{
 		auto view = ecs.view<ComTransform, ComEnemy>();
@@ -31,7 +35,7 @@ namespace app::game::systems {
 				break;
 			case ComEnemy::STATE_MOVING_RIGHT:
 				transform.position.x += GROUND_AI_SPEED * dt;
-				if (transform.position.x >= gDisplayWidth - gEnemySize) {
+				if (transform.position.x >= gDisplayWidth - transform.scale.x) {
 					enemy.state = ComEnemy::STATE_MOVING_LEFT;
 					transform.flipState = SDL_FLIP_HORIZONTAL;
 				}
@@ -39,6 +43,10 @@ namespace app::game::systems {
 			}
 			
 		}
+	}
+
+	void SysAi::updateAiDeath(entt::registry & ecs, float dt)
+	{
 	}
 
 }

@@ -8,6 +8,7 @@
 #include "../components/com_transform.h"
 #include "../components/com_collectible.h"
 #include "../components/com_rigidbody.h"
+#include "../components/com_enemy.h"
 
 #include "../shared/shared_score.h"
 
@@ -163,15 +164,13 @@ namespace app::game::systems {
 		}
 	}
 
-	void SysCollision::resolveEnemyCollideWeapon(entt::registry & ecs, entt::entity playerEntity)
+	void SysCollision::resolveEnemyCollideWeapon(entt::registry & ecs, entt::entity playerEntity, shared::SharedScore& sharedScore)
 	{
-		auto enemies = ecs.view<ComTransform, ComBoxCollider, ComPlayerObstacle>();
-		
-		
+
 		auto* playerCom = ecs.try_get<ComPlayer>(playerEntity);
 		if (!playerCom)
 			return;
-		
+
 		auto* collider = ecs.try_get<ComBoxCollider>(playerCom->weaponTrigger);
 		auto* transform = ecs.try_get<ComTransform>(playerCom->weaponTrigger);
 
@@ -181,17 +180,20 @@ namespace app::game::systems {
 		auto weaponBoxCopy = *collider;
 		syncBoxColliderToTransform(weaponBoxCopy, *transform);
 
+
+		auto enemies = ecs.view<ComTransform, ComBoxCollider, ComEnemy>();
+		
 		for (auto enemy : enemies) {
 
 			auto& enemyTransform = enemies.get<ComTransform>(enemy);
 			auto enemyBox = enemies.get<ComBoxCollider>(enemy); //copy
+			auto& enemyCom = enemies.get<ComEnemy>(enemy);
 
-			// Sync player and obstacle's rect to transform
 			syncBoxColliderToTransform(enemyBox, enemyTransform);
 
 			auto[pushout, index] = aabb::getCollidingAABBSmallestOverlap(weaponBoxCopy.box, enemyBox.box);
 			if (index != 2) {
-				// TODO death code for enemy
+				ecs.destroy(enemy);
 			}
 		}
 
