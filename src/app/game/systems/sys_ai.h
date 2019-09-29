@@ -6,9 +6,7 @@ namespace app::game::systems {
 
 	class SysAi {
 	public:
-		static void updateAiDamageTakeCooldown(entt::registry& ecs, float dt);
-		static void updateAiMovement(entt::registry& ecs, float dt);
-		static void updateAiDeath(entt::registry& ecs, float dt);
+		static void updateEnemyAi(entt::registry& ecs, float dt);
 	};
 }
 

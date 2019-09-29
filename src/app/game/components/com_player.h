@@ -10,6 +10,7 @@ namespace app::game::components {
 		float jumpTimer{};
 		std::array<entt::entity,2> jumpTriggers;
 		entt::entity weaponTrigger;
+		bool isDead{ false };
 	};
 }
 

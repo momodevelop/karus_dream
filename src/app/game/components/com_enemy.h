@@ -16,6 +16,8 @@ namespace app::game::components {
 
 		float hitCooldownTimer{ 0.f };
 		float hitCooldownDuration{ 0.f };
+		float dieCooldownTimer{ 0.f };
+		float dieCooldownDuration{ 1.f };
 	};
 }
 

@@ -136,7 +136,7 @@ namespace app::game::systems {
 
 	void SysCollision::resolvePlayerCollideEnemy(entt::registry & ecs, entt::entity playerEntity)
 	{
-		auto enemies = ecs.view<ComTransform, ComBoxCollider, ComPlayerObstacle>();
+		auto enemies = ecs.view<ComTransform, ComBoxCollider, ComPlayerObstacle, ComEnemy>();
 
 		auto* playerTransform = ecs.try_get<ComTransform>(playerEntity);
 		auto* playerBox = ecs.try_get<ComBoxCollider>(playerEntity);
@@ -148,6 +148,9 @@ namespace app::game::systems {
 			syncBoxColliderToTransform(playerBoxCopy, *playerTransform);
 
 			for (auto enemy : enemies) {
+				auto& enemyCom = enemies.get<ComEnemy>(enemy);
+				if (enemyCom.state == ComEnemy::STATE_DIE)
+					return;
 
 				auto& enemyTransform = enemies.get<ComTransform>(enemy);
 				auto enemyBox = enemies.get<ComBoxCollider>(enemy); //copy
@@ -185,18 +188,24 @@ namespace app::game::systems {
 		
 		for (auto enemy : enemies) {
 
+			auto& enemyCom = enemies.get<ComEnemy>(enemy);
+			if (enemyCom.state == ComEnemy::STATE_DIE)
+				return;
+
 			auto& enemyTransform = enemies.get<ComTransform>(enemy);
 			auto enemyBox = enemies.get<ComBoxCollider>(enemy); //copy
-			auto& enemyCom = enemies.get<ComEnemy>(enemy);
-
 			syncBoxColliderToTransform(enemyBox, enemyTransform);
 
 			auto[pushout, index] = aabb::getCollidingAABBSmallestOverlap(weaponBoxCopy.box, enemyBox.box);
 			if (index != 2) {
-				ecs.destroy(enemy);
+				enemyCom.hp -= 1;
+				if (enemyCom.hp <= 0) {
+					enemyCom.state = ComEnemy::STATE_DIE;
+				}
+
 			}
 		}
-
+		
 		
 	}
 

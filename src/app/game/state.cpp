@@ -189,7 +189,7 @@ namespace app::game {
 		// Physics 
 		SysPhysics::updateConstantForces(ecs);
 		SysPhysics::updateMovement(ecs, 1/60.f); //fixed time step for physics
-		SysAi::updateAiMovement(ecs, dt);
+		SysAi::updateEnemyAi(ecs, dt);
 		SysCollision::resolvePlayerCollideObstacle(ecs, player);
 		SysCollision::resolvePlayerCollideCollectible(ecs, player, sharedScore);
 		SysCollision::resolvePlayerJumpTriggerCollision(ecs, player);
@@ -213,11 +213,13 @@ namespace app::game {
 	void State::onRender(SDL_Renderer& renderer) noexcept
 	{
 		SysRenderer::renderBackground(renderer, sharedTextures);
-		SysRenderer::render(ecs, renderer, sharedTextures);
+		
 #ifdef _DEBUG
-		//SysDebug::renderBoxColliders(ecs, renderer);
+		SysDebug::renderBoxColliders(ecs, renderer);
 #endif
 		SysRenderer::renderForeground(renderer, sharedTextures);
+		SysRenderer::render(ecs, renderer, sharedTextures);
+
 		sharedScore.render(renderer);
 		SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);
 	}
