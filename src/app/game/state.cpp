@@ -125,11 +125,11 @@ namespace app::game {
 				playerEntity.jumpTriggers[i] = entity;
 			}
 
-			// stick child
+			// weapon child
 			{
 				auto entity = ecs.create();
 				ecs.assign<ComTransform>(entity);
-				ecs.assign<ComBoxCollider>(entity, AABB2f{ 0.f, 0.f, gweaponTriggerWidth, gweaponTriggerHeight });
+				ecs.assign<ComBoxCollider>(entity, AABB2f{ 0.f, 0.f, gWeaponTriggerWidth, gWeaponTriggerHeight });
 				playerEntity.weaponTrigger = entity;
 			}
 

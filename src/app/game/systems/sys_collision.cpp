@@ -198,16 +198,10 @@ namespace app::game::systems {
 
 			auto[pushout, index] = aabb::getCollidingAABBSmallestOverlap(weaponBoxCopy.box, enemyBox.box);
 			if (index != 2) {
-				enemyCom.hp -= 1;
-				if (enemyCom.hp <= 0) {
-					enemyCom.state = ComEnemy::STATE_DIE;
-				}
-
+				enemyCom.state = ComEnemy::STATE_DIE;
 			}
 		}
 		
 		
 	}
-
-	
 }

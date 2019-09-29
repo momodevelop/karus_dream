@@ -9,9 +9,6 @@
 #include <constants.h>
 #include <ryoji/easing.h>
 
-
-#define GROUND_AI_SPEED 25.f
-#define FLYING_AI_SPEED 10.f
 #define DEATH_SPEED 500.f
 
 namespace app::game::systems {
@@ -27,14 +24,14 @@ namespace app::game::systems {
 
 			switch (enemy.state) {
 			case ComEnemy::STATE_MOVING_LEFT:
-				transform.position.x -= GROUND_AI_SPEED * dt;
+				transform.position.x -= enemy.speed * dt;
 				if (transform.position.x < 0) {
 					enemy.state = ComEnemy::STATE_MOVING_RIGHT;
 					transform.flipState = SDL_FLIP_NONE;
 				}
 				break;
 			case ComEnemy::STATE_MOVING_RIGHT:
-				transform.position.x += GROUND_AI_SPEED * dt;
+				transform.position.x += enemy.speed * dt;
 				if (transform.position.x >= gDisplayWidth - transform.scale.x) {
 					enemy.state = ComEnemy::STATE_MOVING_LEFT;
 					transform.flipState = SDL_FLIP_HORIZONTAL;

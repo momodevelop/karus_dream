@@ -27,14 +27,14 @@ namespace app::game::shared {
 	struct EnemyTypeInfo {
 		TextureHandler texture;
 		SharedAnimationIndices::Indices animationIndex;
-		uint8_t hp;
+		float speed;
 		std::array<Vec2f, 2> spawnLocations;
 	};
 	const static EnemyTypeInfo enemyInfos[SharedSpawner::MAX] = {
 		{ 
 			TextureHandler::GHOST_SPRITESHEET, 
 			SharedAnimationIndices::ENEMY_GHOST, 
-			3, 
+			30.f,
 			{
 				Vec2f{-enemySizes[SharedSpawner::GHOST].x, 100.f},
 				Vec2f{enemySizes[SharedSpawner::GHOST].x, 100.f}
@@ -44,7 +44,7 @@ namespace app::game::shared {
 		{ 
 			TextureHandler::SKELETON_SPRITESHEET, 
 			SharedAnimationIndices::ENEMY_SKELETON, 
-			3, 
+			30.f,
 			{
 				Vec2f{-enemySizes[SharedSpawner::SKELETON].x, gDisplayHalfHeight - enemySizes[SharedSpawner::SKELETON].y},
 				Vec2f{enemySizes[SharedSpawner::SKELETON].x, gDisplayHalfHeight - enemySizes[SharedSpawner::SKELETON].y}
@@ -53,7 +53,7 @@ namespace app::game::shared {
 		{ 
 			TextureHandler::FROG_SPRITESHEET, 
 			SharedAnimationIndices::ENEMY_FROG, 
-			3,
+			50.f,
 			{
 				Vec2f{-enemySizes[SharedSpawner::FROG].x, gDisplayHalfHeight - enemySizes[SharedSpawner::FROG].y},
 				Vec2f{enemySizes[SharedSpawner::FROG].x, gDisplayHalfHeight - enemySizes[SharedSpawner::FROG].y}
@@ -62,7 +62,7 @@ namespace app::game::shared {
 		{
 			TextureHandler::BAT_SPRITESHEET,
 			SharedAnimationIndices::ENEMY_BAT,
-			3,
+			50.f,
 			{
 				Vec2f{-enemySizes[SharedSpawner::BAT].x, 100.f},
 				Vec2f{enemySizes[SharedSpawner::BAT].x, 100.f}
@@ -120,7 +120,7 @@ namespace app::game::shared {
 
 		auto& enemy = ecs.assign<ComEnemy>(entity,
 			facingRight ? ComEnemy::STATE_MOVING_RIGHT : ComEnemy::STATE_MOVING_LEFT,
-			enemyInfos[type].hp
+			enemyInfos[type].speed
 		);
 		auto& boxCollider = ecs.assign<ComBoxCollider>(entity,
 			ryoji::aabb::AABB2f{ 0.f, 0.f, enemySizes[type].x, enemySizes[type].y }

@@ -39,9 +39,10 @@ namespace app::game::systems {
 		auto* playerTransform = ecs.try_get<ComTransform>(player);
 		auto* playerBox = ecs.try_get<ComBoxCollider>(player);
 		auto* playerCom = ecs.try_get<ComPlayer>(player);
+		auto* playerRigidBody = ecs.try_get<ComRigidBody>(player);
 		
 
-		if (playerTransform && playerBox && playerCom) {
+		if (playerTransform && playerBox && playerCom && playerRigidBody) {
 			auto* jumpTrigger1 = ecs.try_get<ComTransform>(playerCom->jumpTriggers[0]);
 			if (jumpTrigger1) {
 				jumpTrigger1->position = playerTransform->position + Vec2f{ 5.f, playerBox->box.max[1] };
@@ -53,9 +54,37 @@ namespace app::game::systems {
 
 			auto weaponTrigger = ecs.try_get<ComTransform>(playerCom->weaponTrigger);
 			if (weaponTrigger) {
-				weaponTrigger->position = playerTransform->position + Vec2f{ 
-					(playerBox->box.max[0] - playerBox->box.min[0])/2 - gweaponTriggerWidth * 0.5f,
-					(playerBox->box.max[1] - playerBox->box.min[1])/2 - gweaponTriggerHeight * 0.5f };
+				/*weaponTrigger->position = playerTransform->position + Vec2f{ 
+					(playerBox->box.max[0] - playerBox->box.min[0])/2 - gWeaponTriggerWidth * 0.5f,
+					(playerBox->box.max[1] - playerBox->box.min[1])/2 - gWeaponTriggerHeight * 0.5f };*/
+				if (playerRigidBody->velocity.x < 0) // going left
+				{
+					// adjust trigger position
+					auto weaponTransform = ecs.try_get<ComTransform>(playerCom->weaponTrigger);
+					auto weaponBox = ecs.try_get<ComBoxCollider>(playerCom->weaponTrigger);
+					if (weaponTransform && weaponBox) {
+						float weaponWidth = weaponBox->box.max[0] - weaponBox->box.min[0];
+						float weaponHeight = weaponBox->box.max[1] - weaponBox->box.min[1];
+						float playerHeight = playerBox->box.max[1] - playerBox->box.min[1];
+						weaponTransform->position.x = playerTransform->position.x - weaponWidth;
+						weaponTransform->position.y = playerTransform->position.y + playerHeight * 0.5f - weaponHeight * 0.5f ;
+					}
+				}
+				else {
+					// adjust trigger position
+					auto weaponTrigger = ecs.try_get<ComTransform>(playerCom->weaponTrigger);
+					auto weaponTransform = ecs.try_get<ComTransform>(playerCom->weaponTrigger);
+					auto weaponBox = ecs.try_get<ComBoxCollider>(playerCom->weaponTrigger);
+					if (weaponTransform && weaponBox) {
+						float weaponHeight = weaponBox->box.max[1] - weaponBox->box.min[1];
+						float playerWidth = playerBox->box.max[0] - playerBox->box.min[0];
+						float playerHeight = playerBox->box.max[1] - playerBox->box.min[1];
+
+						weaponTransform->position.x = playerTransform->position.x + playerWidth;
+						weaponTransform->position.y = playerTransform->position.y + playerHeight * 0.5f - weaponHeight * 0.5f;
+					}
+				}
+
 			}
 		}
 	}
@@ -69,19 +98,22 @@ namespace app::game::systems {
 		auto* characterAnimation = ecs.try_get<ComCharacterAnimation>(player);
 		auto* playerCom = ecs.try_get<ComPlayer>(player);
 
-		if (rigidbody && characterAnimation && playerCom) {
+		if (rigidbody && characterAnimation) {
 			Vec2f direction { 0.f, 0.f };
 
 			// movement
 			if (sharedKeyboard.isKeyDown(SharedKeyboard::LEFT)) {
 				rigidbody->velocity.x = -character::gMoveSpeed;
 				characterAnimation->nextAnimeDir = SharedAnime::CHARACTER_NORM_LEFT;
+				
 			}
 			else if (sharedKeyboard.isKeyDown(SharedKeyboard::RIGHT)) {
 				rigidbody->velocity.x = character::gMoveSpeed;
 				characterAnimation->nextAnimeDir = SharedAnime::CHARACTER_NORM_RIGHT;
+
 			}	
 
+			// jump
 			if (sharedKeyboard.isKeyDown(SharedKeyboard::Z) && playerCom->jumpTimer >= playerCom->jumpCooldown) {
 				rigidbody->velocity.y = -character::gJump;
 				playerCom->jumpTimer = 0.f;

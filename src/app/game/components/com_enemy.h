@@ -10,14 +10,9 @@ namespace app::game::components {
 			STATE_MOVING_RIGHT,
 			STATE_DIE
 		} state{ STATE_MOVING_RIGHT };
-
-		uint8_t hp{ 3 };
+		float speed{ 1.f };
 		uint8_t score{ 1 };
-
-		float hitCooldownTimer{ 0.f };
-		float hitCooldownDuration{ 0.f };
-		float dieCooldownTimer{ 0.f };
-		float dieCooldownDuration{ 1.f };
+		
 	};
 }
 
