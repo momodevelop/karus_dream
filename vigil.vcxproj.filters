@@ -174,9 +174,6 @@
     <ClInclude Include="src\cmn\ryoji\grid2d.h">
       <Filter>src\cmn\ryoji</Filter>
     </ClInclude>
-    <ClInclude Include="src\app\game\components\com_rigidbody.h">
-      <Filter>src\app\game\components</Filter>
-    </ClInclude>
     <ClInclude Include="src\app\game\systems\sys_renderer.h">
       <Filter>src\app\game\systems</Filter>
     </ClInclude>
@@ -227,6 +224,9 @@
     </ClInclude>
     <ClInclude Include="src\app\game\shared\shared_textures.h">
       <Filter>src\app\game\shared</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\components\com_rigidbody.h">
+      <Filter>src\app\game\components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

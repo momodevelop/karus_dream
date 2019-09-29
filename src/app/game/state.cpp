@@ -83,7 +83,8 @@ namespace app::game {
 			!sharedTextures.addSpritesheet(renderer, SKELETON_SPRITESHEET,	"img/skeleton.png", 1, 4) ||
 			!sharedTextures.addSpritesheet(renderer, FROG_SPRITESHEET,		"img/frog.png", 1, 3) ||
 			!sharedTextures.addSpritesheet(renderer, GHOST_SPRITESHEET,		"img/ghost.png", 1, 3) ||
-			!sharedTextures.addSpritesheet(renderer, COIN_SPRITESHEET,		"img/coin.png", 1, 6)) 
+			!sharedTextures.addSpritesheet(renderer, COIN_SPRITESHEET,		"img/coin.png", 1, 6) ||
+			!sharedTextures.addTexture(renderer, SWORD_TEXTURE, "img/sword.png"))
 		{
 			assert(false);
 		}
@@ -128,8 +129,15 @@ namespace app::game {
 			// weapon child
 			{
 				auto entity = ecs.create();
-				ecs.assign<ComTransform>(entity);
+				ecs.assign<ComTransform>(entity, Vec2f{ -100.f, -100.f }, Vec2f{ gWeaponTriggerWidth, gWeaponTriggerHeight });
 				ecs.assign<ComBoxCollider>(entity, AABB2f{ 0.f, 0.f, gWeaponTriggerWidth, gWeaponTriggerHeight });
+				auto& renderable = ecs.assign<ComRenderable>(entity);
+				renderable.srcRect = {
+					0, 0,
+					sharedTextures[TextureHandler::SWORD_TEXTURE].width,
+					sharedTextures[TextureHandler::SWORD_TEXTURE].height
+				};
+				renderable.textureHandler = TextureHandler::SWORD_TEXTURE;
 				playerEntity.weaponTrigger = entity;
 			}
 

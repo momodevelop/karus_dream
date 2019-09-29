@@ -54,10 +54,7 @@ namespace app::game::systems {
 
 			auto weaponTrigger = ecs.try_get<ComTransform>(playerCom->weaponTrigger);
 			if (weaponTrigger) {
-				/*weaponTrigger->position = playerTransform->position + Vec2f{ 
-					(playerBox->box.max[0] - playerBox->box.min[0])/2 - gWeaponTriggerWidth * 0.5f,
-					(playerBox->box.max[1] - playerBox->box.min[1])/2 - gWeaponTriggerHeight * 0.5f };*/
-				if (playerRigidBody->velocity.x < 0) // going left
+				if (playerCom->state == playerCom->STATE_MOVING_LEFT) // going left
 				{
 					// adjust trigger position
 					auto weaponTransform = ecs.try_get<ComTransform>(playerCom->weaponTrigger);
@@ -65,14 +62,15 @@ namespace app::game::systems {
 					if (weaponTransform && weaponBox) {
 						float weaponWidth = weaponBox->box.max[0] - weaponBox->box.min[0];
 						float weaponHeight = weaponBox->box.max[1] - weaponBox->box.min[1];
+						float playerWidth = playerBox->box.max[0] - playerBox->box.min[0];
 						float playerHeight = playerBox->box.max[1] - playerBox->box.min[1];
-						weaponTransform->position.x = playerTransform->position.x - weaponWidth;
-						weaponTransform->position.y = playerTransform->position.y + playerHeight * 0.5f - weaponHeight * 0.5f ;
+						weaponTransform->position.x = playerTransform->position.x - weaponWidth + playerWidth * 0.5f;
+						weaponTransform->position.y = playerTransform->position.y + playerHeight * 0.5f - weaponHeight * 0.5f + 10.f;
+						weaponTransform->flipState = SDL_FLIP_HORIZONTAL;
 					}
 				}
-				else {
+				else if (playerCom->state == playerCom->STATE_MOVING_RIGHT) {
 					// adjust trigger position
-					auto weaponTrigger = ecs.try_get<ComTransform>(playerCom->weaponTrigger);
 					auto weaponTransform = ecs.try_get<ComTransform>(playerCom->weaponTrigger);
 					auto weaponBox = ecs.try_get<ComBoxCollider>(playerCom->weaponTrigger);
 					if (weaponTransform && weaponBox) {
@@ -80,10 +78,12 @@ namespace app::game::systems {
 						float playerWidth = playerBox->box.max[0] - playerBox->box.min[0];
 						float playerHeight = playerBox->box.max[1] - playerBox->box.min[1];
 
-						weaponTransform->position.x = playerTransform->position.x + playerWidth;
-						weaponTransform->position.y = playerTransform->position.y + playerHeight * 0.5f - weaponHeight * 0.5f;
+						weaponTransform->position.x = playerTransform->position.x + playerWidth * 0.5f;
+						weaponTransform->position.y = playerTransform->position.y + playerHeight * 0.5f - weaponHeight * 0.5f + 10.f;
+						weaponTransform->flipState = SDL_FLIP_NONE;
 					}
 				}
+				
 
 			}
 		}
@@ -105,12 +105,12 @@ namespace app::game::systems {
 			if (sharedKeyboard.isKeyDown(SharedKeyboard::LEFT)) {
 				rigidbody->velocity.x = -character::gMoveSpeed;
 				characterAnimation->nextAnimeDir = SharedAnime::CHARACTER_NORM_LEFT;
-				
+				playerCom->state = ComPlayer::STATE_MOVING_LEFT;
 			}
 			else if (sharedKeyboard.isKeyDown(SharedKeyboard::RIGHT)) {
 				rigidbody->velocity.x = character::gMoveSpeed;
 				characterAnimation->nextAnimeDir = SharedAnime::CHARACTER_NORM_RIGHT;
-
+				playerCom->state = ComPlayer::STATE_MOVING_RIGHT;
 			}	
 
 			// jump
