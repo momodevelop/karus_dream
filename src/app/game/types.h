@@ -17,7 +17,10 @@ namespace app::game {
 
 		ZERO, ONE, TWO, THREE, FOUR,
 		FIVE, SIX, SEVEN, EIGHT, NINE,
+
 		TEXT_SCORE,
+		TEXT_START,
+		TEXT_GAMEOVER,
 
 
 

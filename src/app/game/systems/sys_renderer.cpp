@@ -81,7 +81,6 @@ namespace app::game::systems {
 			SDL_SetTextureAlphaMod(texture, renderable.alpha);
 			SDL_RenderCopyEx(&renderer, texture, &renderable.srcRect, &destRect, (double)transform.rotation, nullptr, transform.flipState);
 		}
-
 		
 	}
 }

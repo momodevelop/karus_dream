@@ -65,13 +65,14 @@ namespace app::game {
 		char buffer[2] = " ";
 		for (int i = 0; i < 10; ++i) {
 			buffer[0] = '0' + i;
-			auto* text = TTF_RenderText_Solid(font, buffer, { 255, 255, 255 });
-			if (!sharedTextures.addTexture(renderer, (TextureHandler)(ZERO + i), text)) {
+			if (!sharedTextures.addText(renderer, font, (TextureHandler)(ZERO + i), { 255, 255, 255 }, buffer)) {
 				assert(false);
 			}
 		}
-		auto* scoreText = TTF_RenderText_Solid(font, "Score: ", { 255, 255, 255 });
-		if (!sharedTextures.addTexture(renderer, TEXT_SCORE, scoreText)) {
+
+		if (!sharedTextures.addText(renderer, font, TEXT_SCORE, { 255, 255, 255 }, "Score: ") ||
+			!sharedTextures.addText(renderer, font, TEXT_GAMEOVER, { 255, 255, 255 }, "Game Over: ") ||
+			!sharedTextures.addText(renderer, font, TEXT_START, { 255, 255, 255 }, "Press Left or Right Arrow to start! ")) {
 			assert(false);
 		}
 
@@ -229,7 +230,12 @@ namespace app::game {
 		SysRenderer::render(ecs, renderer, sharedTextures);
 
 		sharedScore.render(renderer);
+		
+
+		
+
 		SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);
+	
 	}
 
 	void State::onHandleEvent(SDL_Event& e) noexcept
@@ -241,6 +247,12 @@ namespace app::game {
 	{
 	}
 
+	void State::renderTextAt(SDL_Renderer & renderer, TextureHandler handler, int x, int y, float scale) {
+		int w, h;
+		SDL_QueryTexture(sharedTextures[handler].texture.get(), 0, 0, &w, &h);
+		SDL_Rect destRec = { x, y, int(w * scale), int(h * scale) };
+		SDL_RenderCopy(&renderer, sharedTextures[handler].texture.get(), nullptr, &destRec);
+	}
 
 
 }

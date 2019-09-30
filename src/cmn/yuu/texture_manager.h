@@ -61,6 +61,16 @@ namespace yuu {
 			return true;
 		}
 
+		bool addText(SDL_Renderer& renderer, TTF_Font* font, Handler handler, SDL_Color color, const char * text) {
+			if (font == nullptr)
+				return false;
+			auto* surface = TTF_RenderText_Solid(font, text, color);
+			if (!addTexture(renderer, handler, surface)) {
+				return false;
+			}
+			return true;
+		}
+
 
 		bool addSpritesheet(SDL_Renderer& renderer, Handler handler, const char * path, int rows, int cols)
 		{

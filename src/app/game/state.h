@@ -27,6 +27,12 @@ namespace app::game {
 	class State : public StateBase {
 		constexpr static int kMaxEntities = 10;
 	private:
+		enum States {
+			START,
+			PLAY,
+			END
+		} state{ START };
+
 		entt::registry ecs;
 		entt::entity player;
 
@@ -43,6 +49,7 @@ namespace app::game {
 		State& operator=(const State&) = delete;
 
 		void reset();
+		void renderTextAt(SDL_Renderer & renderer, TextureHandler handler, int x, int y, float scale);
 		
 	public:
 		State(SDL_Renderer& renderer);
