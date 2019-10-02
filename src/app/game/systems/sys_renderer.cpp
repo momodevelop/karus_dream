@@ -4,9 +4,19 @@
 #include "sys_renderer.h"
 #include "../components/com_transform.h"
 #include "../components/com_renderable.h"
+#include "../components/com_player.h"
 
 
 namespace app::game::systems {
+
+
+
+	void renderTextAt(SDL_Renderer & renderer, shared::SharedTextures & sharedTextures, TextureHandler handler, int x, int y, float scale) {
+		int w, h;
+		SDL_QueryTexture(sharedTextures[handler].texture.get(), 0, 0, &w, &h);
+		SDL_Rect destRec = { x, y, int(w * scale), int(h * scale) };
+		SDL_RenderCopy(&renderer, sharedTextures[handler].texture.get(), nullptr, &destRec);
+	}
 
 	void SysRenderer::renderForeground(SDL_Renderer & renderer, shared::SharedTextures& textures)
 	{
@@ -83,4 +93,19 @@ namespace app::game::systems {
 		}
 		
 	}
+	void SysRenderer::renderStartGameOver(entt::registry & ecs, SDL_Renderer & renderer, shared::SharedTextures & textures, entt::entity player)
+	{
+		using namespace components;
+		auto* playerCom = ecs.try_get<ComPlayer>(player);
+		// render text based on states
+		switch (playerCom->state) {
+		case ComPlayer::STATE_IDLE:
+			renderTextAt(renderer, textures, TEXT_START, 100, 100, 1.f);
+			break;
+		case ComPlayer::STATE_DIE:
+			renderTextAt(renderer, textures, TEXT_GAMEOVER, 100, 100, 1.f);
+			break;
+		}
+	}
+
 }

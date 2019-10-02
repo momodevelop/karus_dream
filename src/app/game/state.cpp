@@ -228,11 +228,8 @@ namespace app::game {
 #endif
 		SysRenderer::renderForeground(renderer, sharedTextures);
 		SysRenderer::render(ecs, renderer, sharedTextures);
-
+		SysRenderer::renderStartGameOver(ecs, renderer, sharedTextures, player);
 		sharedScore.render(renderer);
-		
-
-		
 
 		SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);
 	
@@ -247,12 +244,7 @@ namespace app::game {
 	{
 	}
 
-	void State::renderTextAt(SDL_Renderer & renderer, TextureHandler handler, int x, int y, float scale) {
-		int w, h;
-		SDL_QueryTexture(sharedTextures[handler].texture.get(), 0, 0, &w, &h);
-		SDL_Rect destRec = { x, y, int(w * scale), int(h * scale) };
-		SDL_RenderCopy(&renderer, sharedTextures[handler].texture.get(), nullptr, &destRec);
-	}
+
 
 
 }
