@@ -37,7 +37,7 @@ namespace app::game::shared {
 			30.f,
 			{
 				Vec2f{-enemySizes[SharedSpawner::GHOST].x, 100.f},
-				Vec2f{enemySizes[SharedSpawner::GHOST].x, 100.f}
+				Vec2f{gDisplayWidth + enemySizes[SharedSpawner::GHOST].x, 100.f}
 			}
 		}, // GHOST
 
@@ -47,7 +47,7 @@ namespace app::game::shared {
 			30.f,
 			{
 				Vec2f{-enemySizes[SharedSpawner::SKELETON].x, gDisplayHalfHeight - enemySizes[SharedSpawner::SKELETON].y},
-				Vec2f{enemySizes[SharedSpawner::SKELETON].x, gDisplayHalfHeight - enemySizes[SharedSpawner::SKELETON].y}
+				Vec2f{gDisplayWidth + enemySizes[SharedSpawner::SKELETON].x, gDisplayHalfHeight - enemySizes[SharedSpawner::SKELETON].y}
 			}
 		}, // SKELETON
 		{ 
@@ -56,7 +56,7 @@ namespace app::game::shared {
 			50.f,
 			{
 				Vec2f{-enemySizes[SharedSpawner::FROG].x, gDisplayHalfHeight - enemySizes[SharedSpawner::FROG].y},
-				Vec2f{enemySizes[SharedSpawner::FROG].x, gDisplayHalfHeight - enemySizes[SharedSpawner::FROG].y}
+				Vec2f{gDisplayWidth + enemySizes[SharedSpawner::FROG].x, gDisplayHalfHeight - enemySizes[SharedSpawner::FROG].y}
 			}
 		}, // FROG
 		{
@@ -65,7 +65,7 @@ namespace app::game::shared {
 			50.f,
 			{
 				Vec2f{-enemySizes[SharedSpawner::BAT].x, 100.f},
-				Vec2f{enemySizes[SharedSpawner::BAT].x, 100.f}
+				Vec2f{gDisplayWidth + enemySizes[SharedSpawner::BAT].x, 100.f}
 			}
 		},// BAT
 	};
@@ -80,7 +80,7 @@ namespace app::game::shared {
 		randomCoinX(gTileSize, gDisplayWidth - gHalfTileSize),
 		randomCoinY(gTileSize, gDisplayHalfHeight - gHalfTileSize),
 		randomEnemyType(GHOST, BAT),
-		randomCoinFlip(false, true)
+		randomCoinFlip(0, 1)
 	{
 	}
 	SharedSpawner::~SharedSpawner()
