@@ -100,7 +100,9 @@ namespace app::game::systems {
 		// render text based on states
 		switch (playerCom->state) {
 		case ComPlayer::STATE_IDLE:
-			renderTextAt(renderer, textures, TEXT_START, 100, 100, 1.f);
+			int w;
+			SDL_QueryTexture(textures[TEXT_START].texture.get(), 0, 0, &w, nullptr);
+			renderTextAt(renderer, textures, TEXT_START, gDisplayHalfWidth - w / 2, 100, 1.f);
 			break;
 		case ComPlayer::STATE_DIE:
 			renderTextAt(renderer, textures, TEXT_GAMEOVER, 100, 100, 1.f);

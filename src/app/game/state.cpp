@@ -209,8 +209,6 @@ namespace app::game {
 		SysAnimation::updateCharacterAnimationType(ecs, sharedAnimationIndices);
 		SysAnimation::updateAnimation(ecs, sharedTextures, dt);
 
-		
-
 		sharedSpawner.update(dt);
 		sharedKeyboard.clear();
 	}
