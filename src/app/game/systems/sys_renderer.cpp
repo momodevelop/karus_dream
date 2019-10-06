@@ -99,13 +99,14 @@ namespace app::game::systems {
 		auto* playerCom = ecs.try_get<ComPlayer>(player);
 		// render text based on states
 		switch (playerCom->state) {
-		case ComPlayer::STATE_IDLE:
 			int w;
+		case ComPlayer::STATE_IDLE:
 			SDL_QueryTexture(textures[TEXT_START].texture.get(), 0, 0, &w, nullptr);
 			renderTextAt(renderer, textures, TEXT_START, gDisplayHalfWidth - w / 2, 100, 1.f);
 			break;
 		case ComPlayer::STATE_DIE:
-			renderTextAt(renderer, textures, TEXT_GAMEOVER, 100, 100, 1.f);
+			SDL_QueryTexture(textures[TEXT_START].texture.get(), 0, 0, &w, nullptr);
+			renderTextAt(renderer, textures, TEXT_GAMEOVER, gDisplayHalfWidth - w / 2, 100, 1.f);
 			break;
 		}
 	}
