@@ -231,5 +231,8 @@
     <ClInclude Include="src\cmn\yuu\texture_shelf.h">
       <Filter>src\cmn\yuu</Filter>
     </ClInclude>
+    <ClInclude Include="src\cmn\yuu\spritesheet_manager.h">
+      <Filter>src\cmn\yuu</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

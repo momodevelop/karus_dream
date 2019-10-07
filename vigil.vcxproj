@@ -207,6 +207,7 @@ copy lib\sdl_ttf\lib\x64\*.dll $(OutDir)</Command>
     <ClInclude Include="src\cmn\ryoji\grid2d.h" />
     <ClInclude Include="src\cmn\ryoji\rect.h" />
     <ClInclude Include="src\cmn\ryoji\vector.h" />
+    <ClInclude Include="src\cmn\yuu\spritesheet_manager.h" />
     <ClInclude Include="src\cmn\yuu\texture_manager.h" />
     <ClInclude Include="src\cmn\yuu\texture_shelf.h" />
     <ClInclude Include="src\cmn\yuu\time.h" />
