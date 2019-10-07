@@ -8,20 +8,25 @@
 namespace yuu {
 	template<typename Handler>
 	class SpritesheetManager {
-		std::unordered_map<Handler, SpritesheetData> spritesheetDatas;
-
 	public:
 		class SpritesheetData {
 			friend class SpritesheetManager;
 		private:
 			std::vector<SDL_Rect> frames;
+			yuu::SDL_TextureUniquePtr texture;
+			size_t width, height;
 			size_t rows, cols;
 		public:
 			inline size_t getRows() { return rows; }
 			inline size_t getCols() { return cols; }
+			inline size_t getWidth() { return width; }
+			inline size_t getHeight() { return height; }
 
 			const SDL_Rect& operator[](size_t index) { return frames[index]; }
 		};
+
+	private:
+		std::unordered_map<Handler, SpritesheetData> spritesheetDatas;
 		
 	public:
 		inline SpritesheetData& operator[](Handler index) {
