@@ -228,5 +228,8 @@
     <ClInclude Include="src\app\game\components\com_rigidbody.h">
       <Filter>src\app\game\components</Filter>
     </ClInclude>
+    <ClInclude Include="src\cmn\yuu\texture_shelf.h">
+      <Filter>src\cmn\yuu</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

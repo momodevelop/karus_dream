@@ -28,7 +28,7 @@ namespace yuu {
 			}
 		}
 
-		bool loadFromSurface(SDL_Renderer * renderer, size_t index, SDL_Surface * surface, SDL_BlendMode blendMode = SDL_BLENDMODE_BLEND) noexcept
+		bool load(SDL_Renderer * renderer, size_t index, SDL_Surface * surface, SDL_BlendMode blendMode = SDL_BLENDMODE_BLEND) noexcept
 		{
 			assert(renderer != nullptr);
 			assert(index >= 0 && index < Size);
@@ -40,7 +40,7 @@ namespace yuu {
 			SDL_SetTextureBlendMode(textures[index], blendMode);
 			return true;
 		}
-		bool loadFromPath(SDL_Renderer * renderer, size_t index, const char * path, SDL_BlendMode blendMode = SDL_BLENDMODE_BLEND) noexcept
+		bool load(SDL_Renderer * renderer, size_t index, const char * path, SDL_BlendMode blendMode = SDL_BLENDMODE_BLEND) noexcept
 		{
 			assert(renderer != nullptr);
 			assert(path != nullptr);
