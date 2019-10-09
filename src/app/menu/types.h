@@ -3,15 +3,16 @@
 
 namespace app::menu {
 	enum TextureHandler : Uint8 {
-		GRID_SPRITESHEET,
+		GRID_TEXTURE,
 		TITLE,
 		ARROW,
 		START,
 		QUIT,
 		MADE_BY,
-		TEXTURE_MAX
 	};
-
+	enum SpritesheetHandler :Uint8 {
+		GRID_SPRITESHEET,
+	};
 
 }
 

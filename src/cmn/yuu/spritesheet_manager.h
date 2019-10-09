@@ -1,5 +1,5 @@
-#ifndef __YUU_TEXTURE_MANAGER_H__
-#define __YUU_TEXTURE_MANAGER_H__
+#ifndef __YUU_SPRITESHEET_MANAGER_H__
+#define __YUU_SPRITESHEET_MANAGER_H__
 
 #include <SDL.h>
 #include <yuu/utils.h>
@@ -9,77 +9,47 @@ namespace yuu {
 	template<typename Handler>
 	class SpritesheetManager {
 	public:
-		class SpritesheetData {
-			friend class SpritesheetManager;
-		private:
+		struct SpritesheetData {
+			int rows, cols;
 			std::vector<SDL_Rect> frames;
-			yuu::SDL_TextureUniquePtr texture;
-			size_t width, height;
-			size_t rows, cols;
-		public:
-			inline size_t getRows() { return rows; }
-			inline size_t getCols() { return cols; }
-			inline size_t getWidth() { return width; }
-			inline size_t getHeight() { return height; }
+			const SDL_Rect& operator[](size_t index) const { return frames.at(index); }
 
-			const SDL_Rect& operator[](size_t index) { return frames[index]; }
+			SpritesheetData(int rows, int cols)
+				: rows(rows), cols(cols) {}
 		};
 
 	private:
-		std::unordered_map<Handler, SpritesheetData> spritesheetDatas;
+		using container_t = std::unordered_map<Handler, SpritesheetData>;
+		container_t spritesheets;
 		
 	public:
-		inline SpritesheetData& operator[](Handler index) {
-			return spritesheetDatas[index];
+
+		inline const SpritesheetData operator[](Handler index) const {
+			return spritesheets.at(index);
 		}
 
-		inline const SpritesheetData& operator[](Handler index) const {
-			return spritesheetDatas[index];
-		}
-
-		bool load(SDL_Renderer& renderer, Handler handler, const char * path, int rows, int cols)
-		{
-			if (!addTexture(renderer, handler, path)) {
+		// http://jguegant.github.io/blogs/tech/performing-try-emplace.html
+		bool load(Handler handler, int rows, int cols, int textureWidth, int textureHeight) {
+			auto[itr, success] = spritesheets.try_emplace(handler, rows, cols);
+			if (!success)
 				return false;
-			}
-			auto& textureData = textures[handler];
-			return addSpritesheetData(handler, textureData.width, textureData.height, rows, cols);
 
-		}
-
-		bool load(SDL_Renderer& renderer, Handler handler, SDL_Surface * surface, int rows, int cols) {
-			if (!addTexture(renderer, handler, surface)) {
-				return false;
-			}
-			auto& textureData = textures[handler];
-			return addSpritesheetData(handler, textureData.width, textureData.height, rows, cols);
-
-		}
-
-	private:
-		bool addSpritesheetData(Handler handler, int width, int height, int rows, int cols) {
-			auto& data = spritesheetDatas[handler];
-			data.rows = rows;
-			data.cols = cols;
-
-
-			int tileWidth = width / cols;
-			int tileHeight = height / rows;
+			int tileWidth = textureWidth / cols;
+			int tileHeight = textureHeight / rows;
 			for (int i = 0; i < rows; ++i) {
 				for (int j = 0; j < cols; ++j) {
-					auto index = j + cols * i;
-					data.frames.emplace_back(SDL_Rect{
+					int index = j + cols * i;
+					itr->second.frames.emplace_back(SDL_Rect{
 						j * tileWidth,
 						i * tileHeight,
 						tileWidth,
 						tileHeight
-						});
+					});
 				}
 			}
 
 			return true;
 		}
-		
 
 	};
 }

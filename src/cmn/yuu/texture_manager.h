@@ -15,26 +15,12 @@ namespace yuu {
 			int width, height;
 		};
 
-		struct SpritesheetData {
-			std::vector<SDL_Rect> frames;
-			int rows, cols;
-		};
+	private:
+		std::unordered_map<Handler, TextureData> textures;
 
 	public:
-		inline TextureData& operator[](Handler index) {
-			return textures.at(index);
-		}
-
 		inline const TextureData& operator[](Handler index) const {
 			return textures.at(index);
-		}
-
-		inline const SpritesheetData& getSpritesheetData(Handler index) const {
-			return spritesheetDatas.at(index);
-		}
-
-		inline const SDL_Rect& getFrame(Handler index, size_t frameIndex) const {
-			return spritesheetDatas.at(index).frames.at(frameIndex);
 		}
 
 		bool addTexture(SDL_Renderer& renderer, Handler handler, const char * path)
@@ -46,8 +32,6 @@ namespace yuu {
 
 			if (!textures[handler].texture)
 				return false;
-
-
 			return true;
 		}
 		bool addTexture(SDL_Renderer& renderer, Handler handler, SDL_Surface* surface) {
@@ -72,51 +56,7 @@ namespace yuu {
 		}
 
 
-		bool addSpritesheet(SDL_Renderer& renderer, Handler handler, const char * path, int rows, int cols)
-		{
-			if (!addTexture(renderer, handler, path)) {
-				return false;
-			}
-			auto& textureData = textures[handler];
-			return addSpritesheetData(handler, textureData.width, textureData.height, rows, cols);
 
-		}
-
-		bool addSpritesheet(SDL_Renderer& renderer, Handler handler, SDL_Surface * surface, int rows, int cols) {
-			if (!addTexture(renderer, handler, surface)) {
-				return false;
-			}
-			auto& textureData = textures[handler];
-			return addSpritesheetData(handler, textureData.width, textureData.height, rows, cols);
-			
-		}
-
-	private:
-		bool addSpritesheetData(Handler handler, int width, int height, int rows, int cols) {
-			auto& data = spritesheetDatas[handler];
-			data.rows = rows;
-			data.cols = cols;
-
-
-			int tileWidth = width / cols;
-			int tileHeight = height / rows;
-			for (int i = 0; i < rows; ++i) {
-				for (int j = 0; j < cols; ++j) {
-					auto index = j + cols * i;
-					data.frames.emplace_back(SDL_Rect{
-						j * tileWidth,
-						i * tileHeight,
-						tileWidth,
-						tileHeight
-					});
-				}
-			}
-
-			return true;
-		}
-
-		std::unordered_map<Handler, TextureData> textures;
-		std::unordered_map<Handler, SpritesheetData> spritesheetDatas;
 
 	};
 }

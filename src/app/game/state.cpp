@@ -78,14 +78,26 @@ namespace app::game {
 
 
 		// init textures
-		if (!sharedTextures.addSpritesheet(renderer, KARU_SPRITESHEET,		"img/spritesheet_karu.png", 4, 3) ||
-			!sharedTextures.addSpritesheet(renderer, GRID_SPRITESHEET,		"img/plains.png", 3, 5) ||
-			!sharedTextures.addSpritesheet(renderer, BAT_SPRITESHEET,		"img/bat.png", 1, 3) ||
-			!sharedTextures.addSpritesheet(renderer, SKELETON_SPRITESHEET,	"img/skeleton.png", 1, 4) ||
-			!sharedTextures.addSpritesheet(renderer, FROG_SPRITESHEET,		"img/frog.png", 1, 3) ||
-			!sharedTextures.addSpritesheet(renderer, GHOST_SPRITESHEET,		"img/ghost.png", 1, 3) ||
-			!sharedTextures.addSpritesheet(renderer, COIN_SPRITESHEET,		"img/coin.png", 1, 6) ||
-			!sharedTextures.addTexture(renderer, SWORD_TEXTURE, "img/sword.png"))
+		if (!sharedTextures.addTexture(renderer, KARU_TEXTURE,		"img/spritesheet_karu.png") ||
+			!sharedTextures.addTexture(renderer, GRID_TEXTURE,		"img/plains.png") ||
+			!sharedTextures.addTexture(renderer, TEXTURE_BAT,		"img/bat.png") ||
+			!sharedTextures.addTexture(renderer, TEXTURE_SKELETON,	"img/skeleton.png") ||
+			!sharedTextures.addTexture(renderer, FROG_TEXTURE,		"img/frog.png") ||
+			!sharedTextures.addTexture(renderer, TEXTURE_GHOST,		"img/ghost.png") ||
+			!sharedTextures.addTexture(renderer, COIN_TEXTURE,		"img/coin.png") ||
+			!sharedTextures.addTexture(renderer, SWORD_TEXTURE,		"img/sword.png"))
+		{
+			assert(false);
+		}
+
+		// init spritesheets
+		if (!sharedSpritesheets.load(KARU_SPRITESHEET,		4, 3,	sharedTextures[KARU_TEXTURE].width, sharedTextures[KARU_TEXTURE].height) ||
+			!sharedSpritesheets.load(GRID_SPRITESHEET,		3, 5,	sharedTextures[GRID_TEXTURE].width, sharedTextures[GRID_TEXTURE].height) ||
+			!sharedSpritesheets.load(SPRITESHEET_BAT,		1, 3,	sharedTextures[TEXTURE_BAT].width, sharedTextures[TEXTURE_BAT].height) ||
+			!sharedSpritesheets.load(SPRITESHEET_SKELETON,	1, 4,	sharedTextures[TEXTURE_SKELETON].width, sharedTextures[TEXTURE_SKELETON].height) ||
+			!sharedSpritesheets.load(SPRITESHEET_FROG,		1, 3,	sharedTextures[FROG_TEXTURE].width, sharedTextures[FROG_TEXTURE].height) ||
+			!sharedSpritesheets.load(SPRITESHEET_GHOST,		1, 3,	sharedTextures[TEXTURE_GHOST].width, sharedTextures[TEXTURE_GHOST].height) ||
+			!sharedSpritesheets.load(COIN_SPRITESHEET,		1, 6,	sharedTextures[COIN_TEXTURE].width, sharedTextures[COIN_TEXTURE].height))
 		{
 			assert(false);
 		}
@@ -105,7 +117,7 @@ namespace app::game {
 			ecs.assign<ComConstantForce>(entity, Vec2f{ 0.f, 2000.f });
 			
 			auto& renderable = ecs.assign<ComRenderable>(entity);
-			renderable.textureHandler = TextureHandler::KARU_SPRITESHEET;
+			renderable.textureHandler = TextureHandler::KARU_TEXTURE;
 
 			auto& animation = ecs.assign<ComAnimation>(entity);
 			auto& indices = sharedAnimationIndices[SharedAnimationIndices::CHARACTER_STOP_DOWN];
@@ -207,7 +219,7 @@ namespace app::game {
 
 		// Animation
 		SysAnimation::updateCharacterAnimationType(ecs, sharedAnimationIndices);
-		SysAnimation::updateAnimation(ecs, sharedTextures, dt);
+		SysAnimation::updateAnimation(ecs, sharedTextures, sharedSpritesheets, dt);
 
 		sharedSpawner.update(dt);
 		sharedKeyboard.clear();
@@ -219,12 +231,12 @@ namespace app::game {
 
 	void State::onRender(SDL_Renderer& renderer) noexcept
 	{
-		SysRenderer::renderBackground(renderer, sharedTextures);
+		SysRenderer::renderBackground(renderer, sharedTextures, sharedSpritesheets);
 		
 #ifdef _DEBUG
 		SysDebug::renderBoxColliders(ecs, renderer);
 #endif
-		SysRenderer::renderForeground(renderer, sharedTextures);
+		SysRenderer::renderForeground(renderer, sharedTextures, sharedSpritesheets);
 		SysRenderer::render(ecs, renderer, sharedTextures);
 		SysRenderer::renderStartGameOver(ecs, renderer, sharedTextures, player);
 		sharedScore.render(renderer);

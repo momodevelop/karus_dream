@@ -5,6 +5,7 @@
 #include <SDL.h>
 #include <yuu/utils.h>
 #include <yuu/texture_manager.h>
+#include <yuu/spritesheet_manager.h>
 #include <SDL_ttf.h>
 
 
@@ -18,13 +19,12 @@ namespace app::menu {
 
 
 	private: // variables
-		std::array<yuu::SDL_TextureUniquePtr, TEXTURE_MAX> textures;
 
 		std::function<void()> startCallback;
 		std::function<void()> quitCallback;
 		
-			yuu::TextureManager<TextureHandler> sharedTextures;
-
+		yuu::TextureManager<TextureHandler> sharedTextures;
+		yuu::SpritesheetManager<SpritesheetHandler> sharedSpritesheets;
 		SDL_Texture* textTexture;
 
 		int currentSelection;

@@ -39,6 +39,7 @@ namespace app::game {
 		//shared::SharedTextures sharedTextures;
 
 		shared::SharedTextures sharedTextures;
+		shared::SharedSpritesheets sharedSpritesheets;
 		shared::SharedKeyboard sharedKeyboard;
 		shared::SharedAnimationIndices sharedAnimationIndices;
 		shared::SharedSpawner sharedSpawner;

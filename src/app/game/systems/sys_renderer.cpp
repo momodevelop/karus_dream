@@ -18,9 +18,10 @@ namespace app::game::systems {
 		SDL_RenderCopy(&renderer, sharedTextures[handler].texture.get(), nullptr, &destRec);
 	}
 
-	void SysRenderer::renderForeground(SDL_Renderer & renderer, shared::SharedTextures& textures)
+	void SysRenderer::renderForeground(SDL_Renderer & renderer, shared::SharedTextures& textures, shared::SharedSpritesheets& spritesheets)
 	{
-		auto& textureData = textures[TextureHandler::GRID_SPRITESHEET];
+		auto& textureData = textures[TextureHandler::GRID_TEXTURE];
+		auto& ssData = spritesheets[SpritesheetHandler::GRID_SPRITESHEET];
 
 		float offset = gDisplayWidth / 20;
 		for (float i = 0.f; i < gDisplayWidth; i += offset) {
@@ -39,15 +40,16 @@ namespace app::game::systems {
 				else if (k == 1) index = 6;
 
 				SDL_SetTextureAlphaMod(textureData.texture.get(), 255);
-				SDL_RenderCopy(&renderer, textureData.texture.get(), &textures.getFrame(textureData.handler, index), &destRect);
+				SDL_RenderCopy(&renderer, textureData.texture.get(), &ssData[index], &destRect);
 			}
 
 
 		}
 	}
-	void SysRenderer::renderBackground(SDL_Renderer & renderer, shared::SharedTextures& textures)
+	void SysRenderer::renderBackground(SDL_Renderer & renderer, shared::SharedTextures& textures, shared::SharedSpritesheets& spritesheets)
 	{
-		auto& textureData = textures[TextureHandler::GRID_SPRITESHEET];
+		auto& textureData = textures[TextureHandler::GRID_TEXTURE];
+		auto& ssData = spritesheets[SpritesheetHandler::GRID_SPRITESHEET];
 		float offset = gDisplayWidth / 20;
 
 		int ii = 0;
@@ -64,10 +66,10 @@ namespace app::game::systems {
 
 
 				SDL_SetTextureAlphaMod(textureData.texture.get(), 255);
-				if (jj == 4 )
-					SDL_RenderCopy(&renderer, textureData.texture.get(), &textures.getFrame(textureData.handler, 8), &destRect);
+				if (jj == 4)
+					SDL_RenderCopy(&renderer, textureData.texture.get(), &ssData[8], &destRect);
 				else
-					SDL_RenderCopy(&renderer, textureData.texture.get(), &textures.getFrame(textureData.handler, 2), &destRect);
+					SDL_RenderCopy(&renderer, textureData.texture.get(), &ssData[2], &destRect);
 			}
 		}
 

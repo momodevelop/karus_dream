@@ -40,7 +40,7 @@ namespace app::menu {
 		auto* quitSurface = TTF_RenderText_Solid(font, "Quit", { 255, 255, 255 });
 		auto* madeBySurface = TTF_RenderText_Solid(font, "A simple game by Gerald Wong (Momo)", { 255, 255, 255 });
 
-		if (!sharedTextures.addSpritesheet(renderer, GRID_SPRITESHEET, "img/plains.png", 3, 5) ||
+		if (!sharedTextures.addTexture(renderer, GRID_TEXTURE, "img/plains.png") ||
 			!sharedTextures.addTexture(renderer, TITLE, titleSurface) ||
 			!sharedTextures.addTexture(renderer, ARROW, arrowSurface) ||
 			!sharedTextures.addTexture(renderer, START, startSurface) ||
@@ -48,6 +48,11 @@ namespace app::menu {
 			!sharedTextures.addTexture(renderer, MADE_BY, madeBySurface)			
 			)
 		{
+			SDL_Log("Failed: %s\n", SDL_GetError());
+			assert(false);
+		}
+
+		if (!sharedSpritesheets.load(GRID_SPRITESHEET, 3, 5, sharedTextures[GRID_TEXTURE].width, sharedTextures[GRID_TEXTURE].height)) {
 			SDL_Log("Failed: %s\n", SDL_GetError());
 			assert(false);
 		}
@@ -113,8 +118,8 @@ namespace app::menu {
 
 	void State::renderBackground(SDL_Renderer & renderer)
 	{
-		auto& textures = sharedTextures;
-		auto& textureData = textures[TextureHandler::GRID_SPRITESHEET];
+		auto& textureData = sharedTextures[TextureHandler::GRID_TEXTURE];
+		auto& spritesheetData = sharedSpritesheets[SpritesheetHandler::GRID_SPRITESHEET];
 		{
 			float offset = gDisplayWidth / 20;
 
@@ -133,9 +138,9 @@ namespace app::menu {
 
 					SDL_SetTextureAlphaMod(textureData.texture.get(), 255);
 					if (jj == 4)
-						SDL_RenderCopy(&renderer, textureData.texture.get(), &textures.getFrame(textureData.handler, 8), &destRect);
+						SDL_RenderCopy(&renderer, textureData.texture.get(), &spritesheetData[8], &destRect);
 					else
-						SDL_RenderCopy(&renderer, textureData.texture.get(), &textures.getFrame(textureData.handler, 2), &destRect);
+						SDL_RenderCopy(&renderer, textureData.texture.get(), &spritesheetData[2], &destRect);
 				}
 			}
 			{
@@ -156,7 +161,7 @@ namespace app::menu {
 						else if (k == 1) index = 6;
 
 						SDL_SetTextureAlphaMod(textureData.texture.get(), 255);
-						SDL_RenderCopy(&renderer, textureData.texture.get(), &textures.getFrame(textureData.handler, index), &destRect);
+						SDL_RenderCopy(&renderer, textureData.texture.get(), &spritesheetData[index], &destRect);
 					}
 				}
 			}

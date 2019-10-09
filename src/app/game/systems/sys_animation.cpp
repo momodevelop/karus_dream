@@ -34,7 +34,7 @@ namespace app::game::systems {
 		}
 	}
 
-	void SysAnimation::updateAnimation(entt::registry& registry, shared::SharedTextures& sharedTextures, float dt) {
+	void SysAnimation::updateAnimation(entt::registry& registry, shared::SharedTextures& sharedTextures, shared::SharedSpritesheets& sharedSpritesheet, float dt) {
 		auto view = registry.view<ComAnimation, ComRenderable>();
 		for (auto entity : view) 
 		{
@@ -44,7 +44,7 @@ namespace app::game::systems {
 			int index = (int)(animation.timer * animation.speed) % animation.indices.size();
 			auto& textureData = sharedTextures[renderable.textureHandler];
 
-			renderable.srcRect = sharedTextures.getFrame(renderable.textureHandler, animation.indices[index]);
+			renderable.srcRect = sharedSpritesheet[animation.spritesheetHandler][animation.indices[index]];
 			
 
 			animation.timer += dt;

@@ -26,13 +26,15 @@ namespace app::game::shared {
 
 	struct EnemyTypeInfo {
 		TextureHandler texture;
+		SpritesheetHandler spritesheet;
 		SharedAnimationIndices::Indices animationIndex;
 		float speed;
 		std::array<Vec2f, 2> spawnLocations;
 	};
 	const static EnemyTypeInfo enemyInfos[SharedSpawner::MAX] = {
 		{ 
-			TextureHandler::GHOST_SPRITESHEET, 
+			TextureHandler::TEXTURE_GHOST, 
+			SpritesheetHandler::SPRITESHEET_GHOST,
 			SharedAnimationIndices::ENEMY_GHOST, 
 			30.f,
 			{
@@ -42,8 +44,10 @@ namespace app::game::shared {
 		}, // GHOST
 
 		{ 
-			TextureHandler::SKELETON_SPRITESHEET, 
+			TextureHandler::TEXTURE_SKELETON, 
+			SpritesheetHandler::SPRITESHEET_SKELETON,
 			SharedAnimationIndices::ENEMY_SKELETON, 
+
 			30.f,
 			{
 				Vec2f{-enemySizes[SharedSpawner::SKELETON].x, gDisplayHalfHeight - enemySizes[SharedSpawner::SKELETON].y},
@@ -51,7 +55,8 @@ namespace app::game::shared {
 			}
 		}, // SKELETON
 		{ 
-			TextureHandler::FROG_SPRITESHEET, 
+			TextureHandler::FROG_TEXTURE, 
+			SpritesheetHandler::SPRITESHEET_FROG,
 			SharedAnimationIndices::ENEMY_FROG, 
 			50.f,
 			{
@@ -60,7 +65,8 @@ namespace app::game::shared {
 			}
 		}, // FROG
 		{
-			TextureHandler::BAT_SPRITESHEET,
+			TextureHandler::TEXTURE_BAT,
+			SpritesheetHandler::SPRITESHEET_BAT,
 			SharedAnimationIndices::ENEMY_BAT,
 			50.f,
 			{
@@ -127,12 +133,13 @@ namespace app::game::shared {
 		);
 		
 		auto& renderable = ecs.assign<ComRenderable>(entity);
-
 		renderable.textureHandler = enemyInfos[type].texture;
+
 		auto& animation = ecs.assign<ComAnimation>(entity);
 		auto& indices = animationIndices[enemyInfos[type].animationIndex];
 		animation.indices.assign(indices.cbegin(), indices.cend());
 		animation.speed = character::gAnimeSpeed;
+		animation.spritesheetHandler = enemyInfos[type].spritesheet;
 	}
 
 	void SharedSpawner::spawnCoin(Vec2f pos)
@@ -141,13 +148,14 @@ namespace app::game::shared {
 		ecs.assign<ComTransform>(entity, pos, Vec2f{ float(gHalfTileSize), float(gHalfTileSize) });
 
 		auto& renderable = ecs.assign<ComRenderable>(entity);
-		renderable.textureHandler = TextureHandler::COIN_SPRITESHEET;
+		renderable.textureHandler = TextureHandler::COIN_TEXTURE;
 
 		ecs.assign<ComCollectible>(entity);
 		ecs.assign<ComBoxCollider>(entity, ryoji::aabb::AABB2f{ 0.f, 0.f, float(gHalfTileSize), float(gHalfTileSize) });
 
 		auto& animation = ecs.assign<ComAnimation>(entity);
 		auto& indices = animationIndices[SharedAnimationIndices::COIN];
+		animation.spritesheetHandler = SpritesheetHandler::COIN_SPRITESHEET;
 		animation.indices.assign(indices.cbegin(), indices.cend());
 		animation.speed = character::gAnimeSpeed;
 	}
