@@ -27,12 +27,6 @@ namespace app::game {
 	class State : public StateBase {
 		constexpr static int kMaxEntities = 10;
 	private:
-		enum States {
-			START,
-			PLAY,
-			END
-		} state{ START };
-
 		entt::registry ecs;
 		entt::entity player;
 

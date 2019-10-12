@@ -144,9 +144,6 @@
     <ClInclude Include="src\app\splash\state.h">
       <Filter>src\app\splash</Filter>
     </ClInclude>
-    <ClInclude Include="src\app\game\state.h">
-      <Filter>src\app\game</Filter>
-    </ClInclude>
     <ClInclude Include="src\app\types.h">
       <Filter>src\app</Filter>
     </ClInclude>
@@ -233,6 +230,9 @@
     </ClInclude>
     <ClInclude Include="src\cmn\yuu\spritesheet_manager.h">
       <Filter>src\cmn\yuu</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\game\state.h">
+      <Filter>src\app\game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

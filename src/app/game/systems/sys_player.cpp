@@ -54,7 +54,7 @@ namespace app::game::systems {
 
 			auto weaponTrigger = ecs.try_get<ComTransform>(playerCom->weaponTrigger);
 			if (weaponTrigger) {
-				if (playerCom->state == playerCom->STATE_MOVING_LEFT) // going left
+				if (playerCom->state == ComPlayer::STATE_MOVING_LEFT) // going left
 				{
 					// adjust trigger position
 					auto weaponTransform = ecs.try_get<ComTransform>(playerCom->weaponTrigger);
@@ -69,7 +69,7 @@ namespace app::game::systems {
 						weaponTransform->flipState = SDL_FLIP_HORIZONTAL;
 					}
 				}
-				else if (playerCom->state == playerCom->STATE_MOVING_RIGHT) {
+				else if (playerCom->state == ComPlayer::STATE_MOVING_RIGHT) {
 					// adjust trigger position
 					auto weaponTransform = ecs.try_get<ComTransform>(playerCom->weaponTrigger);
 					auto weaponBox = ecs.try_get<ComBoxCollider>(playerCom->weaponTrigger);
@@ -83,6 +83,7 @@ namespace app::game::systems {
 						weaponTransform->flipState = SDL_FLIP_NONE;
 					}
 				}
+
 				
 
 			}
@@ -101,23 +102,24 @@ namespace app::game::systems {
 		if (rigidbody && characterAnimation) {
 			Vec2f direction { 0.f, 0.f };
 
-			// movement
-			if (sharedKeyboard.isKeyDown(SharedKeyboard::LEFT)) {
-				rigidbody->velocity.x = -character::gMoveSpeed;
-				characterAnimation->nextAnimeDir = SharedAnime::CHARACTER_NORM_LEFT;
-				playerCom->state = ComPlayer::STATE_MOVING_LEFT;
-			}
-			else if (sharedKeyboard.isKeyDown(SharedKeyboard::RIGHT)) {
-				rigidbody->velocity.x = character::gMoveSpeed;
-				characterAnimation->nextAnimeDir = SharedAnime::CHARACTER_NORM_RIGHT;
-				playerCom->state = ComPlayer::STATE_MOVING_RIGHT;
-			}	
+			if (playerCom->state != ComPlayer::STATE_DIE) {
+				// movement
+				if (sharedKeyboard.isKeyDown(SharedKeyboard::LEFT)) {
+					rigidbody->velocity.x = -character::gMoveSpeed;
+					characterAnimation->nextAnimeDir = SharedAnime::CHARACTER_NORM_LEFT;
+					playerCom->state = ComPlayer::STATE_MOVING_LEFT;
+				}
+				else if (sharedKeyboard.isKeyDown(SharedKeyboard::RIGHT)) {
+					rigidbody->velocity.x = character::gMoveSpeed;
+					characterAnimation->nextAnimeDir = SharedAnime::CHARACTER_NORM_RIGHT;
+					playerCom->state = ComPlayer::STATE_MOVING_RIGHT;
+				}
 
-			// jump
-			if (sharedKeyboard.isKeyDown(SharedKeyboard::Z) && playerCom->jumpTimer >= playerCom->jumpCooldown) {
-				rigidbody->velocity.y = -character::gJump;
-				playerCom->jumpTimer = 0.f;
-
+				// jump
+				if (sharedKeyboard.isKeyDown(SharedKeyboard::Z) && playerCom->jumpTimer >= playerCom->jumpCooldown) {
+					rigidbody->velocity.y = -character::gJump;
+					playerCom->jumpTimer = 0.f;
+				}
 			}
 		}
 

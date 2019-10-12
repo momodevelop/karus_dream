@@ -103,6 +103,17 @@ namespace app::game {
 		}
 
 
+		// game over
+		{
+			auto entity = ecs.create();
+			ecs.assign<ComTransform>(entity, Vec2f{ 0.f, 0.f }, Vec2f{ gDisplayWidth, gDisplayHeight });
+			auto& renderable = ecs.assign<ComRenderable>(entity);
+			renderable.textureHandler = TextureHandler::KARU_TEXTURE;
+			SDL_QueryTexture(sharedTextures[TextureHandler::KARU_TEXTURE].texture.get(), 0, 0, &renderable.srcRect.w, &renderable.srcRect.h);
+			renderable.alpha = 0;
+		}
+
+
 		// initialize main character
 		{	
 			using namespace ryoji::aabb;
@@ -185,8 +196,7 @@ namespace app::game {
 			ecs.assign<ComPlayerObstacle>(entity);
 		}
 		
-		// test enemy
-	
+
 
 
 	}
@@ -201,27 +211,42 @@ namespace app::game {
 
 	void State::onUpdate(float dt) noexcept
 	{
-		// Input
-		SysPlayer::processInput(ecs, sharedKeyboard, player);
-		
-		// update player variables
-		SysPlayer::update(ecs, player, dt);
+		if (ComPlayer* playerCom = ecs.try_get<ComPlayer>(player)) {
+			if (playerCom->state == ComPlayer::STATE_DIE) 
+			{
+				// do game over
+			}
 
-		// Physics 
-		SysPhysics::updateConstantForces(ecs);
-		SysPhysics::updateMovement(ecs, 1/60.f); //fixed time step for physics
-		SysAi::updateEnemyAi(ecs, dt);
-		SysCollision::resolvePlayerCollideObstacle(ecs, player);
-		SysCollision::resolvePlayerCollideCollectible(ecs, player, sharedScore);
-		SysCollision::resolvePlayerJumpTriggerCollision(ecs, player);
-		SysCollision::resolveEnemyCollideWeapon(ecs, player, sharedScore);
-		SysPlayer::updateTriggerPositions(ecs, player);
+			else 
+			{
+				// Input
+				SysPlayer::processInput(ecs, sharedKeyboard, player);
 
-		// Animation
-		SysAnimation::updateCharacterAnimationType(ecs, sharedAnimationIndices);
-		SysAnimation::updateAnimation(ecs, sharedTextures, sharedSpritesheets, dt);
+				// update player variables
+				SysPlayer::update(ecs, player, dt);
 
-		sharedSpawner.update(dt);
+				// Physics 
+				SysPhysics::updateConstantForces(ecs);
+				SysPhysics::updateMovement(ecs, 1 / 60.f); //fixed time step for physics?
+				SysAi::updateEnemyAi(ecs, dt);
+				SysCollision::resolvePlayerCollideObstacle(ecs, player);
+				SysCollision::resolvePlayerCollideCollectible(ecs, player, sharedScore);
+				SysCollision::resolvePlayerJumpTriggerCollision(ecs, player);
+				SysCollision::resolveEnemyCollideWeapon(ecs, player, sharedScore);
+				SysCollision::resolvePlayerCollideEnemy(ecs, player);
+				SysPlayer::updateTriggerPositions(ecs, player);
+
+				// Animation
+				SysAnimation::updateCharacterAnimationType(ecs, sharedAnimationIndices);
+				SysAnimation::updateAnimation(ecs, sharedTextures, sharedSpritesheets, dt);
+				
+				// Enemy spawning logic (hack)
+				if (playerCom->state == ComPlayer::STATE_MOVING_LEFT || playerCom->state == ComPlayer::STATE_MOVING_RIGHT)
+					sharedSpawner.update(dt);
+			}
+			
+		}
+
 		sharedKeyboard.clear();
 	}
 
@@ -238,6 +263,7 @@ namespace app::game {
 #endif
 		SysRenderer::renderForeground(renderer, sharedTextures, sharedSpritesheets);
 		SysRenderer::render(ecs, renderer, sharedTextures);
+		
 		SysRenderer::renderStartGameOver(ecs, renderer, sharedTextures, player);
 		sharedScore.render(renderer);
 

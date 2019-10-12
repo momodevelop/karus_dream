@@ -9,6 +9,7 @@
 #include "../components/com_collectible.h"
 #include "../components/com_rigidbody.h"
 #include "../components/com_enemy.h"
+#include "../components/com_constant_force.h"
 
 #include "../shared/shared_score.h"
 
@@ -136,13 +137,14 @@ namespace app::game::systems {
 
 	void SysCollision::resolvePlayerCollideEnemy(entt::registry & ecs, entt::entity playerEntity)
 	{
-		auto enemies = ecs.view<ComTransform, ComBoxCollider, ComPlayerObstacle, ComEnemy>();
+		auto enemies = ecs.view<ComTransform, ComBoxCollider, ComEnemy>();
 
 		auto* playerTransform = ecs.try_get<ComTransform>(playerEntity);
 		auto* playerBox = ecs.try_get<ComBoxCollider>(playerEntity);
 		auto* playerRb = ecs.try_get<ComRigidBody>(playerEntity);
+		auto* playerCom = ecs.try_get<ComPlayer>(playerEntity);
 
-		if (playerTransform && playerBox && playerRb) {
+		if (playerTransform && playerBox && playerRb && playerCom) {
 			auto playerBoxCopy = *playerBox;
 
 			syncBoxColliderToTransform(playerBoxCopy, *playerTransform);
@@ -160,7 +162,7 @@ namespace app::game::systems {
 
 				auto[pushout, index] = aabb::getCollidingAABBSmallestOverlap(playerBoxCopy.box, enemyBox.box);
 				if (index != 2) {
-					// TODO death code for player
+					playerCom->state = ComPlayer::STATE_DIE;
 				}
 			}
 
