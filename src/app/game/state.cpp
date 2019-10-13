@@ -43,9 +43,10 @@ namespace app::game {
 	{
 	}
 
-	State::State(SDL_Renderer& renderer) :
+	State::State(SDL_Renderer& renderer, std::function<void()> completedCallback) :
 		sharedSpawner(ecs, sharedAnimationIndices),
-		sharedScore(ecs, sharedTextures)
+		sharedScore(ecs, sharedTextures),
+		completedCallback(completedCallback)
 	{
 		if (!sharedKeyboard.init()) {
 			assert(false); // throw instead?
@@ -111,6 +112,8 @@ namespace app::game {
 			renderable.textureHandler = TextureHandler::KARU_TEXTURE;
 			SDL_QueryTexture(sharedTextures[TextureHandler::KARU_TEXTURE].texture.get(), 0, 0, &renderable.srcRect.w, &renderable.srcRect.h);
 			renderable.alpha = 0;
+
+			this->fadeOutEntity = entity;
 		}
 
 
@@ -214,7 +217,19 @@ namespace app::game {
 		if (ComPlayer* playerCom = ecs.try_get<ComPlayer>(player)) {
 			if (playerCom->state == ComPlayer::STATE_DIE) 
 			{
+				using namespace components;
 				// do game over
+				auto* renderer = ecs.try_get<ComRenderable>(fadeOutEntity);
+				if (renderer) {
+					renderer->alpha += Uint8(dt * 500.f);
+					if (renderer->alpha > 255U) {
+						renderer->alpha = 255U;
+					}
+				}
+
+				if (sharedKeyboard.isKeyDown(SharedKeyboard::Z)) {
+					completedCallback();
+				}
 			}
 
 			else 

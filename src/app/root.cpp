@@ -110,7 +110,9 @@ namespace app {
 			);
 			break;
 		case STATE_GAME:
-			return std::make_unique<game::State>(renderer);
+			return std::make_unique<game::State>(renderer, [=]() {
+				nextState = STATE_MENU;
+			});
 			break;
 		default:
 			break;

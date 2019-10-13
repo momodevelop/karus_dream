@@ -27,8 +27,10 @@ namespace app::game {
 	class State : public StateBase {
 		constexpr static int kMaxEntities = 10;
 	private:
+		std::function<void()> completedCallback;
 		entt::registry ecs;
 		entt::entity player;
+		entt::entity fadeOutEntity;
 
 		//shared::SharedTextures sharedTextures;
 
@@ -47,7 +49,7 @@ namespace app::game {
 		void renderTextAt(SDL_Renderer & renderer, TextureHandler handler, int x, int y, float scale);
 		
 	public:
-		State(SDL_Renderer& renderer);
+		State(SDL_Renderer& renderer, std::function<void()> completedCallback);
 		~State();
 
 		virtual void onEnter() noexcept override;
