@@ -12,7 +12,7 @@ namespace app::game::systems {
 		static void resolvePlayerJumpTriggerCollision(entt::registry& ecs, entt::entity player);
 		static void resolvePlayerCollideCollectible(entt::registry& ecs, entt::entity player, shared::SharedScore& sharedScore);
 		static void resolvePlayerCollideObstacle(entt::registry& ecs, entt::entity player);
-		static void resolvePlayerCollideEnemy(entt::registry& ecs, entt::entity player);
+		static void resolvePlayerCollideEnemy(entt::registry& ecs, entt::entity player,shared::SharedGameState& sharedGameState);
 		static void resolveEnemyCollideWeapon(entt::registry& ecs, entt::entity player, shared::SharedScore& sharedScore);
 	};
 }

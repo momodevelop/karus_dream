@@ -12,7 +12,8 @@ namespace app::game::systems {
 		static void renderForeground(SDL_Renderer& renderer, shared::SharedTextures& textures, shared::SharedSpritesheets& spritesheets);
 		static void renderBackground(SDL_Renderer& renderer, shared::SharedTextures& textures, shared::SharedSpritesheets& spritesheets);
 		static void render(entt::registry& registry, SDL_Renderer& renderer, shared::SharedTextures& textures);
-		static void renderStartGameOver(entt::registry& registry, SDL_Renderer& renderer, shared::SharedTextures& textures, entt::entity player);
+		static void renderStart(entt::registry& registry, SDL_Renderer& renderer, shared::SharedTextures& textures);
+		static void renderGameOver(entt::registry& registry, SDL_Renderer& renderer, shared::SharedTextures& textures);
 	};
 }
 

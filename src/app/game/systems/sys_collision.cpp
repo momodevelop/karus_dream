@@ -12,6 +12,7 @@
 #include "../components/com_constant_force.h"
 
 #include "../shared/shared_score.h"
+#include "../shared/shared_game_state.h"
 
 #include "sys_collision.h"
 
@@ -135,7 +136,7 @@ namespace app::game::systems {
 		}
 	}
 
-	void SysCollision::resolvePlayerCollideEnemy(entt::registry & ecs, entt::entity playerEntity)
+	void SysCollision::resolvePlayerCollideEnemy(entt::registry & ecs, entt::entity playerEntity, shared::SharedGameState& sharedGameState)
 	{
 		auto enemies = ecs.view<ComTransform, ComBoxCollider, ComEnemy>();
 
@@ -163,6 +164,7 @@ namespace app::game::systems {
 				auto[pushout, index] = aabb::getCollidingAABBSmallestOverlap(playerBoxCopy.box, enemyBox.box);
 				if (index != 2) {
 					playerCom->state = ComPlayer::STATE_DIE;
+					sharedGameState.state = shared::SharedGameState::GAME_OVER;
 				}
 			}
 

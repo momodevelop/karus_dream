@@ -7,7 +7,7 @@ namespace app::game::systems {
 	public:
 		static void update(entt::registry& ecs, entt::entity player, float dt);
 		static void updateTriggerPositions(entt::registry& ecs, entt::entity player);
-		static void processInput(entt::registry& registry, shared::SharedKeyboard& sharedKeyboard, entt::entity player);
+		static void processInput(entt::registry& registry, shared::SharedKeyboard& sharedKeyboard, entt::entity player, shared::SharedGameState& sharedGameState);
 	};
 
 

@@ -240,7 +240,7 @@ namespace ryoji::easing {
 	// Helper function
 	template<typename T, typename U> static T ease(T start, T end, U time) {
 		static_assert(std::is_floating_point_v<U>);
-		return start + (end - start) * time;
+		return T(start + (end - start) * time);
 	}
 }
 

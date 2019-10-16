@@ -2,6 +2,7 @@
 #include <SDL_image.h>
 #include <constants.h>
 #include <ryoji/vector.h>
+#include <ryoji/easing.h>
 
 #include "../root.h"
 
@@ -72,14 +73,15 @@ namespace app::game {
 		}
 
 		if (!sharedTextures.addText(renderer, font, TEXT_SCORE, { 255, 255, 255 }, "Score: ") ||
-			!sharedTextures.addText(renderer, font, TEXT_GAMEOVER, { 255, 255, 255 }, "Game Over: ") ||
+			!sharedTextures.addText(renderer, font, TEXT_GAMEOVER, { 255, 255, 255 }, "Game Over: Press Z to restart.") ||
 			!sharedTextures.addText(renderer, font, TEXT_START, { 255, 255, 255 }, "Press Left or Right Arrow to start! ")) {
 			assert(false);
 		}
 
 
 		// init textures
-		if (!sharedTextures.addTexture(renderer, KARU_TEXTURE,		"img/spritesheet_karu.png") ||
+		if (!sharedTextures.addTexture(renderer, BLANK_TEXTURE,		"img/blank.png") ||
+			!sharedTextures.addTexture(renderer, KARU_TEXTURE,		"img/spritesheet_karu.png") ||
 			!sharedTextures.addTexture(renderer, GRID_TEXTURE,		"img/plains.png") ||
 			!sharedTextures.addTexture(renderer, TEXTURE_BAT,		"img/bat.png") ||
 			!sharedTextures.addTexture(renderer, TEXTURE_SKELETON,	"img/skeleton.png") ||
@@ -109,8 +111,8 @@ namespace app::game {
 			auto entity = ecs.create();
 			ecs.assign<ComTransform>(entity, Vec2f{ 0.f, 0.f }, Vec2f{ gDisplayWidth, gDisplayHeight });
 			auto& renderable = ecs.assign<ComRenderable>(entity);
-			renderable.textureHandler = TextureHandler::KARU_TEXTURE;
-			SDL_QueryTexture(sharedTextures[TextureHandler::KARU_TEXTURE].texture.get(), 0, 0, &renderable.srcRect.w, &renderable.srcRect.h);
+			renderable.textureHandler = TextureHandler::BLANK_TEXTURE;
+			SDL_QueryTexture(sharedTextures[TextureHandler::BLANK_TEXTURE].texture.get(), 0, 0, &renderable.srcRect.w, &renderable.srcRect.h);
 			renderable.alpha = 0;
 
 			this->fadeOutEntity = entity;
@@ -214,52 +216,49 @@ namespace app::game {
 
 	void State::onUpdate(float dt) noexcept
 	{
-		if (ComPlayer* playerCom = ecs.try_get<ComPlayer>(player)) {
-			if (playerCom->state == ComPlayer::STATE_DIE) 
-			{
-				using namespace components;
-				// do game over
-				auto* renderer = ecs.try_get<ComRenderable>(fadeOutEntity);
-				if (renderer) {
-					renderer->alpha += Uint8(dt * 500.f);
-					if (renderer->alpha > 255U) {
-						renderer->alpha = 255U;
-					}
-				}
 
-				if (sharedKeyboard.isKeyDown(SharedKeyboard::Z)) {
-					completedCallback();
-				}
-			}
 
-			else 
-			{
-				// Input
-				SysPlayer::processInput(ecs, sharedKeyboard, player);
+		if (sharedGameState.state == SharedGameState::GAME_UPDATE || sharedGameState.state == SharedGameState::GAME_START) {
+			// Input
+			SysPlayer::processInput(ecs, sharedKeyboard, player, sharedGameState);
 
-				// update player variables
-				SysPlayer::update(ecs, player, dt);
+			// update player variables
+			SysPlayer::update(ecs, player, dt);
 
-				// Physics 
-				SysPhysics::updateConstantForces(ecs);
-				SysPhysics::updateMovement(ecs, 1 / 60.f); //fixed time step for physics?
-				SysAi::updateEnemyAi(ecs, dt);
-				SysCollision::resolvePlayerCollideObstacle(ecs, player);
-				SysCollision::resolvePlayerCollideCollectible(ecs, player, sharedScore);
-				SysCollision::resolvePlayerJumpTriggerCollision(ecs, player);
-				SysCollision::resolveEnemyCollideWeapon(ecs, player, sharedScore);
-				SysCollision::resolvePlayerCollideEnemy(ecs, player);
-				SysPlayer::updateTriggerPositions(ecs, player);
+			// Physics 
+			SysPhysics::updateConstantForces(ecs);
+			SysPhysics::updateMovement(ecs, 1 / 60.f); //fixed time step for physics?
+			SysAi::updateEnemyAi(ecs, dt);
+			SysCollision::resolvePlayerCollideObstacle(ecs, player);
+			SysCollision::resolvePlayerCollideCollectible(ecs, player, sharedScore);
+			SysCollision::resolvePlayerJumpTriggerCollision(ecs, player);
+			SysCollision::resolveEnemyCollideWeapon(ecs, player, sharedScore);
+			SysCollision::resolvePlayerCollideEnemy(ecs, player, sharedGameState);
+			SysPlayer::updateTriggerPositions(ecs, player);
 
-				// Animation
-				SysAnimation::updateCharacterAnimationType(ecs, sharedAnimationIndices);
-				SysAnimation::updateAnimation(ecs, sharedTextures, sharedSpritesheets, dt);
-				
-				// Enemy spawning logic (hack)
-				if (playerCom->state == ComPlayer::STATE_MOVING_LEFT || playerCom->state == ComPlayer::STATE_MOVING_RIGHT)
-					sharedSpawner.update(dt);
-			}
+			// Animation
+			SysAnimation::updateCharacterAnimationType(ecs, sharedAnimationIndices);
+			SysAnimation::updateAnimation(ecs, sharedTextures, sharedSpritesheets, dt);
 			
+			// Enemy spawning logic 
+			if (sharedGameState.state == SharedGameState::GAME_UPDATE)
+				sharedSpawner.update(dt);
+		}
+		
+		else {
+			using namespace components;
+			// do game over
+			auto* renderer = ecs.try_get<ComRenderable>(fadeOutEntity);
+			if (renderer) {
+				fadeOutTimer += dt;
+				if (fadeOutTimer > fadeOutDuration)
+					fadeOutTimer = fadeOutDuration;
+				renderer->alpha = ryoji::easing::ease(0, 255, fadeOutTimer / fadeOutDuration);
+			}
+
+			if (sharedKeyboard.isKeyDown(SharedKeyboard::Z)) {
+				completedCallback();
+			}
 		}
 
 		sharedKeyboard.clear();
@@ -279,7 +278,11 @@ namespace app::game {
 		SysRenderer::renderForeground(renderer, sharedTextures, sharedSpritesheets);
 		SysRenderer::render(ecs, renderer, sharedTextures);
 		
-		SysRenderer::renderStartGameOver(ecs, renderer, sharedTextures, player);
+		if (sharedGameState.state == SharedGameState::GAME_START)
+			SysRenderer::renderStart(ecs, renderer, sharedTextures);
+		
+
+
 		sharedScore.render(renderer);
 
 		SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);

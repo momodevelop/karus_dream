@@ -15,6 +15,7 @@ namespace app::game {
 		SPRITESHEET_GHOST,
 	};
 	enum TextureHandler {
+		BLANK_TEXTURE,
 		KARU_TEXTURE,
 		GRID_TEXTURE,
 		COIN_TEXTURE,

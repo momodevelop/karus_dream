@@ -95,22 +95,17 @@ namespace app::game::systems {
 		}
 		
 	}
-	void SysRenderer::renderStartGameOver(entt::registry & ecs, SDL_Renderer & renderer, shared::SharedTextures & textures, entt::entity player)
+	void SysRenderer::renderGameOver(entt::registry & registry, SDL_Renderer & renderer, shared::SharedTextures & textures)
 	{
-		using namespace components;
-		auto* playerCom = ecs.try_get<ComPlayer>(player);
-		// render text based on states
-		switch (playerCom->state) {
-			int w;
-		case ComPlayer::STATE_IDLE:
-			SDL_QueryTexture(textures[TEXT_START].texture.get(), 0, 0, &w, nullptr);
-			renderTextAt(renderer, textures, TEXT_START, gDisplayHalfWidth - w / 2, 100, 1.f);
-			break;
-		case ComPlayer::STATE_DIE:
-			SDL_QueryTexture(textures[TEXT_START].texture.get(), 0, 0, &w, nullptr);
-			renderTextAt(renderer, textures, TEXT_GAMEOVER, gDisplayHalfWidth - w / 2, 100, 1.f);
-			break;
-		}
+		int w;
+		SDL_QueryTexture(textures[TEXT_GAMEOVER].texture.get(), 0, 0, &w, nullptr);
+		renderTextAt(renderer, textures, TEXT_GAMEOVER, gDisplayHalfWidth - w / 2, 100, 1.f);
+	}
+	void SysRenderer::renderStart(entt::registry & ecs, SDL_Renderer & renderer, shared::SharedTextures & textures)
+	{
+		int w;
+		SDL_QueryTexture(textures[TEXT_START].texture.get(), 0, 0, &w, nullptr);
+		renderTextAt(renderer, textures, TEXT_START, gDisplayHalfWidth - w / 2, 100, 1.f);
 	}
 
 

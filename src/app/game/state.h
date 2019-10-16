@@ -16,6 +16,7 @@
 #include "shared/shared_animation_indices.h"
 #include "shared/shared_spawner.h"
 #include "shared/shared_score.h"
+#include "shared/shared_game_state.h"
 
 #include "../state_base.h"
 
@@ -30,10 +31,15 @@ namespace app::game {
 		std::function<void()> completedCallback;
 		entt::registry ecs;
 		entt::entity player;
+
+		// for gameover
 		entt::entity fadeOutEntity;
+		float fadeOutDuration = 1.f;
+		float fadeOutTimer = 0.f;
+
 
 		//shared::SharedTextures sharedTextures;
-
+		shared::SharedGameState sharedGameState;
 		shared::SharedTextures sharedTextures;
 		shared::SharedSpritesheets sharedSpritesheets;
 		shared::SharedKeyboard sharedKeyboard;

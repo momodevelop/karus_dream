@@ -178,6 +178,7 @@ copy lib\sdl_ttf\lib\x64\*.dll $(OutDir)</Command>
     <ClInclude Include="src\app\game\components\com_rigidbody.h" />
     <ClInclude Include="src\app\game\components\com_transform.h" />
     <ClInclude Include="src\app\game\shared\shared_animation_indices.h" />
+    <ClInclude Include="src\app\game\shared\shared_game_state.h" />
     <ClInclude Include="src\app\game\shared\shared_keyboard.h" />
     <ClInclude Include="src\app\game\shared\shared_score.h" />
     <ClInclude Include="src\app\game\shared\shared_spawner.h" />

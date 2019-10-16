@@ -15,6 +15,7 @@
 
 #include "../shared/shared_keyboard.h"
 #include "../shared/shared_animation_indices.h"
+#include "../shared/shared_game_state.h"
 
 #include "sys_player.h"
 
@@ -90,7 +91,7 @@ namespace app::game::systems {
 		}
 	}
 
-	void SysPlayer::processInput(entt::registry& ecs, SharedKeyboard& sharedKeyboard, entt::entity player) {
+	void SysPlayer::processInput(entt::registry& ecs, SharedKeyboard& sharedKeyboard, entt::entity player, shared::SharedGameState& sharedGameState) {
 		using namespace character;
 		
 		using SharedAnime = SharedAnimationIndices; // so that I don't have to type lol
@@ -108,11 +109,13 @@ namespace app::game::systems {
 					rigidbody->velocity.x = -character::gMoveSpeed;
 					characterAnimation->nextAnimeDir = SharedAnime::CHARACTER_NORM_LEFT;
 					playerCom->state = ComPlayer::STATE_MOVING_LEFT;
+					sharedGameState.state = SharedGameState::GAME_UPDATE;
 				}
 				else if (sharedKeyboard.isKeyDown(SharedKeyboard::RIGHT)) {
 					rigidbody->velocity.x = character::gMoveSpeed;
 					characterAnimation->nextAnimeDir = SharedAnime::CHARACTER_NORM_RIGHT;
 					playerCom->state = ComPlayer::STATE_MOVING_RIGHT;
+					sharedGameState.state = SharedGameState::GAME_UPDATE;
 				}
 
 				// jump
