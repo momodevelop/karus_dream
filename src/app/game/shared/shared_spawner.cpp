@@ -29,6 +29,7 @@ namespace app::game::shared {
 		SpritesheetHandler spritesheet;
 		SharedAnimationIndices::Indices animationIndex;
 		float speed;
+		uint8_t score;
 		std::array<Vec2f, 2> spawnLocations;
 	};
 	const static EnemyTypeInfo enemyInfos[SharedSpawner::MAX] = {
@@ -36,7 +37,7 @@ namespace app::game::shared {
 			TextureHandler::TEXTURE_GHOST, 
 			SpritesheetHandler::SPRITESHEET_GHOST,
 			SharedAnimationIndices::ENEMY_GHOST, 
-			30.f,
+			30.f, 2,
 			{
 				Vec2f{-enemySizes[SharedSpawner::GHOST].x, 100.f},
 				Vec2f{gDisplayWidth + enemySizes[SharedSpawner::GHOST].x, 100.f}
@@ -47,8 +48,7 @@ namespace app::game::shared {
 			TextureHandler::TEXTURE_SKELETON, 
 			SpritesheetHandler::SPRITESHEET_SKELETON,
 			SharedAnimationIndices::ENEMY_SKELETON, 
-
-			30.f,
+			50.f, 2,
 			{
 				Vec2f{-enemySizes[SharedSpawner::SKELETON].x, gDisplayHalfHeight - enemySizes[SharedSpawner::SKELETON].y},
 				Vec2f{gDisplayWidth + enemySizes[SharedSpawner::SKELETON].x, gDisplayHalfHeight - enemySizes[SharedSpawner::SKELETON].y}
@@ -58,7 +58,7 @@ namespace app::game::shared {
 			TextureHandler::FROG_TEXTURE, 
 			SpritesheetHandler::SPRITESHEET_FROG,
 			SharedAnimationIndices::ENEMY_FROG, 
-			50.f,
+			120.f, 2,
 			{
 				Vec2f{-enemySizes[SharedSpawner::FROG].x, gDisplayHalfHeight - enemySizes[SharedSpawner::FROG].y},
 				Vec2f{gDisplayWidth + enemySizes[SharedSpawner::FROG].x, gDisplayHalfHeight - enemySizes[SharedSpawner::FROG].y}
@@ -68,7 +68,7 @@ namespace app::game::shared {
 			TextureHandler::TEXTURE_BAT,
 			SpritesheetHandler::SPRITESHEET_BAT,
 			SharedAnimationIndices::ENEMY_BAT,
-			50.f,
+			80.f, 2,
 			{
 				Vec2f{-enemySizes[SharedSpawner::BAT].x, 100.f},
 				Vec2f{gDisplayWidth + enemySizes[SharedSpawner::BAT].x, 100.f}
@@ -80,7 +80,7 @@ namespace app::game::shared {
 	SharedSpawner::SharedSpawner(entt::registry& ecs, SharedAnimationIndices& animationIndices) :
 		coinTimer(0.f), coinDuration(5.f),
 		enemyTimer(0.f), enemyDuration(5.f),
-		ecs(ecs), 
+		ecs(ecs), difficultyTimer(0.f),
 		animationIndices(animationIndices),
 		randomGenerator(randomDevice()),
 		randomCoinX(gTileSize, gDisplayWidth - gHalfTileSize),
@@ -89,6 +89,7 @@ namespace app::game::shared {
 		randomCoinFlip(0, 1)
 	{
 	}
+
 	SharedSpawner::~SharedSpawner()
 	{
 	}

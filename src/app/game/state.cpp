@@ -73,7 +73,7 @@ namespace app::game {
 		}
 
 		if (!sharedTextures.addText(renderer, font, TEXT_SCORE, { 255, 255, 255 }, "Score: ") ||
-			!sharedTextures.addText(renderer, font, TEXT_GAMEOVER, { 255, 255, 255 }, "Game Over: Press Z to restart.") ||
+			!sharedTextures.addText(renderer, font, TEXT_GAMEOVER, { 0, 0, 0 }, "Game Over: Press Z to restart.") ||
 			!sharedTextures.addText(renderer, font, TEXT_START, { 255, 255, 255 }, "Press Left or Right Arrow to start! ")) {
 			assert(false);
 		}
@@ -245,22 +245,27 @@ namespace app::game {
 				sharedSpawner.update(dt);
 		}
 		
-		else {
+		else if (sharedGameState.state == SharedGameState::GAME_OVER) {
 			using namespace components;
 			// do game over
 			auto* renderer = ecs.try_get<ComRenderable>(fadeOutEntity);
 			if (renderer) {
 				fadeOutTimer += dt;
-				if (fadeOutTimer > fadeOutDuration)
+				if (fadeOutTimer > fadeOutDuration) {
 					fadeOutTimer = fadeOutDuration;
+					sharedGameState.state = shared::SharedGameState::GAME_OVER_DONE;
+				}
+
 				renderer->alpha = ryoji::easing::ease(0, 255, fadeOutTimer / fadeOutDuration);
 			}
 
+
+		}
+		else if (sharedGameState.state == SharedGameState::GAME_OVER_DONE) {
 			if (sharedKeyboard.isKeyDown(SharedKeyboard::Z)) {
 				completedCallback();
 			}
 		}
-
 		sharedKeyboard.clear();
 	}
 
@@ -280,6 +285,8 @@ namespace app::game {
 		
 		if (sharedGameState.state == SharedGameState::GAME_START)
 			SysRenderer::renderStart(ecs, renderer, sharedTextures);
+		else if (sharedGameState.state == SharedGameState::GAME_OVER_DONE)
+			SysRenderer::renderGameOver(ecs, renderer, sharedTextures);
 		
 
 

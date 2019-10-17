@@ -10,7 +10,8 @@ namespace app::game::shared {
 		enum States {
 			GAME_START,
 			GAME_UPDATE,
-			GAME_OVER
+			GAME_OVER,
+			GAME_OVER_DONE,
 		} state{ GAME_START };
 	};
 

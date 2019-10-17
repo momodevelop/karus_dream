@@ -203,6 +203,7 @@ namespace app::game::systems {
 			auto[pushout, index] = aabb::getCollidingAABBSmallestOverlap(weaponBoxCopy.box, enemyBox.box);
 			if (index != 2) {
 				enemyCom.state = ComEnemy::STATE_DIE;
+				sharedScore.addScore(enemyCom.score);
 			}
 		}
 		

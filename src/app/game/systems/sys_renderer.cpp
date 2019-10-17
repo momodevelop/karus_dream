@@ -99,7 +99,7 @@ namespace app::game::systems {
 	{
 		int w;
 		SDL_QueryTexture(textures[TEXT_GAMEOVER].texture.get(), 0, 0, &w, nullptr);
-		renderTextAt(renderer, textures, TEXT_GAMEOVER, gDisplayHalfWidth - w / 2, 100, 1.f);
+		renderTextAt(renderer, textures, TEXT_GAMEOVER, gDisplayHalfWidth - w / 2, 150, 1.f);
 	}
 	void SysRenderer::renderStart(entt::registry & ecs, SDL_Renderer & renderer, shared::SharedTextures & textures)
 	{
