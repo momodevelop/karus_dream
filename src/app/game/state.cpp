@@ -70,9 +70,13 @@ namespace app::game {
 			if (!sharedTextures.addText(renderer, font, (TextureHandler)(ZERO + i), { 255, 255, 255 }, buffer)) {
 				assert(false);
 			}
+			if (!sharedTextures.addText(renderer, font, (TextureHandler)(ZERO_B + i), { 0, 0, 0 }, buffer)) {
+				assert(false);
+			}
 		}
 
 		if (!sharedTextures.addText(renderer, font, TEXT_SCORE, { 255, 255, 255 }, "Score: ") ||
+			!sharedTextures.addText(renderer, font, TEXT_SCORE_B, { 0, 0, 0 }, "Score: ") ||
 			!sharedTextures.addText(renderer, font, TEXT_GAMEOVER, { 0, 0, 0 }, "Game Over: Press Z to restart.") ||
 			!sharedTextures.addText(renderer, font, TEXT_START, { 255, 255, 255 }, "Press Left or Right Arrow to start! ")) {
 			assert(false);
