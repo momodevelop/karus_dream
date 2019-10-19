@@ -106,7 +106,7 @@ namespace app::game::shared {
 
 		// enemy spawner
 		enemyTimer += dt;
-		if (enemyTimer > enemyDuration - difficultyTimer * 0.1f) {
+		if (enemyTimer > std::max(enemyDuration - difficultyTimer * 0.1f, 0.1f)) {
 			EnemyType type = (EnemyType)randomEnemyType(randomGenerator);
 			spawnEnemy(randomCoinFlip(randomGenerator), type);
 			enemyTimer = 0.f;

@@ -193,7 +193,7 @@ namespace app::game::systems {
 
 			auto& enemyCom = enemies.get<ComEnemy>(enemy);
 			if (enemyCom.state == ComEnemy::STATE_DIE)
-				return;
+				continue;
 
 			auto& enemyTransform = enemies.get<ComTransform>(enemy);
 			auto enemyBox = enemies.get<ComBoxCollider>(enemy); //copy
