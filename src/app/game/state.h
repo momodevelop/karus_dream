@@ -38,7 +38,7 @@ namespace app::game {
 		float fadeOutTimer = 0.f;
 
 		// for speed up
-		float difficulty = 1.1f;
+		float difficulty = 1.f;
 
 
 		//shared::SharedTextures sharedTextures;

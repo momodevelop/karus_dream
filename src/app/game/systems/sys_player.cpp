@@ -65,7 +65,7 @@ namespace app::game::systems {
 						float weaponHeight = weaponBox->box.max[1] - weaponBox->box.min[1];
 						float playerWidth = playerBox->box.max[0] - playerBox->box.min[0];
 						float playerHeight = playerBox->box.max[1] - playerBox->box.min[1];
-						weaponTransform->position.x = playerTransform->position.x - weaponWidth + playerWidth * 0.5f;
+						weaponTransform->position.x = playerTransform->position.x + playerBox->box.min[0] - weaponWidth + playerWidth * 0.5f;
 						weaponTransform->position.y = playerTransform->position.y + playerHeight * 0.5f - weaponHeight * 0.5f + 10.f;
 						weaponTransform->flipState = SDL_FLIP_HORIZONTAL;
 					}
@@ -79,7 +79,7 @@ namespace app::game::systems {
 						float playerWidth = playerBox->box.max[0] - playerBox->box.min[0];
 						float playerHeight = playerBox->box.max[1] - playerBox->box.min[1];
 
-						weaponTransform->position.x = playerTransform->position.x + playerWidth * 0.5f;
+						weaponTransform->position.x = playerTransform->position.x + playerBox->box.min[0] + playerWidth * 0.5f;
 						weaponTransform->position.y = playerTransform->position.y + playerHeight * 0.5f - weaponHeight * 0.5f + 10.f;
 						weaponTransform->flipState = SDL_FLIP_NONE;
 					}
