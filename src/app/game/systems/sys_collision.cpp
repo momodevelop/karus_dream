@@ -153,7 +153,7 @@ namespace app::game::systems {
 			for (auto enemy : enemies) {
 				auto& enemyCom = enemies.get<ComEnemy>(enemy);
 				if (enemyCom.state == ComEnemy::STATE_DIE)
-					return;
+					continue;
 
 				auto& enemyTransform = enemies.get<ComTransform>(enemy);
 				auto enemyBox = enemies.get<ComBoxCollider>(enemy); //copy
@@ -161,8 +161,7 @@ namespace app::game::systems {
 				// Sync player and obstacle's rect to transform
 				syncBoxColliderToTransform(enemyBox, enemyTransform);
 
-				auto[pushout, index] = aabb::getCollidingAABBSmallestOverlap(playerBoxCopy.box, enemyBox.box);
-				if (index != 2) {
+				if (aabb::isAABBColliding(playerBoxCopy.box, enemyBox.box)) {					
 					playerCom->state = ComPlayer::STATE_DIE;
 					sharedGameState.state = shared::SharedGameState::GAME_OVER;
 				}
@@ -200,8 +199,8 @@ namespace app::game::systems {
 			auto enemyBox = enemies.get<ComBoxCollider>(enemy); //copy
 			syncBoxColliderToTransform(enemyBox, enemyTransform);
 
-			auto[pushout, index] = aabb::getCollidingAABBSmallestOverlap(weaponBoxCopy.box, enemyBox.box);
-			if (index != 2) {
+			if (aabb::isAABBColliding(weaponBoxCopy.box, enemyBox.box)) {
+				SDL_Log("Collide");
 				enemyCom.state = ComEnemy::STATE_DIE;
 				sharedScore.addScore(enemyCom.score);
 			}

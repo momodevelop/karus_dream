@@ -79,7 +79,7 @@ namespace app::game::shared {
 
 	SharedSpawner::SharedSpawner(entt::registry& ecs, SharedAnimationIndices& animationIndices) :
 		coinTimer(0.f), coinDuration(5.f),
-		enemyTimer(0.f), enemyDuration(5.f),
+		enemyTimer(0.f), enemyDuration(1.f),
 		ecs(ecs), difficultyTimer(0.f),
 		animationIndices(animationIndices),
 		randomGenerator(randomDevice()),
@@ -106,7 +106,7 @@ namespace app::game::shared {
 
 		// enemy spawner
 		enemyTimer += dt;
-		if (enemyTimer > enemyDuration) {
+		if (enemyTimer > enemyDuration - difficultyTimer * 0.1f) {
 			EnemyType type = (EnemyType)randomEnemyType(randomGenerator);
 			spawnEnemy(randomCoinFlip(randomGenerator), type);
 			enemyTimer = 0.f;

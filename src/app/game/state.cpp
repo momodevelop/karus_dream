@@ -220,6 +220,8 @@ namespace app::game {
 
 	void State::onUpdate(float dt) noexcept
 	{
+		// hack
+		dt = 1 / 60.f;
 
 
 		if (sharedGameState.state == SharedGameState::GAME_UPDATE || sharedGameState.state == SharedGameState::GAME_START) {
@@ -231,14 +233,15 @@ namespace app::game {
 
 			// Physics 
 			SysPhysics::updateConstantForces(ecs);
-			SysPhysics::updateMovement(ecs, 1 / 60.f); //fixed time step for physics?
+			SysPhysics::updateMovement(ecs, dt); //fixed time step for physics?
+			SysPlayer::updateTriggerPositions(ecs, player);
 			SysAi::updateEnemyAi(ecs, dt);
 			SysCollision::resolvePlayerCollideObstacle(ecs, player);
 			SysCollision::resolvePlayerCollideCollectible(ecs, player, sharedScore);
 			SysCollision::resolvePlayerJumpTriggerCollision(ecs, player);
 			SysCollision::resolveEnemyCollideWeapon(ecs, player, sharedScore);
 			SysCollision::resolvePlayerCollideEnemy(ecs, player, sharedGameState);
-			SysPlayer::updateTriggerPositions(ecs, player);
+			
 
 			// Animation
 			SysAnimation::updateCharacterAnimationType(ecs, sharedAnimationIndices);
