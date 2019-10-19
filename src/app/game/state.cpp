@@ -77,7 +77,7 @@ namespace app::game {
 
 		if (!sharedTextures.addText(renderer, font, TEXT_SCORE, { 255, 255, 255 }, "Score: ") ||
 			!sharedTextures.addText(renderer, font, TEXT_SCORE_B, { 0, 0, 0 }, "Score: ") ||
-			!sharedTextures.addText(renderer, font, TEXT_GAMEOVER, { 0, 0, 0 }, "Game Over: Press Z to restart.") ||
+			!sharedTextures.addText(renderer, font, TEXT_GAMEOVER, { 0, 0, 0 }, "You woke up! Press Z to restart.") ||
 			!sharedTextures.addText(renderer, font, TEXT_START, { 255, 255, 255 }, "Press Left or Right Arrow to start! ")) {
 			assert(false);
 		}
@@ -145,7 +145,7 @@ namespace app::game {
 			animation.speed = character::gAnimeSpeed;
 			
 			auto& boxCollider = ecs.assign<ComBoxCollider>(entity);
-			float offset = 5.f;
+			float offset = 7.5f;
 			boxCollider.box = { offset, 0.f, (float)gTileSize - offset, (float)gTileSize };
 			
 			auto& characterAnimation = ecs.assign<ComCharacterAnimation>(entity);
@@ -221,11 +221,15 @@ namespace app::game {
 
 	void State::onUpdate(float dt) noexcept
 	{
-		// hack
-		dt = 1 / 60.f;
-
-
 		if (sharedGameState.state == SharedGameState::GAME_UPDATE || sharedGameState.state == SharedGameState::GAME_START) {
+			// Quick hack to ramp difficulty
+			difficulty += dt * 0.01f;
+			if (difficulty > 2.f)
+				difficulty = 2.f;
+			dt *= difficulty;
+
+			SDL_Log("%f", difficulty);
+
 			// Input
 			SysPlayer::processInput(ecs, sharedKeyboard, player, sharedGameState);
 
@@ -286,7 +290,7 @@ namespace app::game {
 		SysRenderer::renderBackground(renderer, sharedTextures, sharedSpritesheets);
 		
 
-//		SysDebug::renderBoxColliders(ecs, renderer);
+		SysDebug::renderBoxColliders(ecs, renderer);
 
 		SysRenderer::renderForeground(renderer, sharedTextures, sharedSpritesheets);
 		SysRenderer::render(ecs, renderer, sharedTextures);

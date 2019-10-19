@@ -11,6 +11,8 @@
 namespace app {
 	
 	using namespace yuu;
+	static constexpr Uint32 FPS = 60;
+	static constexpr Uint32 frameDelay = 1000 / FPS;
 
 	Root::Root(SDL_Window& window, yuu::Time& time) :
 		window(window), time(time),
@@ -40,7 +42,9 @@ namespace app {
 			this->update();
 			this->render();
 			this->clean();
-			SDL_Delay(10);
+
+			if (frameDelay > time.getTicksElapsed() )
+				SDL_Delay(frameDelay - time.getTicksElapsed());
 		}
 	}
 

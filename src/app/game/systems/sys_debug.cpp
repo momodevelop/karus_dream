@@ -3,7 +3,6 @@
 
 #include "sys_debug.h"
 
-#ifdef _DEBUG
 #include "../components/com_transform.h"
 #include "../components/com_box_collider.h"
 
@@ -59,5 +58,3 @@ namespace app::game::systems {
 	}
 
 }
-
-#endif

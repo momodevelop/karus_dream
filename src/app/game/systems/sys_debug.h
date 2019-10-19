@@ -2,8 +2,6 @@
 #define __APP_GAME_SYSTEMS_DEBUG_RENDER_BOX_COLLIDER_H__
 
 
-#ifdef _DEBUG
-
 namespace app::game::systems {
 	class SysDebug {
 	public:
@@ -11,5 +9,4 @@ namespace app::game::systems {
 	};
 }
 
-#endif
 #endif

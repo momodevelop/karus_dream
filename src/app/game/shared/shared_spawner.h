@@ -21,7 +21,6 @@ namespace app::game::shared {
 		float coinDuration;
 		float enemyTimer;
 		float enemyDuration;
-		float difficultyTimer;
 
 		entt::registry& ecs;
 		shared::SharedAnimationIndices& animationIndices;

@@ -46,12 +46,10 @@ namespace app::splash {
 
 	State::~State() noexcept
 	{		
-		SDL_Log("splash::StateSplash::~StateSplash()");
 	}
 
 	void State::onEnter() noexcept
 	{
-		SDL_Log("splash::StateSplash::onEnter()");
 	}
 
 	void State::onUpdate(float dt) noexcept
@@ -61,7 +59,6 @@ namespace app::splash {
 
 	void State::onExit() noexcept
 	{
-		SDL_Log("splash::StateSplash::onExit()");
 	}
 
 	void State::onRender(SDL_Renderer& renderer) noexcept

@@ -200,7 +200,6 @@ namespace app::game::systems {
 			syncBoxColliderToTransform(enemyBox, enemyTransform);
 
 			if (aabb::isAABBColliding(weaponBoxCopy.box, enemyBox.box)) {
-				SDL_Log("Collide");
 				enemyCom.state = ComEnemy::STATE_DIE;
 				sharedScore.addScore(enemyCom.score);
 			}
