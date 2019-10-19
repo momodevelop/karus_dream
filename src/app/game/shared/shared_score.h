@@ -25,7 +25,9 @@ namespace app::game::shared {
 		~SharedScore();
 
 		void render(SDL_Renderer& renderer);
+		void renderFinalScore(SDL_Renderer& renderer);
 		void addScore(unsigned int i);
+
 
 	};
 }

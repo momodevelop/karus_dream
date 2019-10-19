@@ -45,6 +45,20 @@ namespace app::game::shared {
 		
 	}
 
+	void SharedScore::renderFinalScore(SDL_Renderer & renderer)
+	{
+		int x = gDisplayHalfWidth - 80;
+		int y = gDisplayHalfHeight - 15;
+		renderTextAt(renderer, TEXT_SCORE_B, x, y, 0.9f);
+
+		x += 80;
+
+		// Render score based on scoreStr
+		for (auto& c : scoreStr) {
+			renderTextAt(renderer, TextureHandler(ZERO_B + c), x += 15, y, 0.9f);
+		}
+	}
+
 	void SharedScore::addScore(unsigned int i)
 	{
 		score += i;

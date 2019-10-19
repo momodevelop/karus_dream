@@ -187,8 +187,6 @@ namespace app::menu {
 		default: // START 
 			renderTextAt(renderer, ARROW, startPosition.x - 30, startPosition.y, 1.2f);
 		}
-
-
 		// render made by
 		renderTextAt(renderer, MADE_BY, 10, gDisplayHeight - 22, 0.8f);
 	}

@@ -281,21 +281,21 @@ namespace app::game {
 	{
 		SysRenderer::renderBackground(renderer, sharedTextures, sharedSpritesheets);
 		
-#ifdef _DEBUG
+
 		SysDebug::renderBoxColliders(ecs, renderer);
-#endif
+
 		SysRenderer::renderForeground(renderer, sharedTextures, sharedSpritesheets);
 		SysRenderer::render(ecs, renderer, sharedTextures);
 		
 		if (sharedGameState.state == SharedGameState::GAME_START)
 			SysRenderer::renderStart(ecs, renderer, sharedTextures);
-		else if (sharedGameState.state == SharedGameState::GAME_OVER_DONE)
+		else if (sharedGameState.state == SharedGameState::GAME_OVER_DONE) {
 			SysRenderer::renderGameOver(ecs, renderer, sharedTextures);
-		
-
-
-		sharedScore.render(renderer);
-
+			sharedScore.renderFinalScore(renderer);
+		}
+		else {
+			sharedScore.render(renderer);
+		}
 		SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);
 	
 	}
