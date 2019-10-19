@@ -145,7 +145,8 @@ namespace app::game {
 			animation.speed = character::gAnimeSpeed;
 			
 			auto& boxCollider = ecs.assign<ComBoxCollider>(entity);
-			boxCollider.box = { 0.f, 0.f, (float)gTileSize, (float)gTileSize };
+			float offset = 5.f;
+			boxCollider.box = { offset, 0.f, (float)gTileSize - offset, (float)gTileSize };
 			
 			auto& characterAnimation = ecs.assign<ComCharacterAnimation>(entity);
 			characterAnimation.currentAnimeDir = characterAnimation.nextAnimeDir = SharedAnimationIndices::CHARACTER_STOP_DOWN;
@@ -285,7 +286,7 @@ namespace app::game {
 		SysRenderer::renderBackground(renderer, sharedTextures, sharedSpritesheets);
 		
 
-		SysDebug::renderBoxColliders(ecs, renderer);
+//		SysDebug::renderBoxColliders(ecs, renderer);
 
 		SysRenderer::renderForeground(renderer, sharedTextures, sharedSpritesheets);
 		SysRenderer::render(ecs, renderer, sharedTextures);
