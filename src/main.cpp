@@ -58,7 +58,7 @@ SDL_WindowUniquePtr initSDL() {
 	
 
 	auto window = SDL_CreateWindow(
-		"vigil",
+		"Karu's Dream",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		gDisplayWidth,
