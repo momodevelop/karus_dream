@@ -1,5 +1,6 @@
 #define SDL_MAIN_HANDLED
 
+#include <windows.h>
 #include <random>
 #include <SDL.h>
 #include <yuu/time.h>
@@ -79,8 +80,12 @@ SDL_WindowUniquePtr initSDL() {
 	return SDL_WindowUniquePtr(window);
 }
 
-int main(int argc, char* argv[]) {
-
+int WINAPI WinMain(
+	HINSTANCE hInstance,
+	HINSTANCE hPrevInstance,
+	LPSTR lpCmdLine,
+	int nCmdShow)
+{
 	auto window = initSDL();
 	if (!window)
 		return 1;
