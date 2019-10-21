@@ -78,7 +78,7 @@ namespace app::game {
 		if (!sharedTextures.addText(renderer, font, TEXT_SCORE, { 255, 255, 255 }, "Score: ") ||
 			!sharedTextures.addText(renderer, font, TEXT_SCORE_B, { 0, 0, 0 }, "Score: ") ||
 			!sharedTextures.addText(renderer, font, TEXT_GAMEOVER, { 0, 0, 0 }, "You woke up! Press Z to restart.") ||
-			!sharedTextures.addText(renderer, font, TEXT_START, { 255, 255, 255 }, "Press Left or Right Arrow to start! ")) {
+			!sharedTextures.addText(renderer, font, TEXT_START, { 255, 255, 255 }, "Left or Right Arrow to move, Z to jump! ")) {
 			assert(false);
 		}
 
@@ -290,7 +290,7 @@ namespace app::game {
 		SysRenderer::renderBackground(renderer, sharedTextures, sharedSpritesheets);
 		
 
-		SysDebug::renderBoxColliders(ecs, renderer);
+		//SysDebug::renderBoxColliders(ecs, renderer);
 
 		SysRenderer::renderForeground(renderer, sharedTextures, sharedSpritesheets);
 		SysRenderer::render(ecs, renderer, sharedTextures);
