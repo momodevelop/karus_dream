@@ -223,12 +223,12 @@ namespace app::game {
 	{
 		if (sharedGameState.state == SharedGameState::GAME_UPDATE || sharedGameState.state == SharedGameState::GAME_START) {
 			// Quick hack to ramp difficulty
-			difficulty += dt * 0.01f;
-			if (difficulty > 2.f)
-				difficulty = 2.f;
-			dt *= difficulty;
-
-			SDL_Log("%f", difficulty);
+			if (sharedGameState.state == SharedGameState::GAME_UPDATE) {
+				difficulty += dt * 0.01f;
+				if (difficulty > 2.f)
+					difficulty = 2.f;
+				dt *= difficulty;
+			}
 
 			// Input
 			SysPlayer::processInput(ecs, sharedKeyboard, player, sharedGameState);
