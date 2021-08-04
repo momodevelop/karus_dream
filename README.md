@@ -5,7 +5,7 @@ Monsters will appear on the sides of the screen to eat him. Touching them would 
 
 Equipped with only a sword, try to defeat as many monsters as possible. 
 
-Game is avaliable here: https://momohoudai.itch.io/karudream
+Game is avaliable here: https://momodevelop.itch.io/karudream
 
 (I'll probably do High Score one day...)
 
